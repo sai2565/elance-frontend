@@ -63,7 +63,7 @@ function Header() {
                 <div className="flex items-center justify-between mx-5 my-3 lg:mx-32">
                     <div className="flex items-center">
                         <img
-                        className="h-7 w-7 mr-8 lg:hidden cursor-pointer"
+                        className="h-7 w-7 mr-5 lg:hidden cursor-pointer"
                         src="https://img.icons8.com/metro/52/000000/menu.png"
                         onClick={toggleDrawer("left", true)}/>
                     
