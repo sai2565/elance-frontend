@@ -4,6 +4,11 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {},
+    fontFamily:{
+      'baskerville': ['"Libre Baskerville"'],
+      'roboto':['"Roboto"'],
+      'poppins':['Poppins']
+    }
   },
   variants: {
     extend: {},
