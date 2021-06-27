@@ -4,7 +4,7 @@ function QuoteSection() {
             <div className="m-5 lg:mx-32 lg:grid lg:grid-cols-2">
                 <div className="lg:col-span-1">
                     <h1
-                        className="text-5xl text-[#29b2fe] font-baskerville lg:text-7xl">
+                        className="text-5xl text-[#29b2fe] font-baskerville lg:text-8xl">
                             Join the best freelance marketplace</h1>
                     <div className="text-2xl font-semibold text-gray-500 mt-3">
                         <h1 >Find great talent. Build your business.</h1>
@@ -18,8 +18,8 @@ function QuoteSection() {
                 <div>
                     <img
                     className="hidden lg:col-span-1 lg:flex ml-16"
-                    height={350}
-                    width={350}
+                    height={400}
+                    width={400}
                     loading="lazy"
                     src="https://www.upwork.com/static/assets/Brontes/6a4c747/img/globe-2x.f7d44e7.jpg"
                     />
