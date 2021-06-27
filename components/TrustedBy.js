@@ -3,10 +3,10 @@ export default function TrustedBy() {
         <div className="w-full bg-[#fafafa] h-24 flex items-center mt-10">
             <div className="flex justify-center w-full items-center space-x-10">
                 <h1 className="col-span-1 text-[#c2c2c5] font-bold hidden md:flex">Trusted by :</h1>
-                <img src="https://img.icons8.com/ios-glyphs/50/000000/facebook-new.png"/>
-                <img src="https://img.icons8.com/ios-glyphs/50/000000/google-logo.png"/>
-                <img src="https://img.icons8.com/ios-filled/50/000000/oracle-logo.png"/>
-                <img src="https://img.icons8.com/ios-filled/50/000000/sap.png"/>
+                <img className="h-10 w-10" src="https://img.icons8.com/ios-glyphs/50/000000/facebook-new.png"/>
+                <img className="h-10 w-10" src="https://img.icons8.com/ios-glyphs/50/000000/google-logo.png"/>
+                <img className="h-10 w-10 hidden md:flex" src="https://img.icons8.com/ios-filled/50/000000/oracle-logo.png"/>
+                <img className="h-10 w-10" src="https://img.icons8.com/ios-filled/50/000000/sap.png"/>
             </div>
            {/* <div className="grid grid-cols-10 content-center">
                <div className="col-span-1"/>
