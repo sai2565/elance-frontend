@@ -1,6 +1,6 @@
 export default function TrustedBy() {
     return (
-        <div className="w-full bg-[#fafafa] h-24 flex items-center mt-24">
+        <div className="w-full bg-[#fafafa] h-24 flex items-center mt-10 lg:mt-24">
             <div className="flex justify-center w-full items-center space-x-10">
                 <h1 className="col-span-1 text-[#c2c2c5] font-bold hidden md:flex">Trusted by :</h1>
                 <img className="h-10 w-10" src="https://img.icons8.com/ios-glyphs/50/000000/facebook-new.png"/>
