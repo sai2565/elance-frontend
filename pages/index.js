@@ -4,6 +4,7 @@ import QuoteSection from '../components/QuoteSection'
 import LandingBody from '../components/LandingBody'
 import PopularServicesSlider from '../components/PopularServicesSlider'
 import TrustedBy from '../components/TrustedBy'
+import Footer from '../components/Footer'
 
 export default function Home() {
   return (
@@ -18,6 +19,7 @@ export default function Home() {
         <TrustedBy/>
         <PopularServicesSlider/>
         <LandingBody/>
+        <Footer />
       </div>
     </div>
   )
