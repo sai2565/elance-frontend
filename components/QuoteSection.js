@@ -18,8 +18,8 @@ function QuoteSection() {
                 <div>
                     <img
                     className="hidden lg:col-span-1 lg:flex ml-16"
-                    height={400}
-                    width={400}
+                    height={350}
+                    width={350}
                     loading="lazy"
                     src="https://www.upwork.com/static/assets/Brontes/6a4c747/img/globe-2x.f7d44e7.jpg"
                     />
