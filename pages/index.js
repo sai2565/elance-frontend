@@ -6,14 +6,17 @@ import PopularServicesSlider from '../components/PopularServicesSlider'
 import TrustedBy from '../components/TrustedBy'
 import Footer from '../components/Footer'
 
-export default function Home() {
+import getCountries from "../graphql/Queries/getCountries"
+
+export default function Home({countries}) {
   return (
     <div className="">
+    <pre>{JSON.stringify(countries, null, 2)}</pre>
       <Head>
         <title>Elance | Hire Freelancers & Find Freelance Jobs Online</title>
         <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
       </Head>
-      <div> 
+      <div>
         <Header/>
         <QuoteSection/>
         <TrustedBy/>
@@ -23,4 +26,15 @@ export default function Home() {
       </div>
     </div>
   )
+}
+
+export async function getStaticProps() {
+
+    const  countries = await getCountries()
+
+    return {
+      props: {
+        countries: countries?.slice(0, 4),
+      },
+   };
 }
