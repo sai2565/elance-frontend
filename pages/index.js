@@ -6,7 +6,7 @@ import PopularServicesSlider from '../components/PopularServicesSlider'
 import TrustedBy from '../components/TrustedBy'
 import Footer from '../components/Footer'
 
-import getCountries from "../graphql/Queries/getCountries"
+import getCountries from "../graphql/queries/getCountries"
 
 export default function Home({countries}) {
   return (
