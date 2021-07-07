@@ -2,20 +2,24 @@ import React from 'react';
 import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
-import HeaderTag from '../components/HeaderTag'
+import HeaderTag from '../components/HeaderTag';
+import { useRouter } from "next/router";
+//import {getProviders, signIn, signOut, useSession } from 'next-auth/client';
 
 
 const useStyles = makeStyles({
     list: {
-      width: 300,
+      width: 400,
     },
     fullList: {
       width: 'auto',
     },
   });
 
-function Header() {
+function Header({providers}) {
 
+    //const [session] = useSession();
+    const router = useRouter();
     const onSearch = (e) => {
         e.preventDefault();
     }
@@ -41,9 +45,42 @@ function Header() {
             [classes.fullList]: anchor === 'top' || anchor === 'bottom',
           })}
           role="presentation"
-          onClick={toggleDrawer(anchor, false)}
-          onKeyDown={toggleDrawer(anchor, false)}
-        >
+          //onClick={toggleDrawer(anchor, false)}
+          //onKeyDown={toggleDrawer(anchor, false)}
+          >   
+            <div className="items-center m-2">
+                <div className="flex justify-between items-center">
+                    <div className="flex cursor-pointer items-center">
+                        <img
+                        className="w-10 h-10"
+                        src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
+                        <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724]">elance</h1>
+                    </div>
+                    <img className="w-6 h-6 cursor-pointer" onClick={toggleDrawer(anchor, false)} src="https://img.icons8.com/material-outlined/96/666666/multiply--v1.png"/>
+                </div>
+                
+                <div className="items-center m-2">
+                    <form className="mt-5 flex">
+                        <div className="flex items-center rounded-full h-9 w-full border border-gray-400 focus-within:border-[#0e1724]">
+                            <img 
+                                className="h-4 w-4 ml-3"
+                                src="https://img.icons8.com/metro/52/000000/search.png"/>
+                            <input 
+                                className="border-none focus:outline-none mx-2 text-[#0e1724] flex-grow flex-shrink"
+                                placeholder="Find Jobs or Freelancers"/>
+                        </div>
+                        <button 
+                    type="submit"
+                    onClick={onSearch}
+                    className="bg-[#29b2fe] text-white font-semibold px-5 h-9 rounded-r-full hover:bg-[#238ac2] focus:outline-none -ml-5">OK</button>
+                    </form>
+                </div>
+                <div className="w-full items-center mt-10 space-y-5">
+                    <div className="flex justify-center w-full items-center">
+                        <h1 className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 lg:flex"> Post a Project </h1>
+                    </div>    
+                </div>
+            </div>
         </div>
   );  
     return (
@@ -83,9 +120,6 @@ function Header() {
                                 <input 
                                 className="border-none focus:outline-none mx-2 text-[#0e1724] flex-grow flex-shrink"
                                 placeholder="Find Jobs or Freelancers"/>
-                                {/* <img 
-                                className="mr-3 h-4 w-4 cursor-pointer"
-                                src="https://img.icons8.com/emoji/48/000000/cross-mark-emoji.png"/> */}
                             </div>
                             <button 
                             type="submit"
@@ -96,16 +130,13 @@ function Header() {
                  
                     </div>
                     <div className="flex items-center space-x-5">
-                        <h1 className={`cursor-pointer hover:text-[#29b2fe] text-lg font-semibold`}>
+                        <h1 onClick={() => router.push("/auth/signin")} className={`cursor-pointer hover:text-[#29b2fe] text-lg font-semibold`}>
                             Log In
                         </h1>
-
-                        <h1 className={`cursor-pointer hover:text-[#29b2fe] text-lg font-semibold`}>
+                        <h1 onClick={() => router.push("/auth/signup")} className={`cursor-pointer hover:text-[#29b2fe] text-lg font-semibold`}>
                             Sign Up
                         </h1>
-
-                        <h1
-                        className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 hidden lg:flex">
+                        <h1 className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 hidden lg:flex">
                             Post a Project
                         </h1>
                     </div>

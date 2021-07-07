@@ -1,0 +1,140 @@
+{
+    "user": {
+      "id":"12345",  
+      "f_name": "Sai Sharan",
+      "l_name": "Beepeta",
+      "user_name":"sharan2565",
+      "occupation": "Software Developer",
+      "intro": "I love building solutions to problems that matter",
+      "profile_pic": "https://media-exp1.licdn.com/dms/image/C4E03AQFbqbW-MOsjIA/profile-displayphoto-shrink_400_400/0/1596051692917?e=1631145600&v=beta&t=E64e9qKy768wqU75xABDg9cwYvF0DvdopgTMK-drFxE",
+      "email": "saisharan2565@gmail.com",
+      "phone": "+91 9284659649",
+      "address": {
+        "street": "Big Bazar, Medak",
+        "city": "Hyderabad, India",
+        "state": "Telangana, India",
+        "zip": "502110"
+      },
+      "website": "http://saisharan.vercel.app/",
+      "resume": "",
+      "social_profiles": [
+        {
+          "name": "linkedin",
+          "url": "https://www.linkedin.com/in/sharan-beepeta/",
+          "className": "fa fa-linkedin"
+        },
+        {
+          "name": "github",
+          "url": "https://github.com/sai2565",
+          "className": "fa fa-github"
+        },
+        {
+          "name": "facebook",
+          "url": "https://www.facebook.com/sai.sharan.9085790",
+          "className": "fa fa-facebook"
+        }
+        
+      ],
+      "highest_qualification": [
+        {
+          "school": "National Institute of Technology Manipur",
+          "degree": "Bachelor's Degree, Electronics and Communications Engineering",
+          "graduated": "July 2017",
+          "description": "Graduated with First Class Honours"
+        }
+      ],
+      "works": [
+        {
+          "company": "SAP Labs India",
+          "title": "Software Development Engineer II",
+          "years": "Jan 2019 - Present",
+          "description": "",
+        },
+        {
+          "company": "Capgemini India",
+          "title": "Data Engineer",
+          "years": "Sept 2017 - Dec 2018",
+          "description": ""
+        }
+      ],
+      "skills": [
+        {
+          "name": "Java",
+          "level": "95%"
+        },
+        {
+          "name": "JavaScript",
+          "level": "95%"
+        },
+        {
+          "name": "Python",
+          "level": "80%"
+        },
+        {
+          "name": "ReactJs",
+          "level": "90%"
+        },
+        {
+          "name": "Git",
+          "level": "85%"
+        }
+        ],
+        "portfolio_projects": [
+          {
+            "title": "",
+            "category": "",
+            "description":"",
+            "image_url": "",
+            "project_url": "",
+          }
+        ],
+        "testimonials": [
+            {
+              "rating": "1",
+              "review": "Thank you for always rising up to the occasion. Your presence in the team does take off a lot of pressure from others. You are an asset and it feels great to work with you. Keep up the Stay curious attitude. Best wishes for everything that you do.",
+              "user":{
+                  "id":"12346",
+                  "f_name":"",
+                  "l_name":""
+              }
+          },
+            {
+              "rating": "2",
+              "review": "I would like to thank you for your effort and support during this exceptional times. I would specially thank your support in UX design & implementations of new features in Manage Process Orders app. Thank you for the contributions. Keep continuing your good work !!!",
+              "user":{
+                  "id":"12347",
+                  "f_name":"",
+                  "l_name":""
+              }
+          },
+            {
+              "rating": "3",
+              "review": "Thank you Sharan for taking time out when I have questions, sometimes quite basic ones. This is making my journey in SAP quite pleasant. Thank you again.",
+              "user":{
+                  "id":"12348",
+                  "f_name":"",
+                  "l_name":""
+              }
+          },
+            {
+              "rating": "4",
+              "review": "I want to use this note to thank you for your representation and excellent presentation during DKOM 2021. Thank you for all the hard work and preparation went behind. Much appreciated!! Thanks a lot for your contribution to make SAP successful during this unprecedented time.",
+              "user":{
+                  "id":"12349",
+                  "f_name":"",
+                  "l_name":""
+              }
+          },
+            {
+              "rating": "5",
+              "review": "Thank you for all the contributions you have made. As a new joiner in the team, your contribution was amazing. Your great efforts are much appreciated. Keep up the good job.",
+              "user":{
+                  "id":"12350",
+                  "f_name":"",
+                  "l_name":""
+              }
+          }
+        ]
+    }
+}
+  

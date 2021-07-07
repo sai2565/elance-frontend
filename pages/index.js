@@ -1,12 +1,20 @@
 import Head from 'next/head'
 import Header from '../components/Header'
-import QuoteSection from '../components/QuoteSection'
-import LandingBody from '../components/LandingBody'
-import PopularServicesSlider from '../components/PopularServicesSlider'
-import TrustedBy from '../components/TrustedBy'
 import Footer from '../components/Footer'
+import QuoteSection from '../components/landingpage/QuoteSection'
+import LandingBody from '../components/landingpage/LandingBody'
+import PopularServicesSlider from '../components/landingpage/PopularServicesSlider'
+import TrustedBy from '../components/landingpage/TrustedBy'
+import { useSession } from 'next-auth/client';
+import { useEffect } from 'react';
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
+  const [session] = useSession();
+  //redirect to home page for logged in user
+  if(session && session.user){ router.push('/HomePage'); }
+  else
   return (
     <div className="">
       <Head>

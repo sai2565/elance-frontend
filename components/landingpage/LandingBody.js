@@ -14,7 +14,7 @@ function LandingBody() {
     ]
     return (
         <div>
-            <div className="m-5 lg:mx-32">
+            <div className="m-5 lg:mx-32 lg:mb-28">
                 <div className="border-b border-gray-300 pb-16">
                     <h1 className="text-3xl text-black font-bold mb-5 lg:mb-16 lg:text-4xl">Need something done?</h1>
                     <div className="items-center space-y-10 lg:flex lg:space-x-10 lg:space-y-0">
