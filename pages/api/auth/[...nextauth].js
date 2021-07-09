@@ -24,7 +24,7 @@ export default NextAuth({
     signUp: '/auth/signup',
     error: '/auth/error', // Error code passed in query string as ?error=
     verifyRequest: '/auth/verify-request', // (used for check email message)
-    newUser: '/auth/new-user' // New users will be directed here on first sign in (leave the property out if not of interest)
+    newUser: '/CreateProfile' // New users will be directed here on first sign in (leave the property out if not of interest)
   }
   // A database is optional, but required to persist accounts in a database
   //database: process.env.DATABASE_URL,

@@ -7,7 +7,7 @@ function Signup({ providers }) {
     const [session] = useSession();
 
     //redirect to home page
-    if(session && session.user) router.push('/HomePage');
+    if(session && session.user) router.push('/CreateProfile');
     
     return (
         <div>
@@ -25,15 +25,15 @@ function Signup({ providers }) {
                                 src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
                                 <h1 className="italic text-2xl font-extrabold -ml-3 text-[#0e1724]">elance</h1>
                             </div>
-                            <div className="bg-[#3F51B5] px-8 py-2 rounded-md flex items-center space-x-5 w-full">
+                            <div onClick={() => signIn('facebook')} className="bg-[#3F51B5] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/facebook-new.png"/>
                                 <h1 className="text-white font-semibold">Continue with Facebook</h1>
                             </div>
-                            <div className="bg-[#DE5246] px-8 py-2 rounded-md flex items-center space-x-5 w-full">
+                            <div onClick={() => signIn('google')} className="bg-[#DE5246] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/gmail-new.png"/>
                                 <h1 className="text-white font-semibold">Continue with Google</h1>
                             </div>
-                            <div className="bg-[#404040] px-8 py-2 rounded-md flex items-center space-x-5 w-full">
+                            <div onClick={() => signIn('github')} className="bg-[#404040] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/github.png"/>
                                 <h1 className="text-white font-semibold">Continue with GitHub</h1>
                             </div>

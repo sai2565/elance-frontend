@@ -5,21 +5,21 @@ import QuoteSection from '../components/landingpage/QuoteSection'
 import LandingBody from '../components/landingpage/LandingBody'
 import PopularServicesSlider from '../components/landingpage/PopularServicesSlider'
 import TrustedBy from '../components/landingpage/TrustedBy'
-import { useSession } from 'next-auth/client';
+import { useSession, getSession } from 'next-auth/client';
 import { useEffect } from 'react';
 import { useRouter } from "next/router";
-import getCountries from "../graphql/queries/getCountries";
+//import getCountries from "../graphql/queries/getCountries";
 
 
-export default function Home({countries}) {
+export default function Home() {
   const router = useRouter();
-  const [session] = useSession();
+  //const [session] = useSession();
+  // console.log(session + " sai");
+  // console.log(session.user.name + ""+ session.user.image)
   //redirect to home page for logged in user
-  if(session && session.user){ router.push('/HomePage'); }
-  else
-  
+  // if(session && session.user){ router.push("/HomePage"); }
+  // else
   return (
-
     <div className="">
     {/* <pre>{JSON.stringify(countries, null, 2)}</pre> */}
       <Head>
@@ -27,7 +27,7 @@ export default function Home({countries}) {
         <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
       </Head>
       <div>
-        <Header/>
+        <Header page={"landing"}/>
         <QuoteSection/>
         <TrustedBy/>
         <PopularServicesSlider/>
@@ -38,13 +38,15 @@ export default function Home({countries}) {
   )
 }
 
-export async function getStaticProps() {
+// export async function getInitialProps(){
 
-    const  countries = await getCountries()
+// }
 
-    return {
-      props: {
-        countries: countries?.slice(0, 4),
-      },
-   };
-}
+// export async function getServerSideProps(context){
+//   const session = await getSession(context);
+//   return { 
+//     props:{
+//       session
+//     } 
+//   };
+// }
