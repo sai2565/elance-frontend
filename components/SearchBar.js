@@ -36,13 +36,13 @@ function SearchBar({device}) {
                     className="h-4 w-4 mx-1 cursor-pointer"
                     src="https://img.icons8.com/ios-filled/100/000000/sort-down.png"/>
                     <input 
-                    className="border-none focus:outline-none mx-2 text-[#0e1724] flex-grow flex-shrink"
+                    className="border-none focus:outline-none mx-2 text-[#0e1724] text-sm lg:text-base flex-grow flex-shrink"
                     placeholder="Find Jobs or Freelancers"/>
                 </div>
                 <button 
                 type="submit"
                 onClick={onSearch}
-                className="bg-[#29b2fe] text-white font-semibold px-5 h-9 rounded-r-full hover:bg-[#238ac2] focus:outline-none -ml-1">Search</button>
+                className="bg-[#29b2fe] text-sm lg:text-base text-white font-semibold px-5 h-9 rounded-r-full hover:bg-[#238ac2] focus:outline-none -ml-1">Search</button>
                 </form>
             </div>
             <Popover
@@ -59,7 +59,7 @@ function SearchBar({device}) {
                 vertical: "top",
                 horizontal: "left"
                 }}>
-                    <div className={`rounded-md`}>
+                    <div className={`rounded-md text-sm lg:text-base`}>
                         <div onClick={() => setSearchContext("F")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer hover:bg-[#c2e9ff] ${searchContext === "F" && "bg-[#c2e9ff]"}`}>
                             <img className="w-8 h-8" src="https://img.icons8.com/ios-glyphs/90/000000/user--v1.png"/>
                             <div className="">

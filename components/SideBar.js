@@ -21,7 +21,7 @@ function SideBar({anchor, toggleDrawer, usertype}) {
     }
     return (
         <div
-        className="w-full"
+        className=""
           role="presentation">   
             <div className="items-center m-2">
                 <div className="flex justify-between items-center">

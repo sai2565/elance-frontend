@@ -50,7 +50,7 @@ function Signup({ providers }) {
                                     placeholder="Email"/>
                             </div>
                             <div className="flex cursor-pointer items-center justify-center">
-                                <button type="submit" className="px-3 py-1 text-[#29b2fe] bg-white border border-[#29b2fe] rounded-full place-self-center focus:outline-none">Continue</button>
+                                <button type="submit" className="px-3 py-1 text-white bg-[#29b2fe] font-bold transition duration-150 transform hover:scale-105 rounded-full place-self-center focus:outline-none">Continue</button>
                             </div>
                             <div className="flex items-center justify-center">
                                 Already a user want to 
