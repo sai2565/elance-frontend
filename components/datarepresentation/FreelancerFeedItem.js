@@ -2,12 +2,12 @@ function FreelancerFeedItem({profilepic}) {
     return (
         <div className="p-5 space-y-5 cursor-pointer hover:bg-[#29b2fe] hover:text-white">
             <div className="space-y-1">
-                <div className="flex justify-between items-center">
+                <div className="lg:flex justify-between items-center">
                     <h1 className="text-lg font-semibold cursor-pointer">
                         Programmitis | @programmitis | Software Developement
                     </h1>
-                    <div className="lg:flex lg:space-y-0 lg:space-x-5 lg:items-center">
-                        <img className={`h-8 w-8 rounded-full cursor-pointer mb-3 lg:mb-0`} loading="lazy" src={profilepic}/>
+                    <div className="flex space-x-5 items-center my-2 lg:my-0 justify-between lg:justify-evenly">
+                        <img className={`h-8 w-8 rounded-full cursor-pointer `} loading="lazy" src={profilepic}/>
                         <img className="h-6 w-6 cursor-pointer" src="https://img.icons8.com/ios-glyphs/120/000000/hearts.png"/>
                     </div>
                 </div>
