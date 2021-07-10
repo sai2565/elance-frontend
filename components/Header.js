@@ -72,7 +72,7 @@ function Header({page}) {
                 <div className="flex items-center justify-between mx-5 my-3 lg:mx-32">
                     <div className="flex items-center">
                         <img
-                        className="h-5 w-5 mr-5 lg:hidden cursor-pointer"
+                        className="h-5 w-5 mr-2 lg:hidden cursor-pointer"
                         src="https://img.icons8.com/metro/52/000000/menu.png"
                         onClick={toggleDrawer("left", true)}/>
                     
@@ -80,7 +80,7 @@ function Header({page}) {
                             <img
                             className="w-12 h-12"
                             src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
-                            <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724]">elance</h1>
+                            <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724] hidden lg:flex">elance</h1>
                         </div>
                         <div className="items-center ml-14 hidden lg:flex">
                             <SearchBar device={"l"}/>

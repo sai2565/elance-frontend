@@ -18,7 +18,7 @@ function Signup({ providers }) {
             <div>
                 <div className="w-full flex items-center mt-20">
                     <div className="flex justify-center w-full items-center">
-                        <div className="p-10 rounded-lg space-y-5 border border-[#c4c4c4]">
+                        <div className="p-5 lg:p-10 rounded-lg space-y-5 border border-[#c4c4c4]">
                             <div className="flex cursor-pointer items-center justify-center">
                                 <img
                                 className="w-12 h-12"
@@ -27,15 +27,15 @@ function Signup({ providers }) {
                             </div>
                             <div onClick={() => signIn('facebook')} className="bg-[#3F51B5] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/facebook-new.png"/>
-                                <h1 className="text-white font-semibold">Continue with Facebook</h1>
+                                <h1 className="text-white text-sm lg:text-base font-semibold">Continue with Facebook</h1>
                             </div>
                             <div onClick={() => signIn('google')} className="bg-[#DE5246] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/gmail-new.png"/>
-                                <h1 className="text-white font-semibold">Continue with Google</h1>
+                                <h1 className="text-white text-sm lg:text-base font-semibold">Continue with Google</h1>
                             </div>
                             <div onClick={() => signIn('github')} className="bg-[#404040] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/github.png"/>
-                                <h1 className="text-white font-semibold">Continue with GitHub</h1>
+                                <h1 className="text-white text-sm lg:text-base font-semibold">Continue with GitHub</h1>
                             </div>
                             <div className="w-full flex items-center py-5">
                                 <div className="bg-[#c4c4c4] h-0.5 w-full"/>
@@ -46,7 +46,7 @@ function Signup({ providers }) {
                             </div>
                             <div className="border-2 border-gray-400 focus-within:border-[#0e1724] rounded-lg px-3 py-1">
                                 <input 
-                                    className="border-none focus:outline-none text-[#0e1724] text-s flex-grow flex-shrink w-full h-10"
+                                    className="border-none focus:outline-none text-[#0e1724] text-sm lg:text-base flex-grow flex-shrink w-full h-10"
                                     placeholder="Email"/>
                             </div>
                             <div className="flex cursor-pointer items-center justify-center">
