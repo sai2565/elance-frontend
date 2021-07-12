@@ -1,6 +1,21 @@
 import Head from 'next/head'
+import {useSession} from 'next-auth/client';
+import { useRouter } from 'next/router';
 
 function CreateProfile() {
+    const [session] = useSession();
+    const router = useRouter();
+    const username = session && session.user ? session.user.name : "";
+    var f_name, l_name;
+    if(username.includes(" ")){
+        var names = username.split(" ");;
+        f_name = names[0];
+        l_name = names[1];
+    }
+    else{
+        f_name = username;
+        l_name = "";
+    }
     return (
         <div>
             <Head>
@@ -24,7 +39,7 @@ function CreateProfile() {
             <div>
                 <div className="w-full flex items-center my-10">
                     <div className="flex justify-center w-full items-center">
-                        <div className="px-10 py-5 rounded-lg space-y-5 border border-[#c4c4c4]">
+                        <div className="px-3 lg:px-10 py-5 rounded-lg space-y-5 border border-[#c4c4c4]">
                             <div className="space-y-2"> 
                                 <div className="flex cursor-pointer items-center justify-center">
                                     <h1 className="text-2xl font-bold ">Complete your free account setup</h1>
@@ -38,6 +53,7 @@ function CreateProfile() {
                                     <img className="w-6 h-6" src="https://img.icons8.com/ios-glyphs/90/666666/user--v1.png"/>
                                     <input
                                         type="text"
+                                        defaultValue={f_name}
                                         className="border-none focus:outline-none text-[#0e1724] text-s flex-grow flex-shrink w-full h-10"
                                         placeholder="First Name"/>    
                                 </div>
@@ -45,6 +61,7 @@ function CreateProfile() {
                                     <img className="w-6 h-6" src="https://img.icons8.com/ios-glyphs/90/666666/user--v1.png"/>
                                     <input
                                         type="text"
+                                        defaultValue={l_name}
                                         className="border-none focus:outline-none text-[#0e1724] text-s flex-grow flex-shrink w-full h-10"
                                         placeholder="Last Name"/>    
                                 </div>
@@ -56,7 +73,7 @@ function CreateProfile() {
                                     className="border-none focus:outline-none text-[#0e1724] text-s flex-grow flex-shrink w-full h-10"
                                     placeholder="Set a user name"/>    
                             </div>
-                            <div className="space-y-5 lg:flex lg:space-x-3 lg:space-y-0">
+                            <div className="space-y-5 hidden lg:space-x-3 lg:space-y-0">
                                 <div className="flex border-2 border-gray-400 focus-within:border-[#0e1724] rounded-lg px-3 py-1 items-center space-x-3">
                                     <img className="w-6 h-6" src="https://img.icons8.com/metro/104/666666/password.png"/>
                                     <input
@@ -93,7 +110,7 @@ function CreateProfile() {
                                 </div>
                             </div>  
                             <div className="flex cursor-pointer items-center justify-center">
-                                <button type="submit" className="px-6 py-3 text-white bg-[#29b2fe] hover:bg-[#41a8e0] rounded-md place-self-center focus:outline-none text-sm font-semibold">Create My Account</button>
+                                <button onClick={() => router.push('/HomePage')} type="submit" className="px-6 py-3 text-white bg-[#29b2fe] hover:bg-[#41a8e0] rounded-md place-self-center focus:outline-none text-sm font-semibold">Create My Account</button>
                             </div>                            
                         </div>
                     </div>            
