@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import MyFeed from '../components/homepage/MyFeed';
 
 function HomePage() {
+    const router = useRouter();
     const [session] = useSession();
     const usertype = "C";
     const myposting = 
@@ -52,7 +53,7 @@ function HomePage() {
                         <div className="hidden lg:col-span-1 lg:flex justify-center">
                             <div className="space-y-10">
                                 <div className=" items-center place-items-center flex justify-center">
-                                    <h1   h1 className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer text-center hover:bg-yellow-500  ${ usertype==="C" ? "hidden lg:flex" : "hidden"}`}>
+                                    <h1 onClick={() => router.push('/PostProject')}  h1 className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer text-center hover:bg-yellow-500  ${ usertype==="C" ? "hidden lg:flex" : "hidden"}`}>
                                         Post a Project
                                     </h1>
                                 </div>
