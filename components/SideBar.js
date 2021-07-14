@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import SearchBar from './SearchBar';
+import {useRouter} from 'next/router';
 
 // const useStyles = makeStyles({
 //     list: {
@@ -16,6 +17,7 @@ import SearchBar from './SearchBar';
 function SideBar({anchor, toggleDrawer, usertype}) {
     //const classes = useStyles();
     //on search for projects or freelancers
+    const router = useRouter();
     const onSearch = (e) => {
         e.preventDefault();
     }
@@ -39,7 +41,7 @@ function SideBar({anchor, toggleDrawer, usertype}) {
                 </div>
                 <div className={`w-full items-center mt-10 space-y-5 ${usertype === "F" && "hidden"}`}>
                     <div className="flex justify-center w-full items-center">
-                        <h1 className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 lg:flex"> Post a Project </h1>
+                        <h1 onClick={() => router.push('/PostProject')} className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 lg:flex"> Post a Project </h1>
                     </div>    
                 </div>
             </div>

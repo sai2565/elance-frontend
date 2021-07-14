@@ -30,6 +30,7 @@ function Header({page}) {
     const onSearch = (e) => {
         e.preventDefault();
     }
+
     //parsed data
     const pagesource = page;
     const usertype = "C";
@@ -76,7 +77,7 @@ function Header({page}) {
                         src="https://img.icons8.com/metro/52/000000/menu.png"
                         onClick={toggleDrawer("left", true)}/>
                     
-                        <div className="flex cursor-pointer items-center">
+                        <div onClick={() => router.push('/')} className="flex cursor-pointer items-center">
                             <img
                             className="w-12 h-12"
                             src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
@@ -130,7 +131,7 @@ function Header({page}) {
                             isVisible={true}
                         />
 
-                        <h1 className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500  ${(session && session.user) ? "hidden" : "hidden lg:flex"}`}>
+                        <h1 onClick={() => router.push('/PostProject')} className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500  ${(session && session.user) ? "hidden" : "hidden lg:flex"}`}>
                             Post a Project
                         </h1>
 
@@ -147,7 +148,7 @@ function Header({page}) {
             </div>
 
             {/* lower header */}
-            <div className="bg-white border-b border-gray-200 hidden md:flex z-0">
+            <div className="bg-white border-b border-gray-200 hidden lg:flex z-0">
                 <div className="flex space-x-7 mx-5 lg:mx-32">
                     <HeaderTag tag={'Graphics & Design'}/>
                     <HeaderTag tag={'Digital Marketing'}/>

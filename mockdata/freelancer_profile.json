@@ -4,6 +4,7 @@
       "f_name": "Sai Sharan",
       "l_name": "Beepeta",
       "user_name":"sharan2565",
+      "user_type":"F",
       "occupation": "Software Developer",
       "intro": "I love building solutions to problems that matter",
       "profile_pic": "https://media-exp1.licdn.com/dms/image/C4E03AQFbqbW-MOsjIA/profile-displayphoto-shrink_400_400/0/1596051692917?e=1631145600&v=beta&t=E64e9qKy768wqU75xABDg9cwYvF0DvdopgTMK-drFxE",
@@ -48,7 +49,7 @@
           "company": "SAP Labs India",
           "title": "Software Development Engineer II",
           "years": "Jan 2019 - Present",
-          "description": "",
+          "description": ""
         },
         {
           "company": "Capgemini India",
@@ -85,7 +86,7 @@
             "category": "",
             "description":"",
             "image_url": "",
-            "project_url": "",
+            "project_url": ""
           }
         ],
         "testimonials": [

@@ -1,14 +1,20 @@
 import Popover from "@material-ui/core/Popover";
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 
 
 function SearchBar({device}) {
     const usertype = "C";
     const [searchContext, setSearchContext] = useState(usertype);
+    const searchInputRef = useRef(null);
+    const router = useRouter();
 
     const onSearch = (e) => {
         e.preventDefault();
+        const query = searchInputRef.current.value;
+        if(!query) { return; }
+        searchContext === "F" ? router.push(`/SearchFreelancers?query=${query}`) : router.push(`/SearchProjects?query=${query}`) ;
     }
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,7 +41,8 @@ function SearchBar({device}) {
                     <img 
                     className="h-4 w-4 mx-1 cursor-pointer"
                     src="https://img.icons8.com/ios-filled/100/000000/sort-down.png"/>
-                    <input 
+                    <input
+                    ref={searchInputRef}
                     className="border-none focus:outline-none mx-2 text-[#0e1724] text-sm lg:text-base flex-grow flex-shrink"
                     placeholder="Find Jobs or Freelancers"/>
                 </div>
