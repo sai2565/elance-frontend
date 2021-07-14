@@ -9,6 +9,19 @@ import Popover from "@material-ui/core/Popover";
 import SearchBar from './SearchBar';
 
 function Header({page}) {
+        
+    const categories = [
+        {"subcat":"Logo Design"},
+        {"subcat":"Web and Mobile App Design"},
+        {"subcat":"Architecture and Building Design"},
+        {"subcat":"Art and Illustration"},
+        {"subcat":"Fashion and Merchandise"},
+        {"subcat":"Social Media"},
+        {"subcat":"Gaming"},
+        {"subcat":"Visual Design"},
+        {"subcat":"Print Design"},
+        {"subcat":"Product and Character Design"}];
+
     //react router//
     const router = useRouter();
 
@@ -150,15 +163,15 @@ function Header({page}) {
             {/* lower header */}
             <div className="bg-white border-b border-gray-200 hidden lg:flex z-0">
                 <div className="flex space-x-7 mx-5 lg:mx-32">
-                    <HeaderTag tag={'Graphics & Design'}/>
-                    <HeaderTag tag={'Digital Marketing'}/>
-                    <HeaderTag tag={'Writing & Translation'}/>
-                    <HeaderTag tag={'Video & Animation'}/>
-                    <HeaderTag tag={'Music & Audio'}/>
-                    <HeaderTag tag={'Programming & Tech'}/>
-                    <HeaderTag tag={'Data'}/>
-                    <HeaderTag tag={'Business'}/>
-                    <HeaderTag tag={'Lifestyle'}/>
+                    <HeaderTag tag={'Graphics & Design'} options={categories}/>
+                    <HeaderTag tag={'Digital Marketing'} options={categories}/>
+                    <HeaderTag tag={'Writing & Translation'} options={categories}/>
+                    <HeaderTag tag={'Video & Animation'} options={categories}/>
+                    <HeaderTag tag={'Music & Audio'} options={categories}/>
+                    <HeaderTag tag={'Programming & Tech'} options={categories}/>
+                    <HeaderTag tag={'Data'} options={categories}/>
+                    <HeaderTag tag={'Business'} options={categories}/>
+                    <HeaderTag tag={'Lifestyle'} options={categories}/>
                 </div>
 
             </div>
