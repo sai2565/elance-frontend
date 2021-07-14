@@ -2,11 +2,12 @@ import React, { useState } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import HeaderTag from '../components/HeaderTag';
 import { useRouter } from "next/router";
-import { useSession } from 'next-auth/client';
+import { useSession, signOut } from 'next-auth/client';
 import SideBar from './SideBar';
 import HeaderOption from './HeaderOption';
-import Popover from "@material-ui/core/Popover";
+import Tooltip from '@material-ui/core/Tooltip';
 import SearchBar from './SearchBar';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 
 function Header({page}) {
         
@@ -69,6 +70,17 @@ function Header({page}) {
     );
     // end settings required for side bar drawer
   
+    const IconDropDown = withStyles((theme) => ({
+        tooltip: {
+          backgroundColor: theme.palette.common.white,
+          color: 'rgba(0, 0, 0, 0)',
+          boxShadow: theme.shadows[2],
+          marginTop: 10,
+          marginLeft: 0
+         // fontSize: 11,
+        },
+      }))(Tooltip);
+
     return (
         <header className="sticky">
             {/* left side bar for mobile screens */}
@@ -150,11 +162,41 @@ function Header({page}) {
 
                         {/* notifications */}
                         <div className={`${(!session || !session.user) && "hidden"}`}>
+                            <IconDropDown
+                                className="bg-white" 
+                                interactive
+                                arrow
+                                placement="bottom"
+                                title={
+                                <div className="space-y-2 p-3 text-base text-[#666666]">
+                                    <h1 className="cursor-pointer">
+                                       You do not have any notifications.
+                                    </h1>
+                                </div>
+                                }>
                             <img className="h-7 w-7 cursor-pointer" src="https://img.icons8.com/ios/100/000000/appointment-reminders--v1.png"/>
+                            </IconDropDown>
                         </div>
                         {/* profile pic */}
                         <div className={`${(!session || !session.user) && "hidden"}`}>
-                            <img className={`h-10 w-10 rounded-full cursor-pointer`} src={profilepic} loading="lazy" />
+                            <IconDropDown
+                                className="bg-white" 
+                                interactive
+                                arrow
+                                placement="bottom"
+                                title={
+                                <div className="space-y-2 p-3 text-base text-[#666666]">
+                                    <h1 className="cursor-pointer hover:underline">
+                                       My Profile
+                                    </h1>
+                                    <h1 onClick={signOut} className="cursor-pointer hover:underline">
+                                       Sign Out
+                                    </h1> 
+                                </div>
+                                }>
+                                <img className={`h-10 w-10 rounded-full cursor-pointer`} src={profilepic} loading="lazy" />
+                            </IconDropDown>
+                            
                         </div>
                     </div>
                 </div>

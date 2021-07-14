@@ -40,7 +40,7 @@ function HeaderTag({tag, options}) {
                 </div>
             }>
               <h1
-              className={`text-lg text-gray-500 mt-3 hover:border-b-2 hover:border-[#29b2fe] pb-2 cursor-pointer whitespace-nowrap ${selected && "border-b-2 border-[#29b2fe]"}`}>{tag}</h1>
+                className={`text-lg text-gray-500 mt-3 hover:border-b-2 hover:border-[#29b2fe] pb-2 cursor-pointer whitespace-nowrap ${selected && "border-b-2 border-[#29b2fe]"}`}>{tag}</h1>
               </TagDrop>
               
         </div>
