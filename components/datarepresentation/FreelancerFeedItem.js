@@ -1,9 +1,9 @@
 function FreelancerFeedItem({profilepic}) {
     return (
-        <div className="p-5 space-y-5 cursor-pointer hover:bg-[#29b2fe] hover:text-white">
+        <div className="p-5 space-y-5 cursor-pointer">
             <div className="space-y-1">
                 <div className="lg:flex justify-between items-center">
-                    <h1 className="text-lg font-semibold cursor-pointer">
+                    <h1 className="text-lg font-semibold cursor-pointer text-[#29b2fe] underline hover:text-[#239ada]">
                         Programmitis | @programmitis | Software Developement
                     </h1>
                     <div className="flex space-x-5 items-center my-2 lg:my-0 justify-between lg:justify-evenly">
@@ -28,7 +28,7 @@ function FreelancerFeedItem({profilepic}) {
             </div>
             <div className="flex justify-between">
                 <div className="flex space-x-3 items-center">
-                    <img className="w-6 h-6" src="https://img.icons8.com/material-sharp/96/000000/marker.png"/>
+                    <img className="w-6 h-6" src="https://img.icons8.com/glyph-neue/128/2ECC71/user-location.png"/>
                     <h1>Australia | Remote</h1>
                 </div>
                 <div>
