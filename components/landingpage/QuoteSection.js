@@ -1,4 +1,7 @@
+import { useRouter } from 'next/router';
+
 function QuoteSection() {
+    const router = useRouter();
     return (
         <div>
             <div className="m-5 lg:mx-32 lg:grid lg:grid-cols-2">
@@ -11,8 +14,8 @@ function QuoteSection() {
                         <h1>Take your career to the next level.</h1> 
                     </div>
                     <div className="mt-16 lg:mt-24 space-y-5 items-center lg:space-x-5 lg:flex lg:space-y-0">
-                        <h1 className="px-6 py-2 text-center bg-[#29b2fe] text-white font-bold rounded-full cursor-pointer hover:bg-[#238ac2]">Hire a Freelancer</h1>
-                        <h1 className="px-6 py-2 text-center text-[#29b2fe] font-bold rounded-full border border-[#29b2fe] cursor-pointer hover:bg-gray-100" >Make Money Freelancing</h1>
+                        <h1 onClick={() => router.push('/SearchFreelancers')} className="px-6 py-2 text-center bg-[#29b2fe] text-white font-bold rounded-full cursor-pointer hover:bg-[#238ac2]">Hire a Freelancer</h1>
+                        <h1 onClick={() => router.push('/SearchProjects')} className="px-6 py-2 text-center text-[#29b2fe] font-bold rounded-full border border-[#29b2fe] cursor-pointer hover:bg-gray-100" >Make Money Freelancing</h1>
                     </div>
                 </div>
                 <div>

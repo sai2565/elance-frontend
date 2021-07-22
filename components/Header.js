@@ -81,6 +81,14 @@ function Header({page}) {
         },
       }))(Tooltip);
 
+      const onClickLogo = () => {
+          if(session && session.user){
+              router.push('/HomePage');
+          }
+          else{
+              router.push('/');
+          }
+        };
     return (
         <header className="sticky">
             {/* left side bar for mobile screens */}
@@ -102,7 +110,7 @@ function Header({page}) {
                         src="https://img.icons8.com/metro/52/000000/menu.png"
                         onClick={toggleDrawer("left", true)}/>
                     
-                        <div onClick={() => router.push('/')} className="flex cursor-pointer items-center">
+                        <div onClick={onClickLogo} className="flex cursor-pointer items-center">
                             <img
                             className="w-12 h-12"
                             src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
@@ -186,7 +194,7 @@ function Header({page}) {
                                 placement="bottom"
                                 title={
                                 <div className="space-y-2 p-3 text-base text-[#666666]">
-                                    <h1 className="cursor-pointer hover:underline">
+                                    <h1 onClick={() => router.push('/Profile')} className="cursor-pointer hover:underline">
                                        My Profile
                                     </h1>
                                     <h1 onClick={signOut} className="cursor-pointer hover:underline">
@@ -203,7 +211,7 @@ function Header({page}) {
             </div>
 
             {/* lower header */}
-            <div className="bg-white border-b border-gray-200 hidden lg:flex z-0">
+            <div className= {`bg-white border-b border-gray-200 hidden ${page === "profile" ? "hidden" : "lg:flex z-0"}`} >
                 <div className="flex space-x-7 mx-5 lg:mx-32">
                     <HeaderTag tag={'Graphics & Design'} options={categories}/>
                     <HeaderTag tag={'Digital Marketing'} options={categories}/>

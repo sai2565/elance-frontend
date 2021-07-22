@@ -1,5 +1,18 @@
+import { Dialog } from '@material-ui/core';
+import { useState } from 'react';
+import HireFreelancer from '../search/HireFreelancer';
+
 function FreelancerGridItem({favourite}) {
     var rating = 3;
+    const [open, setOpen] = useState(false);
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
     return (
         <div className="m-2">
             <div>
@@ -52,9 +65,16 @@ function FreelancerGridItem({favourite}) {
                         </div> */}
                         <div className="flex justify-between">
                             <div />
-                            <h1 className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
+                            <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
                                 Hire
                             </h1>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}>
+                                <div>
+                                    <HireFreelancer />
+                                </div>
+                            </Dialog>                           
                         </div>
                     </div>
                     {/* <div className="border-t border-[#c4c4c4] space-x-2 flex p-2 justify-between">

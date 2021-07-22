@@ -1,8 +1,21 @@
 import {useRouter} from "next/router";
+import { Dialog } from '@material-ui/core';
+import { useState } from 'react';
+import HireFreelancer from '../search/HireFreelancer';
+import ApplyToProject from "../search/ApplyToProject";
 
 function ProjectGridItem({favourite}) {
     const router = useRouter();
+    const [open, setOpen] = useState(false);
     var rating = 3;
+
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
     return (
         <div className="m-2">
             <div>
@@ -44,9 +57,16 @@ function ProjectGridItem({favourite}) {
                         </div>
                         <div className="flex justify-between">
                             <div />
-                            <h1 className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
+                            <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
                                 Apply
                             </h1>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}>
+                                <div>
+                                    <ApplyToProject />
+                                </div>
+                            </Dialog>  
                         </div>
                     </div>
                     <div className="border-t border-[#c4c4c4] space-x-2 flex p-2 justify-between">
