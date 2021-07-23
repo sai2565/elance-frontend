@@ -18,10 +18,10 @@ function Search() {
                 <h1 onClick={() => setSearchType('F')} className={`cursor-pointer pb-2 px-2 ${searchType === "F" && "border-b-2 border-white"}`}>Freelancers</h1>
                 <h1 onClick={() => setSearchType('P')} className={`cursor-pointer pb-2 px-2 ${searchType === "P" && "border-b-2 border-white"}`}>Projects</h1>
             </div>
-            <div className={`mx-5 lg:mx-32 mb-10 ${searchType === "P" && "hidden"}`}>
+            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "P" && "hidden"}`}>
                 <FreelancersSearch/>
             </div>
-            <div className={`mx-5 lg:mx-32 mb-10 ${searchType === "F" && "hidden"}`}>
+            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "F" && "hidden"}`}>
                 <ProjectsSearch />
             </div>
             <Footer />
