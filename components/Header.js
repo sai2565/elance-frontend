@@ -30,15 +30,15 @@ function Header({page}) {
     const [session] = useSession();
 
     // Routes //
-    try {
-        if((page === "landing") && (session && session.user)){
-            router.push('/HomePage');
-        }
-        if((page === "home") && (!session || !session.user)){
-            router.push('/');
-        }
-    } catch (error) {   
-    }
+    // try {
+    //     if((page === "landing") && (session && session.user)){
+    //         router.push('/HomePage');
+    //     }
+    //     if((page === "home") && (!session || !session.user)){
+    //         router.push('/');
+    //     }
+    // } catch (error) {   
+    // }
     
     //on search for projects or freelancers
     const onSearch = (e) => {
