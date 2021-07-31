@@ -9,7 +9,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import SearchBar from './SearchBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 
-function Header({page}) {
+function Header({page, isNewUser}) {
         
     const categories = [
         {"subcat":"Logo Design"},

@@ -27,11 +27,15 @@ function NextItemArrow(props) {
     );
   }
 
-function CustomSlider({title, item}) {
+function CustomSlider({profile, slider_data}) {
+  const userType = profile.user[0].userType;
+  const userInternalId = profile.user[0]._id;
+  //console.log(slider_data.projects);
+  const sliderItems = (userType === "client" ? slider_data.projects : profile.user[0].applications)
 
-  const sliderItem = item;
-  
-    var settings = {
+  //const sliderItem = item;
+
+  var settings = {
         dots: false,
         arrows: true,
         infinite: false,
@@ -73,15 +77,32 @@ function CustomSlider({title, item}) {
     return (
         <div className="">
             <div className="space-y-10">
-                <h1 className="text-xl text-black font-bold">{title}</h1>
+                <h1 className="text-xl text-black font-bold">{userType === "client" ? "My Postings" : "My Applications"}</h1>
                 <div className="w-full justify-center">
-                  <Slider {...settings} className="mx-5">
-                    <JobPost jobdata = {sliderItem}/>
+                  <Slider {...settings} className={`${userType === "client" ? "": "hidden"}`} >
+                    {
+                      // slider_data.map(({projectTitle, description, skills, duration, softwareRequirements, visibility, workLocation, education, freelancersCount, budget}) => (
+                      //     <JobPost 
+                      //       projectTitle={projectTitle}
+                      //       description={description}
+                      //       skills={skills}
+                      //       duration={duration}
+                      //       softwareRequirements={softwareRequirements}
+                      //       visibility={visibility}
+                      //       workLocation={workLocation}
+                      //       education={education}
+                      //       freelancersCount={freelancersCount}
+                      //       budget={budget}
+                      //     />
+                      // ))
+
+                    }
+                    {/* <JobPost jobdata = {sliderItem}/>
                     <JobPost jobdata = {sliderItem}/>   
                     <JobPost jobdata = {sliderItem}/>   
                     <JobPost jobdata = {sliderItem}/>   
                     <JobPost jobdata = {sliderItem}/>   
-                    <JobPost jobdata = {sliderItem}/>   
+                    <JobPost jobdata = {sliderItem}/>    */}
                 </Slider>
                 </div>  
             </div>

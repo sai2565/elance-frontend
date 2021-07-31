@@ -4,7 +4,8 @@ import Slider from '@material-ui/core/Slider';
 import CustomCheckbox from '../CustomCheckbox';
 import RatingSet from '../RatingSet';
 
-function ProjectsSearch() {
+function ProjectsSearch({ projects}) {
+    //console.log("Projects " + JSON.stringify(projects));
     const userType = "F";
     const [viewType, setViewType] = useState('G');
     const [minBudget, setMinBudget] = useState(30);
@@ -230,15 +231,9 @@ function ProjectsSearch() {
                         </div>
                       </div>
                       <div className={`${viewType === 'G' && "grid lg:grid-cols-3 md:grid-cols-2"} place-items-center p-5`}>
-                          <ProjectGridItem favourite />
-                          <ProjectGridItem />
-                          <ProjectGridItem favourite />
-                          <ProjectGridItem />
-                          <ProjectGridItem favourite />
-                          <ProjectGridItem />
-                          <ProjectGridItem />
-                          <ProjectGridItem />
-                          <ProjectGridItem favourite />
+                          {projects.map((project) => (
+                              <ProjectGridItem project={project} />
+                          ))}
                       </div>
                       <div className="justify-between w-full">
                         <div />
@@ -255,5 +250,4 @@ function ProjectsSearch() {
             </div>
     )
 }
-
 export default ProjectsSearch

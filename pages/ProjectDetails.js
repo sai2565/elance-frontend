@@ -3,7 +3,9 @@ import ApplicationItem from '../components/ApplicationItem';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
 
-function ProjectDetails() {
+function ProjectDetails({projectdetails}) {
+    console.log(projectdetails.projects);
+
     var favourite = true;
     var rating = 4;
     return (
@@ -14,7 +16,7 @@ function ProjectDetails() {
             </Head>
             <Header page={"projectdetails"}/>
             <div className="h-60 bg-[#666666]">
-                <h1 className="text-white font-bold text-2xl underline text-center pt-10">Build a shopping website for my cloth store </h1>
+                <h1 className="text-white font-bold text-2xl underline text-center pt-10">{projectdetails.projects[0].projectTitle}</h1>
             </div>
             <div className={`mx-8 lg:mx-60 mb-10 -mt-32 space-y-5`}>
                 <div className="justify-center bg-white border border-[#c4c4c4] rounded-md">
@@ -27,39 +29,34 @@ function ProjectDetails() {
                     </div>
                     <div className="p-5 space-y-5">
                         <h1 className="">
-                        We are a team of committed and skilled individuals with more than 17 years of experience in the field of innovative architectural design and 3D realistic visualization.
-                        The services we offer include 3D animation, 3D modeling, 3D rendering and interior design. Since our operation officially began in 2002, we have been continuously catering to clients.
-                        Because we have signed up for over 1500 projects, we are happy to.
-                        We are a team of committed and skilled individuals with more than 17 years of experience in the field of innovative architectural design and 3D realistic visualization.
-                        The services we offer include 3D animation, 3D modeling, 3D rendering and interior design. Since our operation officially began in 2002, we have been continuously catering to clients.
-                        Because we have signed up for over 1500 projects, we are happy to 
+                            {projectdetails.projects[0].description}
                         </h1>
                         <div>
                             <h1 className="font-semibold">
                                 Skills Required
                             </h1>
                             <h1 className="">
-                                ReactJs | NodeJs | MongoDB | GraphQL | NextJS | JavaScript
+                                {projectdetails.projects[0].skills.join(' | ')}
                             </h1>
                         </div>
                         <div className="flex items-center space-x-2">
                             <img className="w-6 h-6" src="https://img.icons8.com/glyph-neue/128/2ECC71/user-location.png"/>
-                            <h1>Remote | Australia</h1>
+                            <h1>{projectdetails.projects[0].workLocation[0]}</h1>
                         </div>
                         <div className="flex items-center space-x-2">
                             <img className="w-6 h-6" src="https://img.icons8.com/color/144/000000/rupee--v1.png"/>
-                            <h1>700 per Hr | 1,25,000 Tot</h1>
+                            <h1>{projectdetails.projects[0].budget ? projectdetails.projects[0].budget.minPrice : "NA"} per Hr | {projectdetails.projects[0].budget ? projectdetails.projects[0].budget.maxPrice : "NA"} Total Budget</h1>
                         </div>
                         <div className="flex space-x-3">
                             {/* <h1>posted on : 24-May-2020</h1> */}
                             <div className="flex items-center space-x-2">
                                 <img className="w-6 h-6" src="https://img.icons8.com/ios-filled/150/666666/clock--v1.png"/>
-                                <h1 className="italic font-semibold text-[#666666] text-sm">24-May-2021</h1>
+                                <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt}</h1>
                             </div>
                             
                             <div className="flex items-center space-x-2">
                                 <img className="w-6 h-6" src="https://img.icons8.com/material/192/666666/expired--v1.png"/>
-                                <h1 className="italic font-semibold text-[#666666] text-sm">24-Sept-2021</h1>
+                                <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt}</h1>
                             </div>
                         </div>
                         <div className="flex justify-between">
@@ -73,7 +70,7 @@ function ProjectDetails() {
                     <div className="border-t border-[#c4c4c4] flex justify-between p-5">
                         <div className="space-y-2">
                             <h1 className="font-semibold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
-                                Sai Sharan Beepeta | @sharan2565 
+                                {projectdetails.projects[0].postedBy.userName} | @{projectdetails.projects[0].postedBy.userName} 
                             </h1>
                             <div className="space-x-0.5 flex">
                                 <img className={`h-4 w-4 ${rating < 1 && "hidden"}`} src="https://img.icons8.com/fluent/120/000000/star.png"/>
@@ -122,3 +119,25 @@ function ProjectDetails() {
 }
 
 export default ProjectDetails
+
+export async function getServerSideProps(context){
+    const projectId = context.query.projectId;
+    const reqBody = {
+        "_id": projectId
+    }
+    console.log(reqBody);
+    const projectDetails = await fetch("http://elance-be.herokuapp.com/api/projects/getAllProjects", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody)
+    });
+    const projectDetails_json = await projectDetails.json();
+    console.log(projectDetails_json);
+    return{
+        props:{
+            projectdetails : projectDetails_json
+        }
+    }    
+}

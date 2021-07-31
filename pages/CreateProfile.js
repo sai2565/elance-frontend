@@ -178,16 +178,16 @@ function CreateProfile() {
                 "address": [countryInputRef.current.value],
                 "website": websiteInputRef.current.value,
                 "resume":"",
-                "socialProfiles": [{
-                        "name":"facebook",
-                        "url": fbInputRef.current.value       
-                    },{
-                        "name":"linkedin",
-                        "url": linkedInputRef.current.value,      
-                    },{
-                        "name":"github",
-                        "url": githubInputRef.current.value
-                    }],
+                // "socialProfiles": [{
+                //         "name":"facebook",
+                //         "url": linkedInputRef.current.value       
+                //     },{
+                //         "name":"linkedin",
+                //         "url": linkedInputRef.current.value,      
+                //     },{
+                //         "name":"github",
+                //         "url": linkedInputRef.current.value
+                //     }],
                 "qualifications":[{
                     "degree": educationInputRef.current.value
                     }],

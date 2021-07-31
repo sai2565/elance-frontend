@@ -4,8 +4,11 @@ import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FreelancersSearch from '../components/search/FreelancersSearch';
 import ProjectsSearch from '../components/search/ProjectsSearch';
+import { useSession, getSession, session} from 'next-auth/client';
 
-function Search() {
+function Search({projects, freelancers}) {
+    console.log("Projects " + JSON.stringify(projects.length));
+    console.log("Users " + JSON.stringify(freelancers.length));
     const [searchType, setSearchType] = useState('F');
     return (
         <div className="">
@@ -19,14 +22,43 @@ function Search() {
                 <h1 onClick={() => setSearchType('P')} className={`cursor-pointer pb-2 px-2 ${searchType === "P" && "border-b-2 border-white"}`}>Projects</h1>
             </div>
             <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "P" && "hidden"}`}>
-                <FreelancersSearch/>
+                <FreelancersSearch freelancers={freelancers}/>
             </div>
             <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "F" && "hidden"}`}>
-                <ProjectsSearch />
+                <ProjectsSearch projects={projects}/>
             </div>
             <Footer />
         </div>
     )
+}
+
+export async function getServerSideProps(context) {
+    const projects = await fetch("http://elance-be.herokuapp.com/api/projects/getAllProjects?page=1&size=9", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        },
+                    body: JSON.stringify({ })
+                    });
+                    //console.log(JSON.stringify(projects));
+    const projects_json = await projects.json();
+    const freelancers = await fetch("http://elance-be.herokuapp.com/api/users/getAllUsers?page=1&size=9", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        },
+                    body: JSON.stringify({
+                        "userType":"freelancer"
+                     })
+                    });
+                    //console.log(JSON.stringify(projects));
+    const freelancers_json = await freelancers.json();     
+    return {
+        props: {
+            projects: projects_json.projects,
+            freelancers: freelancers_json.users
+        }
+    }
 }
 
 export default Search
