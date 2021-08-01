@@ -10,12 +10,12 @@ import MyFeed from '../components/homepage/MyFeed';
 import { useEffect, useState } from 'react';
 import { InvertColorsOffTwoTone } from '@material-ui/icons';
 
-function HomePage({profile, slider}) {
+function HomePage({profile, slider, feed}) {
     const router = useRouter();
     const [session] = useSession();
-    console.log("slider"+  JSON.stringify(slider));
     const [userType, setUserType] = useState("");
-    useEffect(() => {
+    console.log("feed "+ JSON.stringify(feed));
+    useEffect(() => { 
         if(profile.user){
             setUserType(profile.user[0].userType);
         }
@@ -33,17 +33,17 @@ function HomePage({profile, slider}) {
             </Head>
             <Header page={"home"}/>
             <div className={`mx-5 lg:mx-32 mb-10`}>
-                <div className="grid grid-cols-1 lg:grid-cols-4 pt-5">
+                {/* <div className="grid grid-cols-1 lg:grid-cols-4 pt-5">
                     <div className="flex items-end space-x-3 col-span-1 lg:col-span-3">
                         <h1 className="text-lg font-bold text-[#4c4c4c]">{`Welcome, ${session && session.user ? session.user.name : "Guest User"}`}</h1>
                         <img className="animate-wave w-10 h-10" src="https://threejs-journey.xyz/assets/images/hand-emoji-100x100.png"></img>
                     </div>
-                </div>
+                </div> */}
                 <div className="mt-10">
                     <div className="grid grid-cols-1 lg:grid-cols-4">
                         <div className="col-span-1 lg:col-span-3 space-y-5">
-                            {/* <CustomSlider profile={profile} slider_data={slider}/>   */}
-                            {/* <MyFeed profile={profile} slider_data={slider} /> */}
+                            <CustomSlider profile={profile} slider_data={slider}/>
+                            <MyFeed profile={profile} feed={feed}/>
                         </div>
 
                         <div className="hidden lg:col-span-1 lg:flex justify-center">
@@ -91,14 +91,41 @@ export async function getServerSideProps(context) {
                                 body: JSON.stringify({
                                     "postedBy": userInternalId
                                 })
-                            });
+            });
             const slider_json = await slider.json();
+            const feed = await fetch("http://elance-be.herokuapp.com/api/users/getAllUsers?page=1&size=10", {
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ 
+                                "userType": "freelancer"
+                            })
+            });
+            const feed_json = await feed.json();
             return {
                 props: {
                     profile: profile_json,
-                    slider: slider_json
+                    slider: slider_json,
+                    feed: feed_json
                 }
             }         
+        }
+        else{
+            const feed = await fetch("http://elance-be.herokuapp.com/api/projects/getAllProjects?page=1&size=10",{
+                                method: "POST",
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({})
+            });
+            const feed_json = await feed.json();
+            return {
+                props: {
+                    profile: profile_json,
+                    feed: feed_json
+                }
+            } 
         }
         return {
             props: {

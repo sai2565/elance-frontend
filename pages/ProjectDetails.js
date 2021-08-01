@@ -70,7 +70,7 @@ function ProjectDetails({projectdetails}) {
                     <div className="border-t border-[#c4c4c4] flex justify-between p-5">
                         <div className="space-y-2">
                             <h1 className="font-semibold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
-                                {projectdetails.projects[0].postedBy.userName} | @{projectdetails.projects[0].postedBy.userName} 
+                                {projectdetails.projects[0].postedBy?.userName} | @{projectdetails.projects[0].postedBy?.userName} 
                             </h1>
                             <div className="space-x-0.5 flex">
                                 <img className={`h-4 w-4 ${rating < 1 && "hidden"}`} src="https://img.icons8.com/fluent/120/000000/star.png"/>
@@ -125,7 +125,6 @@ export async function getServerSideProps(context){
     const reqBody = {
         "_id": projectId
     }
-    console.log(reqBody);
     const projectDetails = await fetch("http://elance-be.herokuapp.com/api/projects/getAllProjects", {
         method: 'POST',
         headers: {

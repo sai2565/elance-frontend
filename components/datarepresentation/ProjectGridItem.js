@@ -4,10 +4,27 @@ import { useState } from 'react';
 import HireFreelancer from '../search/HireFreelancer';
 import ApplyToProject from "../search/ApplyToProject";
 
-function ProjectGridItem({project}) {
+function ProjectGridItem({currentUserProfile, project}) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     var rating = 3;
+
+    const [isMyFavProj, toggleFavourite] = useState(currentUserProfile.user[0].favProjects.includes(project._id));
+    async function switchFavourite(){
+        const url = isMyFavProj ? "http://elance-be.herokuapp.com/api/favourites/unSetFavProject" : "http://elance-be.herokuapp.com/api/favourites/setFavProject"
+        const favres = await fetch(url,{
+                            method: "POST",
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ 
+                                "favProjectId": project._id,
+                                "userId": currentUserProfile.user[0]._id
+                            })
+        });
+        const favres_json = await favres.json();
+        toggleFavourite(!isMyFavProj);
+    }
 
     const handleOpen = () => {
         setOpen(true);
@@ -22,10 +39,10 @@ function ProjectGridItem({project}) {
                 <div className=" border border-[#c4c4c4] rounded-md">
                     <div className="p-2 space-y-3">
                         <div className="flex justify-between items-center">
-                            <h1 onClick={() => router.push('/ProjectDetails')} className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
+                            <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
                                 {project.projectTitle}
                             </h1>
-                            <img className="w-4 h-4 cursor-pointer transition duration-150 transform hover:scale-110" src={`${true ? "https://img.icons8.com/ios-filled/50/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/29b2fe/like--v1.png"}`} />
+                            <img onClick={switchFavourite} className="w-6 h-6 cursor-pointer transition duration-150 transform hover:scale-110" src={`${isMyFavProj ? "https://img.icons8.com/ios-filled/150/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/000000/like--v1.png"}`} />
                             {/* https://img.icons8.com/ios-filled/50/000000/like--v1.png 
                             https://img.icons8.com/ios/150/333333/like--v1.png*/}
                         </div>
@@ -64,7 +81,7 @@ function ProjectGridItem({project}) {
                                 open={open}
                                 onClose={handleClose}>
                                 <div>
-                                    <ApplyToProject />
+                                    <ApplyToProject project={project} currentUserProfile={currentUserProfile}/>
                                 </div>
                             </Dialog>  
                         </div>

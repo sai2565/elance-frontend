@@ -3,6 +3,7 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import JobPost from "../datarepresentation/JobPost";
+import { useRouter } from "next/router";
 
 function NextItemArrow(props) {
     const { className, style, onClick } = props;
@@ -28,6 +29,7 @@ function NextItemArrow(props) {
   }
 
 function CustomSlider({profile, slider_data}) {
+  const router = useRouter();
   const userType = profile.user[0].userType;
   const userInternalId = profile.user[0]._id;
   //console.log(slider_data.projects);
@@ -81,28 +83,37 @@ function CustomSlider({profile, slider_data}) {
                 <div className="w-full justify-center">
                   <Slider {...settings} className={`${userType === "client" ? "": "hidden"}`} >
                     {
-                      // slider_data.map(({projectTitle, description, skills, duration, softwareRequirements, visibility, workLocation, education, freelancersCount, budget}) => (
-                      //     <JobPost 
-                      //       projectTitle={projectTitle}
-                      //       description={description}
-                      //       skills={skills}
-                      //       duration={duration}
-                      //       softwareRequirements={softwareRequirements}
-                      //       visibility={visibility}
-                      //       workLocation={workLocation}
-                      //       education={education}
-                      //       freelancersCount={freelancersCount}
-                      //       budget={budget}
-                      //     />
-                      // ))
-
+                      sliderItems.length === 0 && userType === "client" &&
+                      <div onClick={() => router.push('/PostProject')} className="space-y-5 border border-[#c4c4c4] rounded-md cursor-pointer w-20">
+                        <h1 className="text-center p-2 border-b border-[#c4c4c4]">Nothing to Show - Post a Project</h1>
+                        <div className="flex justify-center">
+                          <img className="h-28 w-28 my-10" src="https://img.icons8.com/material-outlined/500/000000/add.png"/>
+                        </div>
+                      </div>
                     }
-                    {/* <JobPost jobdata = {sliderItem}/>
-                    <JobPost jobdata = {sliderItem}/>   
-                    <JobPost jobdata = {sliderItem}/>   
-                    <JobPost jobdata = {sliderItem}/>   
-                    <JobPost jobdata = {sliderItem}/>   
-                    <JobPost jobdata = {sliderItem}/>    */}
+                    {
+                      sliderItems.length === 0 && userType === "freelancer" &&
+                      <div onClick={() => router.push('/Search')} className="space-y-5 border border-[#c4c4c4] rounded-md cursor-pointer w-20">
+                        <h1 className="text-center p-2 border-b border-[#c4c4c4]">No Applications - Search and Apply</h1>
+                        <div className="flex justify-center">
+                          <img className="h-28 w-28 my-10" src="https://img.icons8.com/ios/500/000000/search--v4.png"/>
+                          {/* <img  src="https://img.icons8.com/material-outlined/500/000000/add.png"/> */}
+                        </div>
+                      </div>
+                    }
+
+                    { userType === "client" &&
+                      sliderItems.map((project) => (
+                          <JobPost 
+                            project={project}
+                          />
+                      ))
+                    }
+                    {userType === "freelancer" && 
+                      sliderItems.map((application) => (
+                          console.log("Application "+JSON.stringify(application))
+                      ))
+                    }
                 </Slider>
                 </div>  
             </div>
