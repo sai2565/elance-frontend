@@ -160,7 +160,7 @@ function Header({page, isNewUser}) {
                             optionId={"messages"}
                             optionName={"Messages"}
                             optionImage={"https://img.icons8.com/ios/100/000000/messaging-.png"}
-                            isSelected={pagesource === "messages"}
+                            isSelected={pagesource === "messenger"}
                             isVisible={true}
                         />
 
@@ -211,7 +211,7 @@ function Header({page, isNewUser}) {
             </div>
 
             {/* lower header */}
-            <div className= {`bg-white border-b border-gray-200 hidden ${page === "profile" ? "hidden" : "lg:flex z-0"}`} >
+            <div className= {`bg-white border-b border-gray-200 hidden ${page === "profile" || "messenger" ? "hidden" : "lg:flex z-0"}`} >
                 <div className="flex space-x-7 mx-5 lg:mx-32">
                     <HeaderTag tag={'Graphics & Design'} options={categories}/>
                     <HeaderTag tag={'Digital Marketing'} options={categories}/>

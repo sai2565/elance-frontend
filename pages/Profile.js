@@ -8,10 +8,12 @@ import { useSession, getSession, session} from 'next-auth/client';
 import HireFreelancer from '../components/search/HireFreelancer';
 import {useState} from 'react';
 import { Dialog } from '@material-ui/core';
+import {useRouter} from 'next/router';
 
 function Profile({profile, myprofile}) {
     console.log("Fdsgfdgfd"+JSON.stringify(myprofile)); 
     const [session] = useSession();
+    const router = useRouter();
     const SocialIconPopover = withStyles((theme) => ({
         tooltip: {
           backgroundColor: theme.palette.common.white,
@@ -186,8 +188,11 @@ function Profile({profile, myprofile}) {
                                     {profile.email}
                                 </h1>
                             </div>
-                            <div className="flex justify-between">
-                                <div></div>
+                            <div className="flex items-center space-x-5">
+                                <button
+                                    onClick={() => router.push(`/Messenger?userId=${profile._id}`)}
+                                    className="bg-[#29b2fe] text-sm lg:text-base text-white font-semibold px-5 h-9 rounded-md hover:bg-[#238ac2] focus:outline-none mt-10">Message</button>
+
                                 <button
                                     onClick={handleHireDialogOpen}
                                     className="bg-[#29b2fe] text-sm lg:text-base text-white font-semibold px-5 h-9 rounded-md hover:bg-[#238ac2] focus:outline-none mt-10">Hire</button>
