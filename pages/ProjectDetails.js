@@ -125,7 +125,7 @@ export async function getServerSideProps(context){
     const reqBody = {
         "_id": projectId
     }
-    const projectDetails = await fetch("http://elance-be.herokuapp.com/api/projects/getAllProjects", {
+    const projectDetails = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import HeaderTag from '../components/HeaderTag';
 import { useRouter } from "next/router";
@@ -8,9 +8,50 @@ import HeaderOption from './HeaderOption';
 import Tooltip from '@material-ui/core/Tooltip';
 import SearchBar from './SearchBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Popover from "@material-ui/core/Popover";
 
-function Header({page, isNewUser}) {
-        
+function Header({page, isNewUser, profile, status}) {
+    //react router//
+    const router = useRouter();
+    //next auth session//
+    const [session] = useSession();
+    // Routes //
+    try {
+        if(page === "home"){
+            if(status === "nosession"){
+                router.push('/');
+            }else if(status == "newuser"){
+                router.push('/CreateProfile');
+            }
+        }
+    } catch (error) {
+    }
+
+    const notifications = profile?.user[0].notifications;
+    const contactedUsers = profile?.user[0].contacted;
+
+    const [notifyAnchorEl, setNotifyAnchorEl] = React.useState(null);
+    const isNotificationDropOpen = Boolean(notifyAnchorEl);
+    const notificationDropId = isNotificationDropOpen ? "notificationbardropdown" : undefined;
+    const handleNotificationDropClick = (event) => {
+        setNotifyAnchorEl(event.currentTarget);
+    };
+
+    const handleNotificationDropClose = () => {
+        setNotifyAnchorEl(null);
+    };
+
+    const [messengerAnchorEl, setMessengerAnchorEl] = React.useState(null);
+    const isMessageDropOpen = Boolean(messengerAnchorEl);
+    const messengerDropId = isMessageDropOpen ? "messagebardropdown" : undefined;
+    const handleNMessageDropClick = (event) => {
+        setMessengerAnchorEl(event.currentTarget);
+    };
+
+    const handleMessageDropClose = () => {
+        setMessengerAnchorEl(null);
+    };
+    
     const categories = [
         {"subcat":"Logo Design"},
         {"subcat":"Web and Mobile App Design"},
@@ -23,23 +64,6 @@ function Header({page, isNewUser}) {
         {"subcat":"Print Design"},
         {"subcat":"Product and Character Design"}];
 
-    //react router//
-    const router = useRouter();
-
-    //next auth session//
-    const [session] = useSession();
-
-    // Routes //
-    // try {
-    //     if((page === "landing") && (session && session.user)){
-    //         router.push('/HomePage');
-    //     }
-    //     if((page === "home") && (!session || !session.user)){
-    //         router.push('/');
-    //     }
-    // } catch (error) {   
-    // }
-    
     //on search for projects or freelancers
     const onSearch = (e) => {
         e.preventDefault();
@@ -50,7 +74,7 @@ function Header({page, isNewUser}) {
     const usertype = "C";
     const profilepic = (session && session.user && session.user.image) ? session.user.image : "https://img.icons8.com/office/80/000000/user.png";
     const [searchContext, setSearchContext] = useState(usertype);
-    console.log(profilepic);
+    //console.log(profilepic);
 
     //settings required for side bar drawer
     const [state, setState] = React.useState({
@@ -156,34 +180,96 @@ function Header({page, isNewUser}) {
                             isSelected={pagesource === "findfreelancers"}
                             isVisible={usertype === "C"}
                         />
-                        <HeaderOption 
-                            optionId={"messages"}
-                            optionName={"Messages"}
-                            optionImage={"https://img.icons8.com/ios/100/000000/messaging-.png"}
-                            isSelected={pagesource === "messenger"}
-                            isVisible={true}
-                        />
 
+                        <img onClick={handleNMessageDropClick} className={`h-7 w-7 cursor-pointer ${(status === "nosession" || !session || !session.user)  ? "hidden" : "flex"}`} src="https://img.icons8.com/material-rounded/384/29b2fe/facebook-messenger--v1.png"/>
+                        <Popover
+                            className={`rounded-md m-2`}
+                            id={messengerDropId}
+                            open={isMessageDropOpen}
+                            anchorEl={messengerAnchorEl}
+                            onClose={handleMessageDropClose}
+                            anchorOrigin={{
+                            vertical: "bottom",
+                            horizontal: "center"
+                            }}
+                            transformOrigin={{
+                            vertical: "top",
+                            horizontal: "center"
+                            }}>
+                                <div className="w-52">
+                                        <h1 className="text-center p-2 border-b border-[#c4c4c4] text-base font-semibold">
+                                            Contacted users
+                                        </h1>
+                                    {   
+                                        contactedUsers &&
+                                        contactedUsers.length > 0 &&
+                                        contactedUsers.map((contactedUser) => (
+                                                <div className="p-2 border-b border-[#c4c4c4] cursor-pointer space-y-2">
+                                                    <h1 className="text-sm text-[#29b2fe] font-bold hover:underline">
+                                                        {contactedUser.fullName} | @{contactedUser.userName}
+                                                    </h1>
+                                                    <div className="flex justify-between items-center">
+                                                        <h1 className="italiac text-sm italic">
+                                                            {contactedUser.userType}
+                                                        </h1>
+                                                        <h1 onClick={() => router.push(`/Messenger?userId=${contactedUser._id}`)} className="text-white px-1 py-0.5 bg-[#29b2fe] text-xs rounded-full font-bold">
+                                                            open messenger
+                                                        </h1>
+                                                    </div>
+
+                                                </div>
+                                        ))
+                                    }
+                                </div>
+                        </Popover>
                         <h1 onClick={() => router.push('/PostProject')} className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500  ${(session && session.user) ? "hidden" : "hidden lg:flex"}`}>
                             Post a Project
                         </h1>
 
                         {/* notifications */}
                         <div className={`${(!session || !session.user) && "hidden"}`}>
-                            <IconDropDown
-                                className="bg-white" 
-                                interactive
-                                arrow
-                                placement="bottom"
-                                title={
-                                <div className="space-y-2 p-3 text-base text-[#666666]">
-                                    <h1 className="cursor-pointer">
-                                       You do not have any notifications.
-                                    </h1>
-                                </div>
-                                }>
-                            <img className="h-7 w-7 cursor-pointer" src="https://img.icons8.com/ios/100/000000/appointment-reminders--v1.png"/>
-                            </IconDropDown>
+                            <div className="flex" onClick={handleNotificationDropClick}>
+                                <img className="h-7 w-7 cursor-pointer" src="https://img.icons8.com/ios-filled/150/29b2fe/appointment-reminders--v1.png"/>
+                                {   notifications &&
+                                        notifications.length > 0  &&
+                                    <div className="-mt-2 -ml-1.5">
+                                        <h1 className="font-bold">{notifications.length}</h1>
+                                    </div>
+                                }
+                            </div>
+                            <Popover
+                                className={`rounded-md m-2`}
+                                id={notificationDropId}
+                                open={isNotificationDropOpen}
+                                anchorEl={notifyAnchorEl}
+                                onClose={handleNotificationDropClose}
+                                anchorOrigin={{
+                                vertical: "bottom",
+                                horizontal: "center"
+                                }}
+                                transformOrigin={{
+                                vertical: "top",
+                                horizontal: "center"
+                                }}>
+                                    <div className="w-52">
+                                        <h1 className="text-center p-2 border-b border-[#c4c4c4] text-base font-semibold">
+                                            {notifications?.length === 0 ? "You do not have any notifications" : "Your notifications"}
+                                        </h1>
+                                    {
+                                        notifications &&
+                                        notifications.map((notification) => (
+                                            <div className="p-2 border-b border-[#c4c4c4] hover:bg-[#ECF0F1] cursor-pointer">
+                                                <h1>
+                                                    {
+                                                       notification.notificationType === 'message' &&
+                                                       notification.triggeredBy.fullName+ " has sent you a message" 
+                                                    }
+                                                </h1>
+                                            </div>
+                                        ))
+                                    }
+                                    </div>
+                            </Popover>
                         </div>
                         {/* profile pic */}
                         <div className={`${(!session || !session.user) && "hidden"}`}>
@@ -211,7 +297,7 @@ function Header({page, isNewUser}) {
             </div>
 
             {/* lower header */}
-            <div className= {`bg-white border-b border-gray-200 hidden ${page === "profile" || "messenger" ? "hidden" : "lg:flex z-0"}`} >
+            <div className= {`bg-white border-b border-gray-200 hidden ${"lg:flex z-0"}`} >
                 <div className="flex space-x-7 mx-5 lg:mx-32">
                     <HeaderTag tag={'Graphics & Design'} options={categories}/>
                     <HeaderTag tag={'Digital Marketing'} options={categories}/>

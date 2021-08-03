@@ -14,7 +14,7 @@ function SearchBar({device}) {
         e.preventDefault();
         const query = searchInputRef.current.value;
         if(!query) { return; }
-        searchContext === "F" ? router.push(`/SearchFreelancers?query=${query}`) : router.push(`/SearchProjects?query=${query}`) ;
+        searchContext === "F" ? router.push(`/Search?category=freelancers&query=${query}`) : router.push(`/Search?category=projects&query=${query}`) ;
     }
 
     const [anchorEl, setAnchorEl] = React.useState(null);
@@ -67,15 +67,15 @@ function SearchBar({device}) {
                 horizontal: "left"
                 }}>
                     <div className={`rounded-md text-sm lg:text-base`}>
-                        <div onClick={() => setSearchContext("F")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer hover:bg-[#c2e9ff] ${searchContext === "F" && "bg-[#c2e9ff]"}`}>
-                            <img className="w-8 h-8" src="https://img.icons8.com/ios-glyphs/90/000000/user--v1.png"/>
+                        <div onClick={() => setSearchContext("F")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer ${searchContext === "F" && "bg-[#29b2fe] text-white"}`}>
+                            <img className="w-8 h-8" src={`${searchContext === "F" ? "https://img.icons8.com/ios-glyphs/90/ffffff/user--v1.png" : "https://img.icons8.com/ios-glyphs/90/000000/user--v1.png"}`}/>
                             <div className="">
                                 <h1 className="font-bold">Freelancers</h1>
                                 <h1>Hire professional freelancers</h1>
                             </div>
                         </div>
-                        <div onClick={() => setSearchContext("C")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer hover:bg-[#c2e9ff] ${searchContext === "C" && "bg-[#c2e9ff]"}`}>
-                            <img className="w-8 h-8" src="https://img.icons8.com/wired/128/000000/find-matching-job.png"/>
+                        <div onClick={() => setSearchContext("C")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer ${searchContext === "C" && "bg-[#29b2fe] text-white"}`}>
+                            <img className="w-8 h-8" src={`${searchContext === "C" ? "https://img.icons8.com/material-rounded/128/ffffff/find-matching-job.png" : "https://img.icons8.com/material-rounded/128/000000/find-matching-job.png" }`} />
                             <div className="">
                                 <h1 className="font-bold">Projects</h1>
                                 <h1>Browse projects</h1>

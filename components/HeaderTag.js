@@ -32,7 +32,7 @@ function HeaderTag({tag, options}) {
                 <div className="p-5 space-y-2">
                     {
                         options.map(({subcat}) => (
-                            <h1 onClick={() => router.push(`/SearchProjects?category=${tag}&subcategory=${subcat}`)} className="text-lg text-[#666666] hover:underline cursor-pointer">
+                            <h1 onClick={() => router.push(`/Search?category=${tag}&subcategory=${subcat}`)} className="text-lg text-[#666666] hover:underline cursor-pointer">
                                 {subcat}
                             </h1>
                         ))

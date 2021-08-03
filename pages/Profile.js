@@ -10,8 +10,7 @@ import {useState} from 'react';
 import { Dialog } from '@material-ui/core';
 import {useRouter} from 'next/router';
 
-function Profile({profile, myprofile}) {
-    console.log("Fdsgfdgfd"+JSON.stringify(myprofile)); 
+function Profile({profile, myprofile, }) {
     const [session] = useSession();
     const router = useRouter();
     const SocialIconPopover = withStyles((theme) => ({
@@ -34,6 +33,28 @@ function Profile({profile, myprofile}) {
         const handleHireDialogClose = () => {
             setHireDialogOpen(false);
         };
+        console.log(JSON.stringify({
+            "senderUserId": myprofile._id,
+            "revieverUserId": profile._id
+        }));
+        async function handleMessage(){
+            const res = await fetch("http://elance-be.herokuapp.com/api/v1/users/setContacted", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "senderUserId": myprofile._id,
+                    "receiverUserId": profile._id
+                })
+            });
+            const res_json = await res.json();
+            if(res_json.status === 200){
+                router.push(`/Messenger?userId=${profile._id}`)
+            }
+            //console.log(" set contacted "+ JSON.stringify(res_json));
+            // 
+        }
 
     return (
         <div>
@@ -190,7 +211,7 @@ function Profile({profile, myprofile}) {
                             </div>
                             <div className="flex items-center space-x-5">
                                 <button
-                                    onClick={() => router.push(`/Messenger?userId=${profile._id}`)}
+                                    onClick={handleMessage}
                                     className="bg-[#29b2fe] text-sm lg:text-base text-white font-semibold px-5 h-9 rounded-md hover:bg-[#238ac2] focus:outline-none mt-10">Message</button>
 
                                 <button
@@ -250,7 +271,7 @@ export async function getServerSideProps(context){
     const reqBody = {
         "_id": userId,
     }
-    const otherUserProfile = await fetch("http://elance-be.herokuapp.com/api/users/getAllUsers", {
+    const otherUserProfile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -261,7 +282,7 @@ export async function getServerSideProps(context){
     const nextAuthSession = await getSession(context);
     if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
         const email = nextAuthSession.user.email;
-        const myprofile = await fetch("http://elance-be.herokuapp.com/api/users/getUserByEmail",{
+        const myprofile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',

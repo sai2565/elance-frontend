@@ -3,6 +3,8 @@ import {useSession} from 'next-auth/client';
 import { useRouter } from 'next/router';
 import React, { useState, useEffect, useRef } from 'react';
 import { Dialog } from '@material-ui/core';
+import { StreamChat } from 'stream-chat';
+var jwt = require('jsonwebtoken');
 
 function CreateProfile() {
     const [session] = useSession();
@@ -178,16 +180,16 @@ function CreateProfile() {
                 "address": [countryInputRef.current.value],
                 "website": websiteInputRef.current.value,
                 "resume":"",
-                // "socialProfiles": [{
-                //         "name":"facebook",
-                //         "url": linkedInputRef.current.value       
-                //     },{
-                //         "name":"linkedin",
-                //         "url": linkedInputRef.current.value,      
-                //     },{
-                //         "name":"github",
-                //         "url": linkedInputRef.current.value
-                //     }],
+                "socialProfiles": [{
+                        "name":"facebook",
+                        "url": linkedInputRef.current.value       
+                    },{
+                        "name":"linkedin",
+                        "url": linkedInputRef.current.value,      
+                    },{
+                        "name":"github",
+                        "url": linkedInputRef.current.value
+                    }],
                 "qualifications":[{
                     "degree": educationInputRef.current.value
                     }],
@@ -215,10 +217,38 @@ function CreateProfile() {
             const user = await res.json();
             console.log(user);
             setLoading(false);
-            if(user.message){
-                setErrorMessage(user.message);
-            }else{
+            if(user.status === 200){
+                const messageSenderId = user.userDetails._id;
+                const messageSenderName = user.userDetails.userName;
+                const chatClient = StreamChat.getInstance('54bjxgj4wefx');
+                const senderUserToken = jwt.sign({
+                    "user_id": messageSenderId
+                }, '56fbem4f3hvaemwb5svep9v2ghdcb77acacu2953j2cjq9pp35e4yejg75kq8atb');
+                
+                try{
+                    chatClient.connectUser(
+                    {
+                        id: messageSenderId,
+                        name: messageSenderName,
+                        image: `https://getstream.io/random_png/?id=${messageSenderId}&name=${messageSenderName}`,
+                    },
+                        senderUserToken,
+                    );
+                }catch(error){
+                    chatClient.disconnectUser();
+                    chatClient.connectUser(
+                    {
+                        id: messageSenderId,
+                        name: messageSenderName,
+                        image: `https://getstream.io/random_png/?id=${messageSenderId}&name=${messageSenderName}`,
+                    },
+                        senderUserToken,  
+                    );
+                }
                 router.push('/HomePage')
+                
+            }else{
+                setErrorMessage(user.message);
             }
         }
       }

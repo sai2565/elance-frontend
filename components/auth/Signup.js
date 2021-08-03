@@ -7,7 +7,7 @@ function Signup({ providers }) {
     const [session] = useSession();
 
     //redirect to home page
-    if(session && session.user) router.push('/CreateProfile');
+    if(session && session.user) router.push('/HomePage');
     
     return (
         <div>

@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useState } from 'react';
 
 function FreelancerFeedItem({profile, currentUserProfile}) {
-    console.log(JSON.stringify(profile))
+    //console.log(JSON.stringify(profile))
     const router = useRouter();
     const [isFavourite, toggleFavourite] = useState(currentUserProfile.user[0].favUsers.includes(profile._id));
     async function switchFavourite(){
