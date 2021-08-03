@@ -17,6 +17,9 @@ function Header({page, isNewUser, profile, status}) {
     const [session] = useSession();
     // Routes //
     try {
+        if(page === "landing" && session && session.user){
+            router.push('/HomePage');
+        }
         if(page === "home"){
             if(status === "nosession"){
                 router.push('/');
@@ -152,36 +155,8 @@ function Header({page, isNewUser, profile, status}) {
                             Sign Up
                         </h1>
 
-                        <HeaderOption 
-                            optionId={"myApplications"}
-                            optionName={"My Applications"}
-                            optionImage={"https://img.icons8.com/windows/128/000000/home.png"}
-                            isSelected={pagesource === "home"}
-                            isVisible={usertype === "F"}
-                        />
-                        <HeaderOption 
-                            optionId={"findProjects"}
-                            optionName={"Find Projects"}
-                            optionImage={"https://img.icons8.com/wired/128/000000/find-matching-job.png"}
-                            isSelected={pagesource === "findprojects"}
-                            isVisible={usertype === "F"}
-                        />
-                        <HeaderOption 
-                            optionId={"myPostings"}
-                            optionName={"My Postings"}
-                            optionImage={"https://img.icons8.com/windows/128/000000/home.png"}
-                            isSelected={pagesource === "home"}
-                            isVisible={usertype === "C"}
-                        />
-                        <HeaderOption 
-                            optionId={"findFreelancers"}
-                            optionName={"Find Freelancers"}
-                            optionImage={"https://img.icons8.com/dotty/160/000000/teacher-hirring.png"}
-                            isSelected={pagesource === "findfreelancers"}
-                            isVisible={usertype === "C"}
-                        />
-
-                        <img onClick={handleNMessageDropClick} className={`h-7 w-7 cursor-pointer ${(status === "nosession" || !session || !session.user)  ? "hidden" : "flex"}`} src="https://img.icons8.com/material-rounded/384/29b2fe/facebook-messenger--v1.png"/>
+                        <img onClick={() => router.push('/HomePage')} className={`h-7 w-7 cursor-pointer ${page === "landing" ? "hidden" : "flex"}`} src={`${page === "home" ? "https://img.icons8.com/glyph-neue/128/29b2fe/home.png" : "https://img.icons8.com/glyph-neue/128/000000/home.png"}`}/>
+                        <img onClick={handleNMessageDropClick} className={`h-7 w-7 cursor-pointer ${(page === "home" || page === "messenger")  ? "flex" : "hidden"}`} src={`${page === "messenger" ? "https://img.icons8.com/material-rounded/128/29b2fe/facebook-messenger--v1.png":"https://img.icons8.com/material-rounded/128/000000/facebook-messenger--v1.png"}`}/>
                         <Popover
                             className={`rounded-md m-2`}
                             id={messengerDropId}
@@ -212,8 +187,8 @@ function Header({page, isNewUser, profile, status}) {
                                                         <h1 className="italiac text-sm italic">
                                                             {contactedUser.userType}
                                                         </h1>
-                                                        <h1 onClick={() => router.push(`/Messenger?userId=${contactedUser._id}`)} className="text-white px-1 py-0.5 bg-[#29b2fe] text-xs rounded-full font-bold">
-                                                            open messenger
+                                                        <h1 onClick={() => router.push(`/Messenger?userId=${contactedUser._id}`)} className="text-white p-1 bg-[#29b2fe] text-xs rounded-full font-bold hover:bg-white hover:text-[#29b2fe] hover:underline ">
+                                                            Open Messenger
                                                         </h1>
                                                     </div>
 
@@ -225,11 +200,10 @@ function Header({page, isNewUser, profile, status}) {
                         <h1 onClick={() => router.push('/PostProject')} className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500  ${(session && session.user) ? "hidden" : "hidden lg:flex"}`}>
                             Post a Project
                         </h1>
-
                         {/* notifications */}
-                        <div className={`${(!session || !session.user) && "hidden"}`}>
+                        <div className={`${(page !== "home") && "hidden"}`}>
                             <div className="flex" onClick={handleNotificationDropClick}>
-                                <img className="h-7 w-7 cursor-pointer" src="https://img.icons8.com/ios-filled/150/29b2fe/appointment-reminders--v1.png"/>
+                                <img className="h-7 w-7 cursor-pointer" src="https://img.icons8.com/ios-filled/151280/000000/appointment-reminders--v1.png"/>
                                 {   notifications &&
                                         notifications.length > 0  &&
                                     <div className="-mt-2 -ml-1.5">

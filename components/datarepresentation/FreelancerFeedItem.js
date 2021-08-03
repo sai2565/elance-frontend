@@ -6,7 +6,7 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
     const router = useRouter();
     const [isFavourite, toggleFavourite] = useState(currentUserProfile.user[0].favUsers.includes(profile._id));
     async function switchFavourite(){
-            const url = isFavourite ? "http://elance-be.herokuapp.com/api/favourites/unSetFavUser" : "http://elance-be.herokuapp.com/api/favourites/setFavUser"
+            const url = isFavourite ? "http://elance-be.herokuapp.com/api/v1/favourites/unSetFavUser" : "http://elance-be.herokuapp.com/api/v1/favourites/setFavUser"
             const favres = await fetch(url,{
                                 method: "POST",
                                 headers: {

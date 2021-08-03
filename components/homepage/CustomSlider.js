@@ -99,7 +99,6 @@ function CustomSlider({profile, slider_data}) {
                             </div>
                           </div>
                         }
-
                         { userType === "client" &&
                           sliderItems.map((project) => (
                               <JobPost 

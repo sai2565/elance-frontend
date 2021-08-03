@@ -4,8 +4,8 @@ function JobPost({project}) {
     const router = useRouter();
     
     return (
-        <div className="px-3">
-            <div className="rounded-md border border-[#e4e4e4] hover:border-[#c4c4c4] p-3 space-y-5 cursor-pointer">
+        <div className="px-3 h-full">
+            <div className="rounded-md border border-[#e4e4e4] hover:border-[#c4c4c4] p-3 space-y-5 cursor-pointer h-full">
                 <div className="space-y-2">
                     <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-[#29b2fe] text-lg font-semibold line-clamp-2">
                       {project.projectTitle}

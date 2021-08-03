@@ -93,7 +93,7 @@ function PostProject({profile}) {
             "duration": duration
         };
         console.log(reqBody);
-        const res = await fetch("http://elance-be.herokuapp.com/api/projects/createProject", {
+        const res = await fetch("http://elance-be.herokuapp.com/api/v1/projects/createProject", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -472,7 +472,7 @@ export async function getServerSideProps(ctx) {
     const nextAuthSession = await getSession(ctx);
     if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
         const email = nextAuthSession.user.email;
-        const profile = await fetch("http://elance-be.herokuapp.com/api/users/getUserByEmail",{
+        const profile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',

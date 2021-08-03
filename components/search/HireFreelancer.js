@@ -10,7 +10,7 @@ function HireFreelancer({clientprofile, freelancerprofile}) {
     async function validateAndHire(){
         if(projectIDInpRef.current.value && messageInpRef.current.value){
             setLoading(true);
-            const res = await fetch("http://elance-be.herokuapp.com/api/hire/hireRequest", {
+            const res = await fetch("http://elance-be.herokuapp.com/api/v1/hire/hireRequest", {
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',

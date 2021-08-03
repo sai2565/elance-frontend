@@ -161,7 +161,7 @@ function CreateProfile() {
             });
             console.log(skillsObjects);
             setLoading(true);
-            const res = await fetch("https://elance-be.herokuapp.com/api/users/registerUser", {
+            const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/registerUser", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

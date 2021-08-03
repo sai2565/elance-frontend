@@ -64,7 +64,7 @@ function Messenger ({messageSenderProfile, messageReceiverProfile}){
                             <Channel channel={channel}>
                                 <div className="h-full w-full bg-white">
                                     <Window>
-                                        <Header page={"messenger"}/>
+                                        <Header page={"messenger"} profile={messageSenderProfile}/>
                                         <ChannelHeader/>
                                         <MessageList />
                                         <MessageInput />

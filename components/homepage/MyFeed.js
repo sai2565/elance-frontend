@@ -16,7 +16,7 @@ function MyFeed({profile, feed}) {
     async function nextPage(){
         if(feed.page < feed.totalPages){
             setLoading(true);
-            const url = userType === "client" ? `http://elance-be.herokuapp.com/api/users/getAllUsers?page=${parseInt(currPage) + 1}&size=10` : `http://elance-be.herokuapp.com/api/projects/getAllProjects?page=${parseInt(currPage) + 1}&size=10`
+            const url = userType === "client" ? `http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) + 1}&size=10` : `http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) + 1}&size=10`
             const reqBody = userType === "client" ? { "userType":"freelancer" } : {};
             const nextFeed = await fetch(url, {
                 method: "POST",
@@ -27,6 +27,7 @@ function MyFeed({profile, feed}) {
                 });
             const nextFeed_json = await nextFeed.json();
             setFreelancers(nextFeed_json.users);
+            setProjects(nextFeed_json.projects);
             setCurrPage(nextFeed_json.page);
             setTotPages(nextFeed_json.totalPages);
             setLoading(false);
@@ -36,7 +37,7 @@ function MyFeed({profile, feed}) {
     async function prevPage(){
         if(currPage > 1){
             setLoading(true);
-            const url = userType === "client" ? `http://elance-be.herokuapp.com/api/users/getAllUsers?page=${parseInt(currPage) - 1}&size=10` : `http://elance-be.herokuapp.com/api/projects/getAllProjects?page=${parseInt(currPage) - 1}&size=10`
+            const url = userType === "client" ? `http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) - 1}&size=10` : `http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) - 1}&size=10`
             const reqBody = userType === "client" ? { "userType":"freelancer" } : {};
             const prevFeed = await fetch(url, {
                 method: "POST",
@@ -48,6 +49,7 @@ function MyFeed({profile, feed}) {
             const prevFeed_json = await prevFeed.json();
 
             setFreelancers(prevFeed_json.users);
+            setProjects(prevFeed_json.projects);
             setCurrPage(prevFeed_json.page);
             setTotPages(prevFeed_json.totalPages);
             setLoading(false);

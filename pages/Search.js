@@ -33,7 +33,7 @@ function Search({projects, freelancers}) {
 }
 
 export async function getServerSideProps(context) {
-    const projects = await fetch("http://elance-be.herokuapp.com/api/projects/getAllProjects?page=1&size=9", {
+    const projects = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=1&size=9", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ export async function getServerSideProps(context) {
                     });
                     //console.log(JSON.stringify(projects));
     const projects_json = await projects.json();
-    const freelancers = await fetch("http://elance-be.herokuapp.com/api/users/getAllUsers?page=1&size=9", {
+    const freelancers = await fetch("http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=1&size=9", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',

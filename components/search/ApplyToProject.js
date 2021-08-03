@@ -19,7 +19,7 @@ function ApplyToProject({project, currentUserProfile}) {
                 "duration" : durationInpRef.current.value+" Months",
                 "description" : messageInpRef.current.value
             }));
-            const res = await fetch("http://elance-be.herokuapp.com/api/hire/applyProject", {
+            const res = await fetch("http://elance-be.herokuapp.com/api/v1/hire/applyProject", {
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',
