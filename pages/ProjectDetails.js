@@ -2,17 +2,39 @@ import Head from 'next/head';
 import ApplicationItem from '../components/ApplicationItem';
 import Footer from '../components/Footer';
 import Header from '../components/Header';
-import {useSession} from 'next-auth/client';
+import { useSession, getSession} from 'next-auth/client';
+import { Dialog } from '@material-ui/core';
+import { useState } from 'react';
+import ApplyToProject from "../components/search/ApplyToProject";
 
-function ProjectDetails({projectdetails}) {
+function ProjectDetails({projectdetails, currentUserProfile}) {
+    // console.log("Project "+ JSON.stringify(projectdetails));
+    // console.log("current user profile "+ JSON.stringify(currentUserProfile));
+
     //next auth session//
     const [session] = useSession();
 
-    const posterEmail = projectdetails?.projects[0].postedBy.email;
-    const currentUserEmail = session?.user.email; 
+    const posterEmail = projectdetails?.projects[0].postedBy?.email;
+    const currentUserEmail = session?.user.email;
+    const currentUserHasPostedThisProject = posterEmail === currentUserEmail;
+    const appliedBy = projectdetails?.projects[0].appliedBy;
+    var hiredApplications = [];
+    
+    projectdetails?.projects[0].hired.map((application) => (hiredApplications.push(application.applicationId)));
+    console.log(hiredApplications)
+    const currentUserHasAlreadyApplied = (appliedBy && appliedBy[0]?.userId.email) === session?.user?.email;
 
     var favourite = true;
     var rating = 4;
+
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => {
+        setOpen(true);
+      };
+    
+      const handleClose = () => {
+        setOpen(false);
+      };
     return (
         <div>
             <Head>
@@ -58,20 +80,27 @@ function ProjectDetails({projectdetails}) {
                                 {/* <h1>posted on : 24-May-2020</h1> */}
                                 <div className="flex items-center space-x-2">
                                     <img className="w-6 h-6" src="https://img.icons8.com/ios-filled/150/666666/clock--v1.png"/>
-                                    <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt}</h1>
+                                    <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt.split("T")[0]}</h1>
                                 </div>
                                 
-                                <div className="flex items-center space-x-2">
+                                {/* <div className="flex items-center space-x-2">
                                     <img className="w-6 h-6" src="https://img.icons8.com/material/192/666666/expired--v1.png"/>
-                                    <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt}</h1>
-                                </div>
+                                    <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt.split("T")[0]}</h1>
+                                </div> */}
                             </div>
                             <div className="flex justify-between">
                                 <div />
-                                <h1 className={`text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada] ${posterEmail === currentUserEmail ? "hidden" : "flex"}`}>
+                                <h1 onClick={handleOpen} className={`text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada] ${currentUserHasPostedThisProject || currentUserHasAlreadyApplied ? "hidden" : "flex"}`}>
                                     Apply
                                 </h1>
                             </div>
+                            <Dialog
+                                open={open}
+                                onClose={handleClose}>
+                                <div>
+                                    <ApplyToProject project={projectdetails.projects[0]} currentUserProfile={currentUserProfile}/>
+                                </div>
+                            </Dialog> 
                             
                         </div>
                         <div className="border-t border-[#c4c4c4] flex justify-between p-5">
@@ -100,24 +129,35 @@ function ProjectDetails({projectdetails}) {
                             Applications
                         </h1>
                         <div className="divide-y divide-[#c4c4c4]">
-                            <ApplicationItem />
-                            <ApplicationItem />
-                            <ApplicationItem />
-                            <ApplicationItem />
-                            <ApplicationItem />
+                            {
+                                appliedBy && appliedBy.length>0 &&
+                                appliedBy.map((application) => (
+                                    <ApplicationItem application={application} hiredApplications={hiredApplications} posterDetails={projectdetails.projects[0].postedBy} currentUserHasPostedThisProject={currentUserHasPostedThisProject}/>
+                                ))
+                            }{
+                                (!appliedBy || appliedBy.length === 0) &&
+                                <div className="p-5"> 
+                                    <h1 className="text-center font-semibold text-lg">
+                                        This project has not yet received any applications.
+                                    </h1>
+                                </div>
+                            }
                         </div>
-                        <div className="justify-between w-full mb-5">
-                            <div />
-                            
-                            <div className="flex items-center space-x-5 mt-10 justify-center">
-                                <img className="w-8 h-8" src="https://img.icons8.com/ios-glyphs/120/999999/previous.png" />
-                                <h1>
-                                    Page 1 | 5 of 16 applications
-                                </h1>
-                                <img className="w-8 h-8 cursor-pointer" src="https://img.icons8.com/ios-glyphs/120/29b2fe/next.png" />
+                        {
+                            appliedBy && appliedBy.length>0 &&
+                            <div className="justify-between w-full mb-5">
+                                <div />
+                                
+                                <div className="flex items-center space-x-5 mt-10 justify-center">
+                                    <img className="w-8 h-8 cursor-not-allowed" src="https://img.icons8.com/ios-glyphs/120/999999/previous.png" />
+                                    <h1>
+                                        Page 1 of 1
+                                    </h1>
+                                    <img className="w-8 h-8 cursor-not-allowed" src="https://img.icons8.com/ios-glyphs/120/999999/next.png" />
+                                </div>
+                                
                             </div>
-                            
-                        </div>
+                        }
                     </div> 
                 </div>
             }
@@ -130,22 +170,54 @@ function ProjectDetails({projectdetails}) {
 export default ProjectDetails
 
 export async function getServerSideProps(context){
-    const projectId = context.query.projectId;
-    const reqBody = {
-        "_id": projectId
-    }
-    const projectDetails = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reqBody)
-    });
-    const projectDetails_json = await projectDetails.json();
-    console.log(projectDetails_json);
-    return{
-        props:{
-            projectdetails : projectDetails_json
+    const nextAuthSession = await getSession(context);
+    if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
+        const email = nextAuthSession.user.email;
+        const profile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                "email": email
+            })
+        });
+        const profile_json = await profile.json();
+        const projectId = context.query.projectId;
+        const reqBody = {
+            "_id": projectId
         }
-    }    
+        const projectDetails = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqBody)
+        });
+        const projectDetails_json = await projectDetails.json();
+        return{
+            props:{
+                projectdetails : projectDetails_json,
+                currentUserProfile : profile_json
+            }
+        }
+    }else{
+        const projectId = context.query.projectId;
+        const reqBody = {
+            "_id": projectId
+        }
+        const projectDetails = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqBody)
+        });
+        const projectDetails_json = await projectDetails.json();
+        return{
+            props:{
+                projectdetails : projectDetails_json
+            }
+        }
+    }  
 }

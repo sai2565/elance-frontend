@@ -1,5 +1,8 @@
 import { useRouter } from "next/router";
 import { useState } from 'react';
+import { Dialog } from '@material-ui/core';
+import HireFreelancer from '../search/HireFreelancer';
+
 
 function FreelancerFeedItem({profile, currentUserProfile}) {
     //console.log(JSON.stringify(profile))
@@ -21,6 +24,15 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
             toggleFavourite(!isFavourite);
             console.log( " fav reds" + JSON.stringify(favres_json));
     }
+    const [hireDialogOpen, setHireDialogOpen] = useState(false);
+    const handleHireDialogOpen = () => {
+        setHireDialogOpen(true);
+    };
+  
+    const handleHireDialogClose = () => {
+        setHireDialogOpen(false);
+    };
+
     return (
         <div className="m-3 p-5 space-y-5 cursor-pointer border border-[#e4e4e4] rounded-md hover:border-[#c4c4c4]">
             <div className="space-y-1">
@@ -29,7 +41,7 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
                         {profile.fullName} | @{profile.userName} | {profile.occupation}
                     </h1>
                     <div className="flex space-x-5 items-center my-2 lg:my-0 justify-between lg:justify-evenly">
-                        <img className={`h-8 w-8 rounded-full cursor-pointer `} loading="lazy" src={profile.profilePic}/>
+                        <img className={`h-8 w-8 rounded-full cursor-pointer `} loading="lazy" src={profile && profile.profilePic && profile.profilePic.includes("http") ? profile.profilePic : "https://img.icons8.com/officel/128/000000/user.png"}/>
                         <img onClick={switchFavourite} className="h-6 w-6 cursor-pointer" src={`${isFavourite ? "https://img.icons8.com/ios-filled/120/29b2fe/like--v1.png" : "https://img.icons8.com/ios/120/000000/like--v1.png"}`} />
                     </div>
                 </div>
@@ -60,10 +72,21 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
                     <h1>{profile.address? profile.address[0] : "Open to work anywhere"}</h1>
                 </div>
                 <div>
-                    <h1>{profile.hourlyRate || "NA"}</h1>
+                    <h1>{profile.hourlyRate || "850"} ₹</h1>
                 </div>
             </div>
-
+            <div className="flex justify-end">
+                <h1 onClick={handleHireDialogOpen} className="text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
+                    Hire
+                </h1>
+            </div>
+            <Dialog
+                open={hireDialogOpen}
+                onClose={handleHireDialogClose}>
+                <div>
+                    <HireFreelancer clientprofile={currentUserProfile} freelancerprofile={profile}/>
+                </div>
+            </Dialog> 
         </div>
     )
 }

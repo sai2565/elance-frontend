@@ -34,7 +34,7 @@ function Profile({profile, myprofile, }) {
             setHireDialogOpen(false);
         };
         console.log(JSON.stringify({
-            "senderUserId": myprofile._id,
+            "senderUserId": myprofile.user[0]._id,
             "revieverUserId": profile._id
         }));
         async function handleMessage(){
@@ -44,7 +44,7 @@ function Profile({profile, myprofile, }) {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    "senderUserId": myprofile._id,
+                    "senderUserId": myprofile.user[0]._id,
                     "receiverUserId": profile._id
                 })
             });
@@ -62,7 +62,7 @@ function Profile({profile, myprofile, }) {
                 <title>Elance | @{profile.userName}</title>
                 <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
             </Head>
-            <Header page={"profile"}/>
+            <Header page={"profile"} />
             <div className="h-60 bg-[#666666] lg:flex justify-center space-x-5">
              <h1 className="text-white font-bold text-2xl text-center pt-10">{profile.fullName} | @{profile.userName}</h1>
                 {/* <div className="pt-5">
@@ -295,7 +295,7 @@ export async function getServerSideProps(context){
         return{
             props:{
                 profile : otherUserProfile_json.users[0],
-                myprofile: myprofile_json.user[0]
+                myprofile: myprofile_json
             }
         }
     }

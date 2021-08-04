@@ -47,7 +47,7 @@ function Messenger ({messageSenderProfile, messageReceiverProfile}){
     const channelID = (messageSenderId > messageReceiverID) ? messageSenderId+"-"+messageReceiverID : messageReceiverID+"-"+messageSenderId;
     const channel = chatClient.channel('messaging', channelID, {
         image: messageReceiverImage,
-        name: messageReceiverName,
+        name: messageReceiverName+" & "+messageSenderName,
         members: [messageSenderId, messageReceiverID],
     });
 

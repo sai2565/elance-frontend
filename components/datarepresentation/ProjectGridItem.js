@@ -34,10 +34,10 @@ function ProjectGridItem({currentUserProfile, project}) {
         setOpen(false);
       };
     return (
-        <div className="m-2">
-            <div>
-                <div className=" border border-[#c4c4c4] rounded-md">
-                    <div className="p-2 space-y-3">
+        // <div className="m-2">
+        //     <div>
+                <div className=" border border-[#c4c4c4] rounded-md m-2">
+                    <div className="p-2 space-y-3 mb-5">
                         <div className="flex justify-between items-center">
                             <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
                                 {project.projectTitle}
@@ -107,8 +107,8 @@ function ProjectGridItem({currentUserProfile, project}) {
                         </div>
                     </div>
                 </div> 
-            </div>
-        </div>
+        //     </div>
+        // </div>
     )
 }
 

@@ -16,6 +16,8 @@ function MyFeed({profile, feed}) {
     async function nextPage(){
         if(feed.page < feed.totalPages){
             setLoading(true);
+            setFreelancers([]);
+            setProjects([]);
             const url = userType === "client" ? `http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) + 1}&size=10` : `http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) + 1}&size=10`
             const reqBody = userType === "client" ? { "userType":"freelancer" } : {};
             const nextFeed = await fetch(url, {
@@ -37,6 +39,8 @@ function MyFeed({profile, feed}) {
     async function prevPage(){
         if(currPage > 1){
             setLoading(true);
+            setFreelancers([]);
+            setProjects([]);
             const url = userType === "client" ? `http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) - 1}&size=10` : `http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) - 1}&size=10`
             const reqBody = userType === "client" ? { "userType":"freelancer" } : {};
             const prevFeed = await fetch(url, {
@@ -62,7 +66,7 @@ function MyFeed({profile, feed}) {
             profile && feed &&
             <div className="space-y-10">
                 <h1 className="text-xl text-black font-bold">My Feed</h1>
-                <div className="h-full grid grid-cols-2">
+                <div className="h-full grid grid-cols-1">
                     {
                         userType === "client" &&
                         freelancers.map((freelancer) => (

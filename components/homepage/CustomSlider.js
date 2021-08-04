@@ -99,16 +99,57 @@ function CustomSlider({profile, slider_data}) {
                             </div>
                           </div>
                         }
-                        { userType === "client" &&
+                        { userType === "client" && sliderItems &&
                           sliderItems.map((project) => (
                               <JobPost 
                                 project={project}
                               />
                           ))
                         }
-                        {userType === "freelancer" && 
+                        {userType === "freelancer" && sliderItems &&
                           sliderItems.map((application) => (
-                              console.log("Application "+JSON.stringify(application))
+                            <div className="px-3 h-full">
+                                <div className="rounded-md border border-[#e4e4e4] hover:border-[#c4c4c4] space-y-2 cursor-pointer h-full">
+                                    <div className="space-y-2 px-3 py-1">
+                                        <h1 onClick={() => router.push(`/ProjectDetails?projectId=${application.projectId._id}`)} className="text-[#29b2fe] text-lg font-semibold line-clamp-1 hover:underline">
+                                          {application.projectId.projectTitle}
+                                        </h1>
+                                        <h1 className="text-sm line-clamp-3">
+                                            {application.projectId.description}
+                                        </h1>
+                                    </div>
+                                    <div className="px-3 py-1">
+                                        <h1 className="font-bold text-sm">
+                                            Skills Required
+                                        </h1>
+                                        <h1 className="line-clamp-1">
+                                            {application.projectId.skills.join(" | ")}
+                                        </h1>
+                                    </div>
+                                    <div className="text-sm px-3 pb-3 pt-1">
+                                        <h1>
+                                            {application.projectId.budget?.minPrice}  per Hr for a freelancer | {application.projectId.budget?.maxPrice} total project budget
+                                        </h1>
+                                    </div>
+                                    <div className="px-3 py-1">
+                                      <h1 className="text-base font-semibold">
+                                        Application
+                                      </h1>
+                                      <h1 className="text-base italic line-clamp-3">
+                                        {application.applicationId.description}
+                                      </h1>
+                                      <h1 className="text-base italic">
+                                        {application.applicationId.bid} ₹ per hour {application.applicationId.bid * 9} for complete project
+                                      </h1>
+                                    </div>
+                                    <div className="flex justify-end pb-3 px-3">
+                                        <h1 className={`bg-[#29b2fe] px-2 py-1 text-white font-semibold hover:bg-[#238ac2] rounded-full cursor-pointer text-center`}>
+                                            {"Remind"}
+                                        </h1>
+                                    </div>
+                                
+                                </div>
+                            </div>
                           ))
                         }
                     </Slider>

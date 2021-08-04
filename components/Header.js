@@ -116,6 +116,36 @@ function Header({page, isNewUser, profile, status}) {
               router.push('/');
           }
         };
+
+        async function hireRequestAction(action, notificationId, freelancerId, projectId){
+            const url = (action === "accept") ? "http://elance-be.herokuapp.com/api/v1/hire/agreeHireRequest" : "http://elance-be.herokuapp.com/api/v1/hire/rejectHireRequest";
+            const res = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                        "message" : action,
+                        "freelancerId": freelancerId,
+                        "projectId" : projectId,
+                        "notificationId": notificationId
+                    })
+                });
+            const res_json = await res.json();
+            console.log("action res "+ JSON.stringify(res_json));
+            const resReadNotification = await fetch("http://elance-be.herokuapp.com/api/v1/users/readNotification",{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                        "userId": freelancerId,
+                        "notificationId": notificationId
+                    })
+                });
+            const resReadNotification_json = await resReadNotification.json();
+            console.log("read notific"+JSON.stringify(resReadNotification_json));  
+        }
     return (
         <header className="sticky">
             {/* left side bar for mobile screens */}
@@ -155,7 +185,7 @@ function Header({page, isNewUser, profile, status}) {
                             Sign Up
                         </h1>
 
-                        <img onClick={() => router.push('/HomePage')} className={`h-7 w-7 cursor-pointer ${page === "landing" ? "hidden" : "flex"}`} src={`${page === "home" ? "https://img.icons8.com/glyph-neue/128/29b2fe/home.png" : "https://img.icons8.com/glyph-neue/128/000000/home.png"}`}/>
+                        <img onClick={() => router.push('/HomePage')} className={`h-7 w-7 cursor-pointer ${page === "landing" || page === "postproject" ? "hidden" : "flex"}`} src={`${page === "home" ? "https://img.icons8.com/glyph-neue/128/29b2fe/home.png" : "https://img.icons8.com/glyph-neue/128/000000/home.png"}`}/>
                         <img onClick={handleNMessageDropClick} className={`h-7 w-7 cursor-pointer ${(page === "home" || page === "messenger")  ? "flex" : "hidden"}`} src={`${page === "messenger" ? "https://img.icons8.com/material-rounded/128/29b2fe/facebook-messenger--v1.png":"https://img.icons8.com/material-rounded/128/000000/facebook-messenger--v1.png"}`}/>
                         <Popover
                             className={`rounded-md m-2`}
@@ -173,7 +203,7 @@ function Header({page, isNewUser, profile, status}) {
                             }}>
                                 <div className="w-52">
                                         <h1 className="text-center p-2 border-b border-[#c4c4c4] text-base font-semibold">
-                                            Contacted users
+                                            Connected users
                                         </h1>
                                     {   
                                         contactedUsers &&
@@ -197,7 +227,7 @@ function Header({page, isNewUser, profile, status}) {
                                     }
                                 </div>
                         </Popover>
-                        <h1 onClick={() => router.push('/PostProject')} className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500  ${(session && session.user) ? "hidden" : "hidden lg:flex"}`}>
+                        <h1 onClick={() => router.push('/PostProject')} className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500  ${(session && session.user || page === "postproject") ? "hidden" : "hidden lg:flex"}`}>
                             Post a Project
                         </h1>
                         {/* notifications */}
@@ -237,6 +267,25 @@ function Header({page, isNewUser, profile, status}) {
                                                     {
                                                        notification.notificationType === 'message' &&
                                                        notification.triggeredBy.fullName+ " has sent you a message" 
+                                                    }{
+                                                       notification.notificationType === 'jobApplication' &&
+                                                       <div onClick={() => router.push(`/ProjectDetails?projectId=${notification.projectId}`)}>
+                                                           <h1 onClick={() => router.push(`/Profile?id=${notification.triggeredBy._id}`) } className={`text-sm text-[#29b2fe] font-semibold hover:underline cursor-pointer`} >{notification.triggeredBy.fullName} | @{notification.triggeredBy.userName}</h1> 
+                                                           <h1 onClick={() => router.push(`/ProjectDetails?projectId=${notification.projectId}`)} > has applied to your project </h1>
+                                                       </div>
+                                                    }{
+                                                        notification.notificationType === 'hireRequest' &&
+                                                        <div>
+                                                            <h1 onClick={() => router.push(`/ProjectDetails?projectId=${notification.projectId}`)} className="text-sm text-[#29b2fe] font-semibold hover:underline cursor-pointer">{notification.notificationMessage}</h1>
+                                                            <div className="flex space-x-5 lg:space-x-10 items-center pt-5">
+                                                                <h1 onClick={() => hireRequestAction("accept", notification._id, profile.user[0]._id, notification.projectId)} className="text-white font-semibold text-sm px-2 py-1 rounded-md bg-[#2ECC71] cursor-pointer hover:bg-[#138643]">
+                                                                    Accept
+                                                                </h1>
+                                                                <h1 onClick={() => hireRequestAction("reject", notification._id, profile.user[0]._id, notification.projectId)} className="text-white font-semibold text-sm px-2 py-1 rounded-md bg-[#E74C3C] cursor-pointer hover:bg-[#cc3c2c]">
+                                                                    Reject
+                                                                </h1>
+                                                            </div>
+                                                        </div>
                                                     }
                                                 </h1>
                                             </div>
@@ -271,7 +320,7 @@ function Header({page, isNewUser, profile, status}) {
             </div>
 
             {/* lower header */}
-            <div className= {`bg-white border-b border-gray-200 hidden ${"lg:flex z-0"}`} >
+            <div className= {`bg-white border-b border-gray-200 ${page === "messenger" ? "hidden" : "hidden lg:flex z-0"}`} >
                 <div className="flex space-x-7 mx-5 lg:mx-32">
                     <HeaderTag tag={'Graphics & Design'} options={categories}/>
                     <HeaderTag tag={'Digital Marketing'} options={categories}/>
