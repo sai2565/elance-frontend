@@ -118,7 +118,7 @@ function Header({page, isNewUser, profile, status}) {
         };
 
         async function hireRequestAction(action, notificationId, freelancerId, projectId){
-            const url = (action === "accept") ? "http://elance-be.herokuapp.com/api/v1/hire/agreeHireRequest" : "http://elance-be.herokuapp.com/api/v1/hire/rejectHireRequest";
+            const url = (action === "accept") ? "https://elance-be.herokuapp.com/api/v1/hire/agreeHireRequest" : "https://elance-be.herokuapp.com/api/v1/hire/rejectHireRequest";
             const res = await fetch(url, {
                 method: 'POST',
                 headers: {
@@ -133,7 +133,7 @@ function Header({page, isNewUser, profile, status}) {
                 });
             const res_json = await res.json();
             console.log("action res "+ JSON.stringify(res_json));
-            const resReadNotification = await fetch("http://elance-be.herokuapp.com/api/v1/users/readNotification",{
+            const resReadNotification = await fetch("https://elance-be.herokuapp.com/api/v1/users/readNotification",{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

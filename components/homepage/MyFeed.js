@@ -18,7 +18,7 @@ function MyFeed({profile, feed}) {
             setLoading(true);
             setFreelancers([]);
             setProjects([]);
-            const url = userType === "client" ? `http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) + 1}&size=10` : `http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) + 1}&size=10`
+            const url = userType === "client" ? `https://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) + 1}&size=10` : `https://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) + 1}&size=10`
             const reqBody = userType === "client" ? { "userType":"freelancer" } : {};
             const nextFeed = await fetch(url, {
                 method: "POST",
@@ -41,7 +41,7 @@ function MyFeed({profile, feed}) {
             setLoading(true);
             setFreelancers([]);
             setProjects([]);
-            const url = userType === "client" ? `http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) - 1}&size=10` : `http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) - 1}&size=10`
+            const url = userType === "client" ? `https://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=${parseInt(currPage) - 1}&size=10` : `https://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=${parseInt(currPage) - 1}&size=10`
             const reqBody = userType === "client" ? { "userType":"freelancer" } : {};
             const prevFeed = await fetch(url, {
                 method: "POST",

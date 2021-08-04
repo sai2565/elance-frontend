@@ -61,7 +61,7 @@ export async function getServerSideProps(context) {
     const nextAuthSession = await getSession(context);
     if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
         const email = nextAuthSession.user.email;
-        const profile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
+        const profile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',
@@ -74,7 +74,7 @@ export async function getServerSideProps(context) {
         if(profile_json.user){
             if(profile_json.user[0].userType === "client"){
                 const userInternalId = profile_json.user[0]._id;
-                const slider = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects",{
+                const slider = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects",{
                                     method: "POST",
                                     headers: {
                                         'Content-Type': 'application/json',
@@ -84,7 +84,7 @@ export async function getServerSideProps(context) {
                                     })
                 });
                 const slider_json = await slider.json();
-                const feed = await fetch("http://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=1&size=10", {
+                const feed = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=1&size=10", {
                                 method: "POST",
                                 headers: {
                                     'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ export async function getServerSideProps(context) {
                 }         
             }
             else{
-                const feed = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=1&size=10",{
+                const feed = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=1&size=10",{
                                     method: "POST",
                                     headers: {
                                         'Content-Type': 'application/json',

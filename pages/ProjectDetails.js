@@ -173,7 +173,7 @@ export async function getServerSideProps(context){
     const nextAuthSession = await getSession(context);
     if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
         const email = nextAuthSession.user.email;
-        const profile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
+        const profile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -187,7 +187,7 @@ export async function getServerSideProps(context){
         const reqBody = {
             "_id": projectId
         }
-        const projectDetails = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
+        const projectDetails = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -206,7 +206,7 @@ export async function getServerSideProps(context){
         const reqBody = {
             "_id": projectId
         }
-        const projectDetails = await fetch("http://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
+        const projectDetails = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

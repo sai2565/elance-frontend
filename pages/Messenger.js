@@ -85,7 +85,7 @@ export async function getServerSideProps(context) {
     const nextAuthSession = await getSession(context);
     if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
         const messageSenderEmail = nextAuthSession.user.email;
-        const messageSenderProfile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
+        const messageSenderProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',
@@ -95,7 +95,7 @@ export async function getServerSideProps(context) {
                             })
                         });
         const messageSenderProfile_json = await messageSenderProfile.json();
-        const messageReceiverProfile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
+        const messageReceiverProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',

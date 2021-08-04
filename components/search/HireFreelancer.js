@@ -17,7 +17,7 @@ function HireFreelancer({clientprofile, freelancerprofile}) {
         if(selectedProject && messageInpRef.current.value && durationInpRef.current.value && rateInpRef.current.value){
             setIsMissingDetails(false);
             setLoading(true);
-            const res = await fetch("http://elance-be.herokuapp.com/api/v1/hire/hireRequest", {
+            const res = await fetch("https://elance-be.herokuapp.com/api/v1/hire/hireRequest", {
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',

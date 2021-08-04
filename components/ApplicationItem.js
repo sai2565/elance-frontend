@@ -10,7 +10,7 @@ function ApplicationItem({application, currentUserHasPostedThisProject, hiredApp
 
     async function applicationAction(action){
         setLoading(true);
-        const url = (action === "accept") ? "http://elance-be.herokuapp.com/api/v1/hire/hireApplicant" : "http://elance-be.herokuapp.com/api/v1/hire/rejectApplicant";
+        const url = (action === "accept") ? "https://elance-be.herokuapp.com/api/v1/hire/hireApplicant" : "https://elance-be.herokuapp.com/api/v1/hire/rejectApplicant";
         const res = await fetch(url, {
             method: 'POST',
             headers: {

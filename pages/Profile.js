@@ -38,7 +38,7 @@ function Profile({profile, myprofile, }) {
             "revieverUserId": profile._id
         }));
         async function handleMessage(){
-            const res = await fetch("http://elance-be.herokuapp.com/api/v1/users/setContacted", {
+            const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/setContacted", {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -271,7 +271,7 @@ export async function getServerSideProps(context){
     const reqBody = {
         "_id": userId,
     }
-    const otherUserProfile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
+    const otherUserProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -282,7 +282,7 @@ export async function getServerSideProps(context){
     const nextAuthSession = await getSession(context);
     if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
         const email = nextAuthSession.user.email;
-        const myprofile = await fetch("http://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
+        const myprofile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
                             method: "POST",
                             headers: {
                                 'Content-Type': 'application/json',
