@@ -44,6 +44,7 @@ function SearchBar({device}) {
                     <input
                     ref={searchInputRef}
                     className="border-none focus:outline-none mx-2 text-[#0e1724] text-sm lg:text-base flex-grow flex-shrink"
+                    defaultValue={router.query.query || ""}
                     placeholder="Find Jobs or Freelancers"/>
                 </div>
                 <button 

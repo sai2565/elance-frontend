@@ -9,8 +9,8 @@ import React, { useContext } from "react"
 import { useSession, getSession, session} from 'next-auth/client';
 import router from 'next/router';
 
-function PostProject({profile}) {
-    console.log(profile);
+function PostProject() {
+    const [session] = useSession();
     const [currStep, setCurrStep] = useState("1");
     var intStep = 1;
     const projNameInpRef = useRef(null);
@@ -87,8 +87,8 @@ function PostProject({profile}) {
             "workLocation":location,
             "softwareRequirements":equipment.split(','),
             "freelancersCount":count,
-            "visibility":["1", "2", "3"],
-            "postedBy":profile.user[0]._id,
+            "visibility": ["1", "2", "3", "4"],
+            "postedBy": session.user.elanceprofile.user[0]._id,
             "budget": {"minPrice": hourlyBudget, "maxPrice": budget},
             "duration": duration
         };
@@ -467,33 +467,4 @@ function PostProject({profile}) {
         </div>
     )
 }
-
-export async function getServerSideProps(ctx) {
-    const nextAuthSession = await getSession(ctx);
-    if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
-        const email = nextAuthSession.user.email;
-        const profile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                "email": email
-                            })
-                        });
-        const profile_json = await profile.json();
-        
-    return {
-            props: {
-                profile: profile_json
-            }, // will be passed to the page component as props
-        }
-    }
-    return {
-        props: {
-            profile: "Login Required"
-        }
-    } 
-  }
-
 export default PostProject

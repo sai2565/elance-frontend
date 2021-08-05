@@ -6,8 +6,9 @@ import FreelancersSearch from '../components/search/FreelancersSearch';
 import ProjectsSearch from '../components/search/ProjectsSearch';
 import { useSession, getSession, session} from 'next-auth/client';
 
-function Search({projects, freelancers, currentUserProfile, category}) {
-    const [searchType, setSearchType] = useState(category);
+function Search({data, query, category, subcategory}) {
+    const [searchType, setSearchType] = useState("freelancers");
+    console.log(data.users);
     return (
         <div className="">
             <Head>
@@ -19,11 +20,11 @@ function Search({projects, freelancers, currentUserProfile, category}) {
                 <h1 onClick={() => setSearchType('freelancers')} className={`cursor-pointer pb-2 px-2 ${searchType === "freelancers" && "border-b-2 border-white"}`}>Freelancers</h1>
                 <h1 onClick={() => setSearchType('projects')} className={`cursor-pointer pb-2 px-2 ${searchType === "projects" && "border-b-2 border-white"}`}>Projects</h1>
             </div>
-            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "P" && "hidden"}`}>
-                {/* <FreelancersSearch freelancers={freelancers}  /> */}
+            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "projects" && "hidden"}`}>
+                <FreelancersSearch freelancers={data.users} pages={data.totalUserPages} />
             </div>
-            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "F" && "hidden"}`}>
-                {/* <ProjectsSearch projects={projects}/> */}
+            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "freelancers" && "hidden"}`}>
+                <ProjectsSearch projects={data.projects} pages={data.totalProjectPages}/>
             </div>
             <Footer />
         </div>
@@ -31,51 +32,94 @@ function Search({projects, freelancers, currentUserProfile, category}) {
 }
 
 export async function getServerSideProps(context) {
-    const category = context.query.category;
     const query = context.query.query;
-    const nextAuthSession = await getSession(context);
-    // if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
-        const email = nextAuthSession.user.email;
-        const profile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                "email": email
-                            })
-                        });
-        const profile_json = await profile.json();
+    const category = context.query.category;
+    const subcategory = context.query.subcategory;
+    // if(!query)
+    // var searchString = category ? category : "";
+    // searchString = query ? searchString + " " + query : searchString;
+    // searchString = subcategory ? searchString + " " + subcategory : searchString;
+    // if(searchString.length > 1){
+        const skill = [
+            "React",
+            "Next",
+            "Mongo",
+            "Firebase",
+            "GraphQL",
+            "Redux",
+            "UI/UX",
+            "Figma",
+            "NextJs",
+            "NodeJS",
+            "MongoDB",
+            "Java",
+            "Microservices ",
+            "REST API",
+            "Cloud-Native",
+            "Kubernetes",
+            "container management",
+            "REST APIs",
+            "SQL database",
+            "Relational database",
+            "TypeScript",
+            "HTML",
+            "CSS",
+            "Capacitor",
+            "NPM",
+            "Git",
+            "GitHub",
+            "Node.js",
+            "Express",
+            "React Native",
+            "Capacitor plugins.",
+            "Cross platform - Flutter 2.0",
+            "KMM CICD - KTLINT",
+            "Code Generator",
+            "Building Design System",
+            "Hello Project by Rajeshwar",
+            "React",
+            "Next",
+            "MongoDB",
+            "NodeJs",
+            "Mangoose",
+            "Figma",
+            " Nodejs",
+            "Redux",
+            "NextJs",
+            "tailwind css",
+            "Firebase authentication",
+            "GCP",
+            "Stripe API",
+            "fddsgdrs",
+            "risk",
+            "analysis"
+        ].join(" ");
+        const res = await fetch("https://elance-be.herokuapp.com/api/v1/search", {
+                        method: "POST",
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            "searchString" : query || (category && subcategory && category+" "+subcategory) || category || skill
+                        })
+            });
+        const res_json = await res.json();
+        return {
+            props: {
+                data: res_json
+                // query: query,
+                // category: category,
+                // subcategory: subcategory
+            }
+        } 
     // }
-    const projects = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects?page=1&size=9", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        },
-                    body: JSON.stringify({ })
-                    });
-                    //console.log(JSON.stringify(projects));
-    const projects_json = await projects.json();
-    const freelancers = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers?page=1&size=9", {
-                    method: "POST",
-                    headers: {
-                        'Content-Type': 'application/json',
-                        },
-                    body: JSON.stringify({
-                        "userType":"freelancer"
-                     })
-                    });
-                    //console.log(JSON.stringify(projects));
-    const freelancers_json = await freelancers.json();     
-    return {
-        props: {
-            projects: projects_json.projects,
-            freelancers: freelancers_json.users,
-            currentUserProfile : profile_json,
-            category: category,
-            query: query
-        }
-    }
+    // return {
+    //     props: {
+    //         query: query,
+    //         category: category,
+    //         subcategory: subcategory
+    //     }
+    // }
 }
 
 export default Search

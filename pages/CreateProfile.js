@@ -203,12 +203,12 @@ function CreateProfile() {
                     },{
                     "title": proj2TitInputRef.current.value,
                     "description": proj2DescInputRef.current.value,
-                    "category": proj2SkillsInputRef.current.value.split(","),
+                    "skills": proj2SkillsInputRef.current.value.split(","),
                     "project_url": proj2UrlInputRef.current.value
                     },{
                     "title": proj3TitInputRef.current.value,
                     "description": proj3DescInputRef.current.value,
-                    "category": proj3SkillsInputRef.current.value.split(","),
+                    "skills": proj3SkillsInputRef.current.value.split(","),
                     "project_url": proj3UrlInputRef.current.value
                     } 
                 ],

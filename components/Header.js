@@ -111,6 +111,7 @@ function Header({page}) {
 
     function handleReviewNotification(notificationId, userId){
         readNotification(userId, notificationId);
+        router.push('/Profile');
     }
 
     function handleJobApplicationNotification(notificationId, userId, projectId){

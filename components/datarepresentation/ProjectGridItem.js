@@ -14,7 +14,7 @@ function ProjectGridItem({currentUserProfile, project}) {
         setApplyReqSuccess(isSuccess);
     }
 
-    const [isMyFavProj, toggleFavourite] = useState(currentUserProfile.user[0].favProjects.includes(project._id));
+    const [isMyFavProj, toggleFavourite] = useState(currentUserProfile?.user[0].favProjects.includes(project._id));
     async function switchFavourite(){
         const url = isMyFavProj ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavProject" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavProject"
         toggleFavourite(!isMyFavProj);
@@ -45,7 +45,7 @@ function ProjectGridItem({currentUserProfile, project}) {
     return (
         // <div className="m-2">
         //     <div>
-                <div className=" border border-[#c4c4c4] rounded-md m-2">
+                <div className="border border-[#c4c4c4] rounded-md m-2">
                     <div className="p-2 space-y-3 mb-5">
                         <div className="flex justify-between items-center">
                             <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">

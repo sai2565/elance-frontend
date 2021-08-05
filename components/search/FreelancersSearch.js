@@ -6,7 +6,7 @@ import Slider from '@material-ui/core/Slider';
 import CustomCheckbox from '../CustomCheckbox';
 import RatingSet from '../RatingSet';
 
-function FreelancersSearch({freelancers}) {
+function FreelancersSearch({freelancers, pages}) {
     const [viewType, setViewType] = useState('G');
     const [minBudget, setMinBudget] = useState(30);
     const [maxBudget, setMaxBudget] = useState(50);
@@ -211,17 +211,9 @@ function FreelancersSearch({freelancers}) {
                         </div>
                       </div>
                       <div className={`${viewType === 'G' && "grid lg:grid-cols-3 md:grid-cols-2"} place-items-center p-5`}>
-                          {freelancers.map(() => (
-                              <FreelancerGridItem favourite />
+                          {freelancers && freelancers.map((freelancer) => (
+                              <FreelancerGridItem profile={freelancer} />
                           ))}
-                          {/* <FreelancerGridItem />
-                          <FreelancerGridItem favourite />
-                          <FreelancerGridItem />
-                          <FreelancerGridItem favourite />
-                          <FreelancerGridItem />
-                          <FreelancerGridItem />
-                          <FreelancerGridItem />
-                          <FreelancerGridItem favourite /> */}
                       </div>
                       <div className="justify-between w-full">
                         <div />

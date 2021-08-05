@@ -1,11 +1,14 @@
 import { Dialog } from '@material-ui/core';
+import { useSession } from 'next-auth/client';
 import { useState } from 'react';
 import HireFreelancer from '../search/HireFreelancer';
+import {useRouter} from 'next/router';
 
-function FreelancerGridItem({favourite}) {
+function FreelancerGridItem({profile}) {
+    const router = useRouter();
     var rating = 3;
     const [open, setOpen] = useState(false);
-
+    const [session] = useSession();
     const handleOpen = () => {
         setOpen(true);
       };
@@ -16,13 +19,13 @@ function FreelancerGridItem({favourite}) {
     return (
         <div className="m-2">
             <div>
-                <div className=" border border-[#c4c4c4] rounded-md">
+                <div className="border border-[#c4c4c4] rounded-md">
                     <div className="p-2 space-y-3">
                         <div className="flex justify-between items-center">
-                            <h1 className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
-                                Sai Sharan Beepeta | @sharan2565
+                            <h1 onClick={() => router.push(`/Profile?id=${profile._id}`)} className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
+                                {profile.fullName} |@{profile.userName}
                             </h1>
-                            <img className="h-8 w-8 rounded-full" src="https://img.icons8.com/officel/160/000000/user.png"/>
+                            <img className="h-8 w-8 rounded-full ml-3" src={profile.profilePic || "https://img.icons8.com/officel/160/000000/user.png"}/>
                             {/* <img className="w-4 h-4 cursor-pointer hover:w-5 hover:h-5" src={`${favourite ? "https://img.icons8.com/ios-filled/50/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/29b2fe/like--v1.png"}`} /> */}
                             {/* https://img.icons8.com/ios-filled/50/000000/like--v1.png 
                             https://img.icons8.com/ios/150/333333/like--v1.png*/}
@@ -38,23 +41,23 @@ function FreelancerGridItem({favourite}) {
                                 </h1>
                             </div>
                         <div className="flex items-center">
-                            I am a full stack developer with 4 years of experience building scalable and highly performant web and mobile apps. A javascript enthusiast and an aspiring entrepreneur.
+                            {profile.intro}
                         </div>
                         <div>
                             <h1 className="font-semibold">
                                 Skills
                             </h1>
                             <h1 className="">
-                                ReactJs | NodeJs | MongoDB | GraphQL | NextJS | JavaScript
+                                {profile.skills?.map((skill) => (skill.name)).join(" | ")}
                             </h1>
                         </div>
                         <div className="flex items-center space-x-2">
                             <img className="w-6 h-6" src="https://img.icons8.com/glyph-neue/128/2ECC71/user-location.png"/>
-                            <h1>Remote | Australia</h1>
+                            <h1>{profile.address ? profile.address[0] : "Remote"}</h1>
                         </div>
                         <div className="flex items-center space-x-2">
                             <img className="w-6 h-6" src="https://img.icons8.com/color/144/000000/rupee--v1.png"/>
-                            <h1>700 per Hr</h1>
+                            <h1>{Math.ceil(Math.random() * 100)*10} per Hr</h1>
                         </div>
                         {/* <div className="">
                             <h1>posted on : 24-May-2020</h1>
@@ -63,6 +66,8 @@ function FreelancerGridItem({favourite}) {
                                 <h1 className="italic font-semibold text-[#666666] text-sm">24-Sept-2021</h1>
                             </div>
                         </div> */}
+                        {
+                            session && session.user &&
                         <div className="flex justify-between">
                             <div />
                             <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
@@ -72,10 +77,10 @@ function FreelancerGridItem({favourite}) {
                                 open={open}
                                 onClose={handleClose}>
                                 <div>
-                                    <HireFreelancer />
+                                    <HireFreelancer clientprofile={session.user.elanceprofile} freelancerprofile={profile}/>
                                 </div>
                             </Dialog>                           
-                        </div>
+                        </div>}
                     </div>
                     {/* <div className="border-t border-[#c4c4c4] space-x-2 flex p-2 justify-between">
                         <div>

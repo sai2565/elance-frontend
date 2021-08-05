@@ -82,19 +82,7 @@ function Messenger ({messageSenderProfile, messageReceiverProfile}){
 export default Messenger;
 
 export async function getServerSideProps(context) {
-    const nextAuthSession = await getSession(context);
-    if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
-        const messageSenderEmail = nextAuthSession.user.email;
-        const messageSenderProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                "email": messageSenderEmail
-                            })
-                        });
-        const messageSenderProfile_json = await messageSenderProfile.json();
+        const session = await getSession(context);
         const messageReceiverProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
                             method: "POST",
                             headers: {
@@ -108,12 +96,10 @@ export async function getServerSideProps(context) {
 
         return {
             props : {
-                "messageSenderProfile" : messageSenderProfile_json,
+                "messageSenderProfile" : session?.user?.elanceprofile,
                 "messageReceiverProfile" : messageReceiverProfile_json
             }
         }
-    }
-    
 }
 
 

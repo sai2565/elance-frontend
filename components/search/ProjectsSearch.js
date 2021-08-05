@@ -3,8 +3,9 @@ import { useState } from 'react';
 import Slider from '@material-ui/core/Slider';
 import CustomCheckbox from '../CustomCheckbox';
 import RatingSet from '../RatingSet';
+import { session } from 'next-auth/client';
 
-function ProjectsSearch({ projects}) {
+function ProjectsSearch({ projects, pages}) {
     //console.log("Projects " + JSON.stringify(projects));
     const userType = "F";
     const [viewType, setViewType] = useState('G');
@@ -230,9 +231,9 @@ function ProjectsSearch({ projects}) {
                                 src={`https://img.icons8.com/material-rounded/240/${ viewType === 'F' ? "29b2fe" : "666666"}/overview-pages-3.png`} />
                         </div>
                       </div>
-                      <div className={`${viewType === 'G' && "grid lg:grid-cols-3 md:grid-cols-2"} place-items-center p-5`}>
-                          {projects.map((project) => (
-                              <ProjectGridItem project={project} />
+                      <div className={`${viewType === 'G' && "grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row-dense flex-grow-0"} place-items-center p-5`}>
+                          {projects && projects.map((project) => (
+                              <ProjectGridItem currentUserProfile={session?.user?.elanceprofile} project={project} />
                           ))}
                       </div>
                       <div className="justify-between w-full">
