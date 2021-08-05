@@ -8,10 +8,16 @@ function ProjectGridItem({currentUserProfile, project}) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     var rating = 3;
+    const [isApplyReqSuccess, setApplyReqSuccess] = useState(false);
+
+    function handleRequestSuccess(isSuccess){
+        setApplyReqSuccess(isSuccess);
+    }
 
     const [isMyFavProj, toggleFavourite] = useState(currentUserProfile.user[0].favProjects.includes(project._id));
     async function switchFavourite(){
         const url = isMyFavProj ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavProject" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavProject"
+        toggleFavourite(!isMyFavProj);
         const favres = await fetch(url,{
                             method: "POST",
                             headers: {
@@ -23,7 +29,7 @@ function ProjectGridItem({currentUserProfile, project}) {
                             })
         });
         const favres_json = await favres.json();
-        toggleFavourite(!isMyFavProj);
+        // toggleFavourite(!isMyFavProj);
     }
 
     const handleOpen = () => {
@@ -31,6 +37,9 @@ function ProjectGridItem({currentUserProfile, project}) {
       };
     
       const handleClose = () => {
+        if(isApplyReqSuccess){
+            router.reload();
+        }
         setOpen(false);
       };
     return (
@@ -81,7 +90,7 @@ function ProjectGridItem({currentUserProfile, project}) {
                                 open={open}
                                 onClose={handleClose}>
                                 <div>
-                                    <ApplyToProject project={project} currentUserProfile={currentUserProfile}/>
+                                    <ApplyToProject project={project} currentUserProfile={currentUserProfile} handleRequestSuccess={handleRequestSuccess}/>
                                 </div>
                             </Dialog>  
                         </div>

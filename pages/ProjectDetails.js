@@ -7,22 +7,19 @@ import { Dialog } from '@material-ui/core';
 import { useState } from 'react';
 import ApplyToProject from "../components/search/ApplyToProject";
 
-function ProjectDetails({projectdetails, currentUserProfile}) {
-    // console.log("Project "+ JSON.stringify(projectdetails));
-    // console.log("current user profile "+ JSON.stringify(currentUserProfile));
+function ProjectDetails({projectdetails}) {
 
-    //next auth session//
     const [session] = useSession();
-
     const posterEmail = projectdetails?.projects[0].postedBy?.email;
-    const currentUserEmail = session?.user.email;
+    var currentUserEmail = session?.user.email;
     const currentUserHasPostedThisProject = posterEmail === currentUserEmail;
     const appliedBy = projectdetails?.projects[0].appliedBy;
     var hiredApplications = [];
     
     projectdetails?.projects[0].hired.map((application) => (hiredApplications.push(application.applicationId)));
     console.log(hiredApplications)
-    const currentUserHasAlreadyApplied = (appliedBy && appliedBy[0]?.userId.email) === session?.user?.email;
+    //check (appliedBy && appliedBy[0]?.userId.email) === session?.user?.email;
+    var currentUserHasAlreadyApplied = appliedBy.map((application) => (application.userId.email)).includes(session?.user?.email);
 
     var favourite = true;
     var rating = 4;
@@ -42,6 +39,7 @@ function ProjectDetails({projectdetails, currentUserProfile}) {
                 <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
             </Head>
             <Header page={"projectdetails"}/>
+            
             <div className="h-60 bg-[#666666]">
                 <h1 className="text-white font-bold text-2xl underline text-center pt-10">{projectdetails.projects[0].projectTitle}</h1>
             </div>
@@ -88,19 +86,24 @@ function ProjectDetails({projectdetails, currentUserProfile}) {
                                     <h1 className="italic font-semibold text-[#666666] text-sm">{projectdetails.projects[0].createdAt.split("T")[0]}</h1>
                                 </div> */}
                             </div>
+                            {
+                                session && session.user &&
                             <div className="flex justify-between">
                                 <div />
                                 <h1 onClick={handleOpen} className={`text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada] ${currentUserHasPostedThisProject || currentUserHasAlreadyApplied ? "hidden" : "flex"}`}>
                                     Apply
                                 </h1>
                             </div>
+                            }{
+                                session && session.user &&
                             <Dialog
                                 open={open}
                                 onClose={handleClose}>
                                 <div>
-                                    <ApplyToProject project={projectdetails.projects[0]} currentUserProfile={currentUserProfile}/>
+                                    <ApplyToProject project={projectdetails.projects[0]} currentUserProfile={session.user.elanceprofile}/>
                                 </div>
                             </Dialog> 
+                            }
                             
                         </div>
                         <div className="border-t border-[#c4c4c4] flex justify-between p-5">
@@ -170,54 +173,27 @@ function ProjectDetails({projectdetails, currentUserProfile}) {
 export default ProjectDetails
 
 export async function getServerSideProps(context){
-    const nextAuthSession = await getSession(context);
-    if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
-        const email = nextAuthSession.user.email;
-        const profile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
-            method: "POST",
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                "email": email
-            })
-        });
-        const profile_json = await profile.json();
-        const projectId = context.query.projectId;
-        const reqBody = {
-            "_id": projectId
-        }
-        const projectDetails = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reqBody)
-        });
-        const projectDetails_json = await projectDetails.json();
+    const projectId = context.query.projectId;
+    if(!projectId || projectId.length < 1) 
         return{
             props:{
-                projectdetails : projectDetails_json,
-                currentUserProfile : profile_json
+                projectdetails : "no-projectid"
             }
-        }
-    }else{
-        const projectId = context.query.projectId;
-        const reqBody = {
-            "_id": projectId
-        }
-        const projectDetails = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(reqBody)
-        });
-        const projectDetails_json = await projectDetails.json();
-        return{
-            props:{
-                projectdetails : projectDetails_json
-            }
+        }  
+    const reqBody = {
+        "_id": projectId
+    }
+    const projectDetails = await fetch("https://elance-be.herokuapp.com/api/v1/projects/getAllProjects", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(reqBody)
+    });
+    const projectDetails_json = await projectDetails.json();
+    return{
+        props:{
+            projectdetails : projectDetails_json
         }
     }  
 }

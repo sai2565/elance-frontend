@@ -63,14 +63,18 @@ function ApplicationItem({application, currentUserHasPostedThisProject, hiredApp
                     !hiredApplications.includes(application.applicationId._id) &&
                     currentUserHasPostedThisProject && 
                     posterDetails && posterDetails._id &&
-                    <div className="flex space-x-5 lg:space-x-10 items-center pt-5">
-                        <h1 onClick={() => applicationAction("accept")} className="text-white font-semibold px-4 py-2 rounded-md bg-[#2ECC71] cursor-pointer hover:bg-[#138643]">
-                            Accept
-                        </h1>
-                        <h1 onClick={() => applicationAction("reject")} className="text-white font-semibold px-4 py-2 rounded-md bg-[#E74C3C] cursor-pointer hover:bg-[#cc3c2c]">
-                            Reject
-                        </h1>
-                    </div>
+                    // <div className="flex justify-between w-full">
+                    //     <div />
+                        <div className="flex space-x-5 lg:space-x-10 items-center pt-5">
+                            <h1 onClick={() => applicationAction("accept")} className="text-white font-semibold px-4 py-2 rounded-md bg-[#2ECC71] cursor-pointer hover:bg-[#138643]">
+                                Accept
+                            </h1>
+                            <h1 onClick={() => applicationAction("reject")} className="text-white font-semibold px-4 py-2 rounded-md bg-[#E74C3C] cursor-pointer hover:bg-[#cc3c2c]">
+                                Reject
+                            </h1>
+                        </div>
+                    // </div>
+                    
                 }
             </div>
             <Dialog

@@ -4,14 +4,14 @@ function JobPost({project}) {
     const router = useRouter();
     
     return (
-        <div className="px-3 h-full">
+        <div className="px-3">
             <div className="rounded-md border border-[#e4e4e4] hover:border-[#c4c4c4] p-3 space-y-5 cursor-pointer h-full">
                 <div className="space-y-2">
                     <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-[#29b2fe] hover:underline text-lg font-semibold line-clamp-2">
                       {project.projectTitle}
                     </h1>
                     <div className="space-x-5 flex text-xs font-semibold text-[#c4c4c4]">
-                    <h1>{"posted on: "+ project.createdAt.split('T')[0]}</h1>
+                    <h1>{"posted on: "+ project.createdAt?.split('T')[0]}</h1>
                     {/* <h1>{"closed on:"+ jobdata.closedOn}</h1> */}
                     </div>
                     <h1 className="text-sm line-clamp-4">

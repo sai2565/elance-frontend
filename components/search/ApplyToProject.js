@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { Dialog } from '@material-ui/core';
 
-function ApplyToProject({project, currentUserProfile}) {
+function ApplyToProject({project, currentUserProfile, handleRequestSuccess}) {
 
     const messageInpRef = useRef(null);
     const durationInpRef = useRef(null);
@@ -39,6 +39,7 @@ function ApplyToProject({project, currentUserProfile}) {
             //console.log("Apply Res"+ JSON.stringify(res_json));
             setLoading(false);
             setIsRequestSuccess(true);
+            handleRequestSuccess(true);
         }else{
             setIsMissingDetails(true);
         }

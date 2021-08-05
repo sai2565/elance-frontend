@@ -4,17 +4,18 @@ import FreelancerFeedItem from "../datarepresentation/FreelancerFeedItem";
 import { Dialog } from '@material-ui/core';
 import ProjectGridItem from '../datarepresentation/ProjectGridItem';
 
-function MyFeed({profile, feed}) {
-
-    const userType = profile?.user[0].userType;
+function MyFeed({feed}) {
+    const [session] = useSession();
+    const userType = session.user.elanceprofile.user[0].userType;
     const [freelancers, setFreelancers] = useState(feed?.users) ;
     const [projects, setProjects] = useState(feed?.projects);
     const [currPage, setCurrPage] = useState(feed?.page);
     const [totalPages, setTotPages] = useState(feed?.totalPages);
     const [loading, setLoading] = useState(false);
+    const myAppliedProjects = session.user.elanceprofile.user[0].applications.map((application) => (application.projectId._id));
     
     async function nextPage(){
-        if(feed.page < feed.totalPages){
+        if(currPage < feed.totalPages){
             setLoading(true);
             setFreelancers([]);
             setProjects([]);
@@ -63,20 +64,22 @@ function MyFeed({profile, feed}) {
     return (
     <div>
         {
-            profile && feed &&
+            session && session.user && feed &&
             <div className="space-y-10">
                 <h1 className="text-xl text-black font-bold">My Feed</h1>
                 <div className="h-full grid grid-cols-1">
                     {
                         userType === "client" &&
                         freelancers.map((freelancer) => (
-                            <FreelancerFeedItem profile={freelancer} currentUserProfile={profile}/>
+                            <FreelancerFeedItem profile={freelancer} currentUserProfile={session.user.elanceprofile}/>
                         ))
                     }
                     {
                         userType === "freelancer" &&
                         projects.map((project) => (
-                            <ProjectGridItem currentUserProfile={profile} project={project} />
+
+                                (!myAppliedProjects.includes(project._id)) &&
+                                <ProjectGridItem project={project} currentUserProfile={session.user.elanceprofile}/>
                         ))
                     }
                 </div>

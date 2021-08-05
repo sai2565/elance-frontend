@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import JobPost from "../datarepresentation/JobPost";
 import { useRouter } from "next/router";
+import { useSession } from 'next-auth/client';
 
 function NextItemArrow(props) {
     const { className, style, onClick } = props;
@@ -27,11 +28,12 @@ function NextItemArrow(props) {
     );
   }
 
-function CustomSlider({profile, slider_data}) {
+function CustomSlider() {
   const router = useRouter();
-  const userType = profile?.user[0].userType;
-  const userInternalId = profile?.user[0]._id;
-  const sliderItems = (userType === "client" ? slider_data.projects : profile?.user[0].applications)
+  const [session] = useSession();
+  const userType = session?.user.elanceprofile.user[0].userType;
+  const userInternalId = session?.user.elanceprofile.user[0]._id;
+  const sliderItems = (userType === "client" ? session?.user.elanceprofile.user[0].projects : session?.user.elanceprofile.user[0].applications)
 
   var settings = {
         dots: false,
@@ -78,7 +80,6 @@ function CustomSlider({profile, slider_data}) {
                 <h1 className="text-xl text-black font-bold">{userType === "client" ? "My Postings" : "My Applications"}</h1>
                 <div className="w-full justify-center">
                   {
-                    profile &&
                     <Slider {...settings} className={`${userType === "client" ? "": "hidden"}`} >
                         {
                           sliderItems.length === 0 && userType === "client" &&
@@ -99,14 +100,16 @@ function CustomSlider({profile, slider_data}) {
                             </div>
                           </div>
                         }
-                        { userType === "client" && sliderItems &&
+                        { 
+                        userType === "client" && sliderItems &&
                           sliderItems.map((project) => (
                               <JobPost 
                                 project={project}
                               />
-                          ))
+                          )).reverse()
                         }
-                        {userType === "freelancer" && sliderItems &&
+                        {
+                        userType === "freelancer" && sliderItems &&
                           sliderItems.map((application) => (
                             <div className="px-3 h-full">
                                 <div className="rounded-md border border-[#e4e4e4] hover:border-[#c4c4c4] space-y-2 cursor-pointer h-full">
@@ -150,7 +153,7 @@ function CustomSlider({profile, slider_data}) {
                                 
                                 </div>
                             </div>
-                          ))
+                          )).reverse()
                         }
                     </Slider>
                   }

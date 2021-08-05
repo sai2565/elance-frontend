@@ -1,10 +1,18 @@
 import { getProviders, signIn, useSession } from 'next-auth/client'
 import Head from 'next/head'
 import { useRouter } from "next/router";
+import { useState } from 'react';
+import { Dialog } from '@material-ui/core';
 
 function Signup({ providers }) {
     const router = useRouter();
     const [session] = useSession();
+    const [loading, setLoading] = useState(false);
+
+    function handleGoogleSIgnUp(){
+        setLoading(true);
+        signIn('google');
+    }
 
     //redirect to home page
     if(session && session.user) router.push('/HomePage');
@@ -15,6 +23,8 @@ function Signup({ providers }) {
                 <title>Elance | Sign Up</title>
                 <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
             </Head>
+            {
+                !loading &&
             <div>
                 <div className="w-full flex items-center mt-20">
                     <div className="flex justify-center w-full items-center">
@@ -29,7 +39,7 @@ function Signup({ providers }) {
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/facebook-new.png"/>
                                 <h1 className="text-white text-sm lg:text-base font-semibold">Continue with Facebook</h1>
                             </div>
-                            <div onClick={() => signIn('google')} className="bg-[#DE5246] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
+                            <div onClick={handleGoogleSIgnUp} className="bg-[#DE5246] px-8 py-2 rounded-md flex items-center space-x-5 w-full cursor-pointer">
                                 <img loading="lazy" className="w-8 h-8" src="https://img.icons8.com/ios-filled/150/ffffff/gmail-new.png"/>
                                 <h1 className="text-white text-sm lg:text-base font-semibold">Continue with Google</h1>
                             </div>
@@ -66,7 +76,19 @@ function Signup({ providers }) {
                     </div>            
                 </div>
                 
-            </div>
+            </div>}{
+            loading &&
+            <Dialog
+                open={loading}
+                className={`${loading ? "" : "hidden"}`}
+                >
+                <div className="animate-pulse flex items-center justify-center p-5">
+                    <img
+                        className="w-12 h-12"
+                        src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
+                    <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724] hidden lg:flex">elance</h1>    
+                </div>
+            </Dialog>}
         </div>
     )
 }

@@ -6,13 +6,53 @@ import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Link from 'next/link';
 import { useSession, getSession, session} from 'next-auth/client';
 import HireFreelancer from '../components/search/HireFreelancer';
-import {useState} from 'react';
+import {useState, useRef} from 'react';
 import { Dialog } from '@material-ui/core';
 import {useRouter} from 'next/router';
+import RatingSet from '../components/RatingSet';
 
-function Profile({profile, myprofile, }) {
+function Profile({profile}) {
     const [session] = useSession();
     const router = useRouter();
+    console.log(session);
+    console.log(profile);
+    // try{
+    //     if(!session && profile === "no-id") {router.push('/');}
+    // }catch(error){}
+
+    var myprofile = session?.user.elanceprofile;
+    const isMyProfile = (profile === "no-id");
+    if(isMyProfile){profile = myprofile?.user[0]}
+    //const reviews = profile?.reviews;
+    const [myGivenRating, setMyGivenRating] = useState(null);
+    const [loading, setLoading] = useState(false);
+    function handleMyGivenRating(rating){
+        setMyGivenRating(rating);
+    }
+    const myGivenReviewInpRef = useRef(null);
+    async function submitReviweRating(){
+        if(myGivenRating && myGivenReviewInpRef.current.value){
+            setLoading(true);
+            //console.log("Review "+ myGivenReviewInpRef.current.value +" | Rating "+myGivenRating);
+            const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/setReview",{
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            "userId": profile._id,
+                            "reviewedBy": session.user.elanceprofile.user[0]._id,
+                            "title":"Review by "+session.user.elanceprofile.user[0].fullName,
+                            "description":myGivenReviewInpRef.current.value,
+                            "rating":myGivenRating,
+                        })
+            });
+            const res_json = await res.json();
+            //console.log("review Response"+JSON.stringify(res_json));
+            router.reload();
+        }
+    }
+    
     const SocialIconPopover = withStyles((theme) => ({
         tooltip: {
           backgroundColor: theme.palette.common.white,
@@ -33,10 +73,6 @@ function Profile({profile, myprofile, }) {
         const handleHireDialogClose = () => {
             setHireDialogOpen(false);
         };
-        console.log(JSON.stringify({
-            "senderUserId": myprofile.user[0]._id,
-            "revieverUserId": profile._id
-        }));
         async function handleMessage(){
             const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/setContacted", {
                 method: 'POST',
@@ -59,25 +95,18 @@ function Profile({profile, myprofile, }) {
     return (
         <div>
             <Head>
-                <title>Elance | @{profile.userName}</title>
+                <title>Elance | @{profile?.userName}</title>
                 <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
             </Head>
             <Header page={"profile"} />
+            { 
+                ((session) || (profile && profile.name)) &&
             <div className="h-60 bg-[#666666] lg:flex justify-center space-x-5">
-             <h1 className="text-white font-bold text-2xl text-center pt-10">{profile.fullName} | @{profile.userName}</h1>
-                {/* <div className="pt-5">
-                    <h1 className="text-white text-center italic">First Name</h1>
-                    <h1 className="text-white font-bold text-2xl text-center">{profile.firstName}</h1> 
-                </div>
-                <div className="pt-5">
-                    <h1 className="text-white text-center italic">Last Name</h1>
-                    <h1 className="text-white font-bold text-2xl text-center">{profile.lastName}</h1> 
-                </div>
-                <div className="pt-5">
-                    <h1 className="text-white text-center italic">User Name</h1>
-                    <h1 className="text-white font-bold text-2xl text-center">{profile.userName}</h1> 
-                </div> */}
+                <h1 className="text-white font-bold text-2xl text-center pt-10">{profile.fullName} | @{profile.userName}</h1>
             </div>
+            }
+            { 
+                ((session) || (profile && profile.name)) &&
             <div className={`mx-8 lg:mx-60 mb-10 mt-5 lg:-mt-32 space-y-5`}>
                 <div className="justify-center bg-white border border-[#c4c4c4] rounded-md">
                 <div className="justify-between border-b border-[#c4c4c4] flex items-center p-5">
@@ -209,6 +238,8 @@ function Profile({profile, myprofile, }) {
                                     {profile.email}
                                 </h1>
                             </div>
+                            {
+                             !isMyProfile &&
                             <div className="flex items-center space-x-5">
                                 <button
                                     onClick={handleMessage}
@@ -217,7 +248,7 @@ function Profile({profile, myprofile, }) {
                                 <button
                                     onClick={handleHireDialogOpen}
                                     className="bg-[#29b2fe] text-sm lg:text-base text-white font-semibold px-5 h-9 rounded-md hover:bg-[#238ac2] focus:outline-none mt-10">Hire</button>
-                            </div>
+                            </div>}
                             <Dialog
                                 open={hireDialogOpen}
                                 onClose={handleHireDialogClose}>
@@ -235,14 +266,14 @@ function Profile({profile, myprofile, }) {
                 {/* <div class={`border border-[#c4c4c4] rounded-md mt-10`}> */}
                 <div className="justify-between border border-[#c4c4c4] rounded-t-md flex items-center p-5">
                     <h1 className="text-black font-bold text-lg italic">
-                        Projects & Works
+                        Personal projects & works
                     </h1>
                     {/* <img className="w-6 h-6 cursor-pointer transition duration-150 transform hover:scale-110" src={`${favourite ? "https://img.icons8.com/ios-filled/50/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/29b2fe/like--v1.png"}`} /> */}
                 </div>
-                <div className="lg:grid lg:grid-cols-3 mt-10">
+                <div className="lg:grid lg:grid-cols-3 mt-10 space-y-4 lg:space-x-4 lg:space-y-0">
                     {
                         profile.portfolioProjects.map((project) => (
-                            <div className="p-3 space-y-3 rounded-md text-center border border-[#c4c4c4] mx-3">
+                            <div className="p-3 space-y-3 rounded-b-md text-center border border-[#c4c4c4]">
                                 <h1 className="font-semibold">{project.title}</h1>
                                 <h1>{project.description}</h1>
                                 <div>
@@ -257,10 +288,74 @@ function Profile({profile, myprofile, }) {
                             </div>
                         ))
                     }
-                    
+
                 </div>
-                {/* </div> */}
+            
+            <div>
+                <div className="justify-between border border-[#c4c4c4] rounded-t-md flex items-center p-5">
+                    <h1 className="text-black font-bold text-lg italic">
+                        Reviews & Ratings
+                    </h1>
+                    {/* <img className="w-6 h-6 cursor-pointer transition duration-150 transform hover:scale-110" src={`${favourite ? "https://img.icons8.com/ios-filled/50/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/29b2fe/like--v1.png"}`} /> */}
+                </div>
+                <div className="justify-between border border-[#c4c4c4] rounded-b-md p-5 space-y-5">
+                    {
+                        !isMyProfile && !(session && profile.reviews.map((review) => (review.reviewedBy._id)).includes(session.user.elanceprofile.user[0]._id)) &&
+                        <div className="w-full space-y-3">
+                            <h1 className="text-xl text-[#666666] font-bold">Give your rating</h1>
+                            <RatingSet handleRating={handleMyGivenRating} editable={true}/> 
+                            <textarea
+                                type="text"
+                                rows="2"
+                                ref={myGivenReviewInpRef}
+                                className="border border-[#666666] focus:outline-none text-[#0e1724] text-base font-semibold rounded-md p-2 flex-grow flex-shrink w-full h-full"
+                                placeholder={`Know ${profile.fullName}? Write your thoughts and give a review.`}/>
+                            <div className="flex justify-between">
+                                <div/>
+                                <h1 onClick={submitReviweRating} className="text-white font font-semibold px-4 py-2 bg-[#29b2fe] hover:bg-[#238ac2] rounded-md text-right cursor-pointer">Send</h1> 
+                            </div>   
+                             
+                        </div>
+                    }
+                    {
+                        !isMyProfile && (session && profile.reviews.map((review) => (review.reviewedBy._id)).includes(session.user.elanceprofile.user[0]._id)) &&
+                        <h1 className="text-center text-xl font-bold w-full border-b border-[#c4c4c4] pb-3">
+                            You have already given a review for this profile !
+                        </h1>
+                    }
+                    {
+                        profile.reviews && profile.reviews.map((review) => (
+                            <div className="space-y-2 m-1">
+                                <h1 onClick={() => router.push(`/Profile?id=${review.reviewedBy._id}`)} className="cursor-pointer text-lg text-[#29b2fe] hover:underline font-semibold">
+                                    {review.reviewedBy.fullName} | @{review.reviewedBy.userName}
+                                </h1>
+                                <h1 className="text-base font-semibold text-[#666666]">
+                                    {review.description}
+                                </h1>
+                                <div>
+                                    <RatingSet editable={false} rating={review.rating} />
+                                </div>
+                            </div>
+                        ))
+                    }
+                </div>
             </div>
+                
+            </div>
+            }
+            {
+                (!session || !session.user || loading) &&
+                <Dialog
+                        open={true}
+                        >
+                        <div className="animate-pulse flex items-center justify-center p-5">
+                            <img
+                                className="w-12 h-12"
+                                src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
+                            <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724] hidden lg:flex">elance</h1>    
+                        </div>
+                    </Dialog> 
+            }
         </div>
     )
 }
@@ -268,42 +363,31 @@ function Profile({profile, myprofile, }) {
 export async function getServerSideProps(context){
 
     const userId = context.query.id;
-    const reqBody = {
-        "_id": userId,
-    }
-    const otherUserProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(reqBody)
-    });
-    const otherUserProfile_json = await otherUserProfile.json();
-    const nextAuthSession = await getSession(context);
-    if(nextAuthSession && nextAuthSession.user && nextAuthSession.user.email){
-        const email = nextAuthSession.user.email;
-        const myprofile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getUserByEmail",{
-                            method: "POST",
-                            headers: {
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify({
-                                "email": email
-                            })
-                        });
-        const myprofile_json = await myprofile.json();
+    if(userId){
+        const reqBody = {
+                "_id": userId,
+        }
+        const otherUserProfile = await fetch("https://elance-be.herokuapp.com/api/v1/users/getAllUsers", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reqBody)
+        });
+        const otherUserProfile_json = await otherUserProfile.json();
         return{
             props:{
-                profile : otherUserProfile_json.users[0],
-                myprofile: myprofile_json
+                profile : otherUserProfile_json.users[0]
+            }
+        }
+    }else{
+        return{
+            props:{
+                profile : "no-id"
             }
         }
     }
-    return{
-        props:{
-            profile : otherUserProfile_json.users[0]
-        }
-    }    
+        
 }
 
 export default Profile

@@ -10,6 +10,7 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
     const [isFavourite, toggleFavourite] = useState(currentUserProfile.user[0].favUsers.includes(profile._id));
     async function switchFavourite(){
             const url = isFavourite ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavUser" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavUser"
+            toggleFavourite(!isFavourite);
             const favres = await fetch(url,{
                                 method: "POST",
                                 headers: {
@@ -21,7 +22,7 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
                                 })
             });
             const favres_json = await favres.json();
-            toggleFavourite(!isFavourite);
+            // toggleFavourite(!isFavourite);
             console.log( " fav reds" + JSON.stringify(favres_json));
     }
     const [hireDialogOpen, setHireDialogOpen] = useState(false);
