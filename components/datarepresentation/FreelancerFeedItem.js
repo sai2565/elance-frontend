@@ -7,7 +7,8 @@ import HireFreelancer from '../search/HireFreelancer';
 function FreelancerFeedItem({profile, currentUserProfile}) {
     //console.log(JSON.stringify(profile))
     const router = useRouter();
-    const [isFavourite, toggleFavourite] = useState(currentUserProfile.user[0].favUsers.includes(profile._id));
+    const [isFavourite, toggleFavourite] = useState(currentUserProfile.user[0].favUsers.map((user) => (user._id)).includes(profile._id));
+    console.log(currentUserProfile.user[0].favUsers);
     async function switchFavourite(){
             const url = isFavourite ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavUser" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavUser"
             toggleFavourite(!isFavourite);

@@ -14,7 +14,7 @@ function ProjectGridItem({currentUserProfile, project}) {
         setApplyReqSuccess(isSuccess);
     }
 
-    const [isMyFavProj, toggleFavourite] = useState(currentUserProfile?.user[0].favProjects.includes(project._id));
+    const [isMyFavProj, toggleFavourite] = useState(currentUserProfile?.user[0].favProjects.map((project) => (project._id)).includes(project._id));
     async function switchFavourite(){
         const url = isMyFavProj ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavProject" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavProject"
         toggleFavourite(!isMyFavProj);
