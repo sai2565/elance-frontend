@@ -64,9 +64,13 @@ function FreelancerGridItem({profile}) {
                     session && session.user &&
                     <div className="flex justify-between align-baseline -mt-14 mr-3">
                         <div />
-                        <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
-                            Hire
-                        </h1>
+
+                        {
+                            session?.user?.elanceprofile?.user[0]?.userType === "client" &&
+                            <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
+                                Hire
+                            </h1>
+                        }
                         <Dialog
                             open={open}
                             onClose={handleClose}>

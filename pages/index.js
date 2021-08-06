@@ -6,9 +6,16 @@ import LandingBody from '../components/landingpage/LandingBody'
 import PopularServicesSlider from '../components/landingpage/PopularServicesSlider'
 import TrustedBy from '../components/landingpage/TrustedBy'
 import { useRouter } from "next/router";
+import {useSession} from "next-auth/client"
 
 export default function Home() {
   const router = useRouter();
+  const [session] = useSession();
+  if(session && session.user && session.user.elanceprofile && !session.user.elanceprofile.user){
+    router.push('/CreateProfile');
+  }else if(session && session.user && session.user.elanceprofile && session.user.elanceprofile.user[0]){
+    router.push('/HomePage');
+  }
   return (
     <div className="">
       <Head>

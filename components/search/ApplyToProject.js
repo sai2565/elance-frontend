@@ -1,11 +1,13 @@
 import { useState, useRef } from 'react';
 import { Dialog } from '@material-ui/core';
+import { useSession } from 'next-auth/client';
 
 function ApplyToProject({project, currentUserProfile, handleRequestSuccess}) {
 
     const messageInpRef = useRef(null);
     const durationInpRef = useRef(null);
     const bidInpRef = useRef(null);
+    const [session] = useSession();
 
     const [isMissingDetails, setIsMissingDetails] = useState(false);
     const [isRequestSuccess, setIsRequestSuccess] = useState(false);
@@ -15,13 +17,13 @@ function ApplyToProject({project, currentUserProfile, handleRequestSuccess}) {
         if(messageInpRef.current.value && durationInpRef.current.value && bidInpRef.current.value){
             setIsMissingDetails(false);
             setLoading(true);
-            console.log("apply pay load "+JSON.stringify({
-                "projectId": project._id,
-                "userId" : currentUserProfile.user[0]._id,
-                "bid" : bidInpRef.current.value,
-                "duration" : durationInpRef.current.value+" Months",
-                "description" : messageInpRef.current.value
-            }));
+            // console.log("apply pay load "+JSON.stringify({
+            //     "projectId": project._id,
+            //     "userId" : session.user.elanceprofile.user[0]._id,
+            //     "bid" : bidInpRef.current.value,
+            //     "duration" : durationInpRef.current.value+" Months",
+            //     "description" : messageInpRef.current.value
+            // }));
             const res = await fetch("https://elance-be.herokuapp.com/api/v1/hire/applyProject", {
                             method: "POST",
                             headers: {
@@ -29,7 +31,7 @@ function ApplyToProject({project, currentUserProfile, handleRequestSuccess}) {
                             },
                             body: JSON.stringify({
                                 "projectId": project._id,
-                                "userId" : currentUserProfile.user[0]._id,
+                                "userId" : session.user.elanceprofile.user[0]._id,
                                 "bid" : bidInpRef.current.value,
                                 "duration" : durationInpRef.current.value,
                                 "description" : messageInpRef.current.value

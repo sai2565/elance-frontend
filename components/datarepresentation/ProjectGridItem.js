@@ -3,10 +3,12 @@ import { Dialog } from '@material-ui/core';
 import { useState } from 'react';
 import HireFreelancer from '../search/HireFreelancer';
 import ApplyToProject from "../search/ApplyToProject";
+import { useSession } from "next-auth/client";
 
 function ProjectGridItem({currentUserProfile, project}) {
     const router = useRouter();
     const [open, setOpen] = useState(false);
+    const [session] = useSession();
     var rating = 3;
     const [isApplyReqSuccess, setApplyReqSuccess] = useState(false);
 
@@ -25,7 +27,7 @@ function ProjectGridItem({currentUserProfile, project}) {
                             },
                             body: JSON.stringify({ 
                                 "favProjectId": project._id,
-                                "userId": currentUserProfile.user[0]._id
+                                "userId": session.user.elanceprofile.user[0]._id
                             })
         });
         const favres_json = await favres.json();
@@ -85,9 +87,13 @@ function ProjectGridItem({currentUserProfile, project}) {
                         </div>
                         <div className="flex justify-between">
                             <div />
-                            <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
-                                Apply
-                            </h1>
+                            {
+                               session?.user?.elanceprofile?.user[0]?.userType === "freelancer" &&
+                               <h1 onClick={handleOpen} className=" text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
+                                    Apply
+                                </h1>
+                            }
+                            
                             <Dialog
                                 open={open}
                                 onClose={handleClose}>

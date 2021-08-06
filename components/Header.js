@@ -9,13 +9,15 @@ import Tooltip from '@material-ui/core/Tooltip';
 import SearchBar from './SearchBar';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Popover from "@material-ui/core/Popover";
+import { Dialog } from '@material-ui/core';
 
 function Header({page}) {
     const router = useRouter();
     const [session] = useSession();
-    const myProfile = session?.user.elanceprofile.user[0];
+    const myProfile = session?.user.elanceprofile.user && session?.user.elanceprofile.user[0];
     const myNotifications = myProfile?.notifications;
     const myContactedUsers = myProfile?.contacted;
+    const [loading, setLoading] = useState(false);
     // Routes //
 
     const [notifyAnchorEl, setNotifyAnchorEl] = React.useState(null);
@@ -86,7 +88,8 @@ function Header({page}) {
         }
     };
 
-    async function hireRequestAction(action, notificationId, freelancerId, projectId){
+    async function hireRequestAction(action, notificationId, freelancerId, hireRequestId){
+        setLoading(true);
         const url = (action === "accept") ? "https://elance-be.herokuapp.com/api/v1/hire/agreeHireRequest" : "https://elance-be.herokuapp.com/api/v1/hire/rejectHireRequest";
         const res = await fetch(url, {
             method: 'POST',
@@ -94,20 +97,39 @@ function Header({page}) {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                    "message" : action,
-                    "freelancerId": freelancerId,
-                    "projectId" : projectId,
-                    "notificationId": notificationId
+                    // "message" : action,
+                    // "freelancerId": freelancerId,
+                    "hireRequestId" : hireRequestId
+                    // "notificationId": notificationId
                 })
             });
         const res_json = await res.json();
         console.log("action res "+ JSON.stringify(res_json));
         readNotification(freelancerId, notificationId);
+        setLoading(false);
     }
 
     // function handleMessageNotification(notificationId, userId){
     //     readNotification(userId, notificationId);
     // }
+
+    async function handleHireReqAgreeNotification(notificationId, myId, triggeredById){
+        setLoading(true);
+        const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/setContacted", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    "senderUserId": myId,
+                    "receiverUserId": triggeredById
+                })
+            });
+            const res_json = await res.json();
+            readNotification(myId, notificationId);
+            router.push(`/Messenger?userId=${triggeredById}`);
+        setLoading(false);            
+    }
 
     function handleReviewNotification(notificationId, userId){
         readNotification(userId, notificationId);
@@ -207,7 +229,9 @@ function Header({page}) {
                                 }}>
                                 <div className="w-52">
                                     <h1 className="text-center p-2 border-b border-[#c4c4c4] text-base font-semibold">
-                                        Connected users
+                                        {
+                                            myContactedUsers &&
+                                            myContactedUsers.length > 0 ? "Connected users" : "You are not connected to anyone. Go to someones profile and click on 'Message' to add them here"}
                                     </h1>
                                     {   
                                         myContactedUsers &&
@@ -293,10 +317,10 @@ function Header({page}) {
                                                         <div>
                                                             <h1 onClick={() => router.push(`/ProjectDetails?projectId=${notification.projectId}`)} className="text-sm text-[#29b2fe] font-semibold hover:underline cursor-pointer">{notification.notificationMessage}</h1>
                                                             <div className="flex space-x-5 lg:space-x-10 items-center pt-5">
-                                                                <h1 onClick={() => hireRequestAction("accept", notification._id, myProfile._id, notification.projectId)} className="text-white font-semibold text-sm px-2 py-1 rounded-md bg-[#2ECC71] cursor-pointer hover:bg-[#138643]">
+                                                                <h1 onClick={() => hireRequestAction("accept", notification._id, myProfile._id, notification.hireRequestId)} className="text-white font-semibold text-sm px-2 py-1 rounded-md bg-[#2ECC71] cursor-pointer hover:bg-[#138643]">
                                                                     Accept
                                                                 </h1>
-                                                                <h1 onClick={() => hireRequestAction("reject", notification._id, myProfile._id, notification.projectId)} className="text-white font-semibold text-sm px-2 py-1 rounded-md bg-[#E74C3C] cursor-pointer hover:bg-[#cc3c2c]">
+                                                                <h1 onClick={() => hireRequestAction("reject", notification._id, myProfile._id, notification.hireRequestId)} className="text-white font-semibold text-sm px-2 py-1 rounded-md bg-[#E74C3C] cursor-pointer hover:bg-[#cc3c2c]">
                                                                     Reject
                                                                 </h1>
                                                             </div>
@@ -309,7 +333,26 @@ function Header({page}) {
                                                             </h1>
                                                             
                                                         </div>
+                                                    }{
+                                                        notification.notificationType === 'agreeHireRequest' &&
+                                                        <div>
+                                                            <h1 className="text-sm font-semibold">
+                                                                {notification.triggeredBy.fullName} has accepted your hire request 
+                                                            </h1>
+                                                            <h1 onClick={() => handleHireReqAgreeNotification(notification._id, myProfile._id, notification.triggeredBy._id)} className="text-sm font-semibold text-[#29b2fe]">
+                                                                Send a Message
+                                                            </h1>
+                                                        </div>
                                                     }
+                                                    {/* 'jobApplication', 
+                                                    'hireRequest', 
+                                                    'review', 
+                                                    'applicantHired', 
+                                                    "applicantRejected", 
+                                                    "agreeHireRequest", 
+                                                    "rejectedHireRequest",
+                                                    "message",
+                                                    "jobApplicationReminder" */}
                                                 </h1>
                                             </div>
                                         ))
@@ -359,6 +402,14 @@ function Header({page}) {
                     </div>
                 </div>
             }
+            <Dialog open={loading}>
+                <div className="animate-pulse flex items-center justify-center p-5">
+                    <img
+                        className="w-12 h-12"
+                        src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
+                    <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724] hidden lg:flex">elance</h1>    
+                </div>
+            </Dialog>
             
         </header>
     )

@@ -4,6 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer';
 import SearchBar from './SearchBar';
 import {useRouter} from 'next/router';
+import {useSession} from 'next-auth/client'
 
 // const useStyles = makeStyles({
 //     list: {
@@ -18,9 +19,11 @@ function SideBar({anchor, toggleDrawer, usertype}) {
     //const classes = useStyles();
     //on search for projects or freelancers
     const router = useRouter();
-    const onSearch = (e) => {
-        e.preventDefault();
-    }
+    const [session] = useSession();
+
+    // const onSearch = (e) => {
+    //     e.preventDefault();
+    // }
     return (
         <div
         className=""
@@ -39,11 +42,15 @@ function SideBar({anchor, toggleDrawer, usertype}) {
                 <div className="items-center m-2 ">
                     <SearchBar device={"s"} />
                 </div>
-                <div className={`w-full items-center mt-10 space-y-5 ${usertype === "F" && "hidden"}`}>
-                    <div className="flex justify-center w-full items-center">
-                        <h1 onClick={() => router.push('/PostProject')} className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 lg:flex"> Post a Project </h1>
-                    </div>    
-                </div>
+                {
+                    !session || (session?.user?.elanceprofile?.user && session?.user?.elanceprofile?.user[0].userType === "client") &&
+                    <div className={`w-full items-center mt-10 space-y-5 ${usertype === "F" && "hidden"}`}>
+                        <div className="flex justify-center w-full items-center">
+                            <h1 onClick={() => router.push('/PostProject')} className="bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 lg:flex"> Post a Project </h1>
+                        </div>    
+                    </div>
+                }
+                
             </div>
         </div>
     )

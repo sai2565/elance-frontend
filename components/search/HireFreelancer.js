@@ -1,10 +1,12 @@
 import { useState, useRef } from 'react';
 import { Dialog } from '@material-ui/core';
 import {useRouter} from 'next/router';
+import { useSession } from 'next-auth/client';
 
 
 function HireFreelancer({clientprofile, freelancerprofile}) {
     const router = useRouter();
+    const [session] = useSession();
     const messageInpRef = useRef(null);
     const durationInpRef = useRef(null);
     const rateInpRef = useRef(null);
@@ -15,6 +17,7 @@ function HireFreelancer({clientprofile, freelancerprofile}) {
 
     async function validateAndHire(){
         if(selectedProject && messageInpRef.current.value && durationInpRef.current.value && rateInpRef.current.value){
+            const clientID = session.user.elanceprofile.user[0]._id;
             setIsMissingDetails(false);
             setLoading(true);
             const res = await fetch("https://elance-be.herokuapp.com/api/v1/hire/hireRequest", {
@@ -25,7 +28,7 @@ function HireFreelancer({clientprofile, freelancerprofile}) {
                             body: JSON.stringify({
                                 "projectId": selectedProject,
                                 "freelancerId" : freelancerprofile._id,
-                                "clientId" : clientprofile._id,
+                                "clientId" : clientID,
                                 "description" : messageInpRef.current.value,
                                 "hourlyRate" : rateInpRef.current.value,
                                 "duration" : durationInpRef.current.value

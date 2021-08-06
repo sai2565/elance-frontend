@@ -73,6 +73,37 @@ function CustomSlider() {
         ]
       };
 
+      async function handleMessage(receiverID){
+          const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/setContacted", {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                  "senderUserId": session.user.elanceprofile.user[0]._id,
+                  "receiverUserId": receiverID
+              })
+          });
+          const res_json = await res.json();
+          if(res_json.status === 200){
+              router.push(`/Messenger?userId=${receiverID}`)
+          }
+          //console.log(" set contacted "+ JSON.stringify(res_json));
+          // 
+      }
+
+    async function sendReminder(applicationId){
+      const res = await fetch("https://elance-be.herokuapp.com/api/v1/hire/remindJobApplication", {
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                "applicationId": applicationId
+            })
+          });
+          const res_json = await res.json();
+    }
 
     return (
         <div className="">
@@ -147,11 +178,24 @@ function CustomSlider() {
                                       </h1>
                                     </div>
                                   </div>
-                                    <div className="flex justify-end pb-3 px-3">
+                                  {
+                                    (!(application.applicationId.applicationStatus === "hired")) &&
+                                    <div onClick={() => sendReminder(application.applicationId._id)} className="flex justify-end pb-3 px-3">
                                         <h1 className={`bg-[#29b2fe] px-2 py-1 text-white font-semibold hover:bg-[#238ac2] rounded-full cursor-pointer text-center`}>
                                             {"Remind"}
                                         </h1>
                                     </div>
+                                  }
+                                  {
+                                    application.applicationId.applicationStatus === "hired" &&
+                                    <div className="pb-3 px-3">
+                                        <h1 className={`text-[#2ECC71] font-semibold`}>
+                                            {"Congratulations! You got hired to work on this project."}
+                                        </h1>
+                                        <h1 onClick={() => handleMessage(application.projectId.postedBy)} className={`text-[#29b2fe] font-semibold hover:underline`}>Send a message to Job Poster</h1>
+                                    </div>
+                                  }
+                                    
                                 </div>
                             </div>
                           )).reverse()

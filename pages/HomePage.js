@@ -80,11 +80,11 @@ function HomePage({feed}) {
                   
             }
             {
-                session && session.user &&
+                session && session.user && session.user.elanceprofile &&
                 <Footer className=""/>
             }
             {
-                (!session || !session.user) &&
+                (!session || !session.user || !session.user.elanceprofile) &&
                 <Dialog
                         open={true}
                         >
