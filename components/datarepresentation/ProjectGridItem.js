@@ -14,7 +14,7 @@ function ProjectGridItem({currentUserProfile, project}) {
         setApplyReqSuccess(isSuccess);
     }
 
-    const [isMyFavProj, toggleFavourite] = useState(currentUserProfile?.user[0].favProjects.map((project) => (project._id)).includes(project._id));
+    var [isMyFavProj, toggleFavourite] = useState(currentUserProfile?.user[0].favProjects.map((project) => (project._id)).includes(project._id));
     async function switchFavourite(){
         const url = isMyFavProj ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavProject" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavProject"
         toggleFavourite(!isMyFavProj);
@@ -44,25 +44,25 @@ function ProjectGridItem({currentUserProfile, project}) {
       };
     return (
         // <div className="m-2">
-        //     <div>
-                <div className="border border-[#c4c4c4] rounded-md m-2">
-                    <div className="p-2 space-y-3 mb-5">
+            <div className="my-3 px-3 w-full">
+                <div className="border border-[#c4c4c4] rounded-md h-96 w-full ">
+                    <div className="p-2 space-y-3">
                         <div className="flex justify-between items-center">
-                            <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
+                            <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg line-clamp-1 font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
                                 {project.projectTitle}
                             </h1>
                             <img onClick={switchFavourite} className="w-6 h-6 cursor-pointer transition duration-150 transform hover:scale-110" src={`${isMyFavProj ? "https://img.icons8.com/ios-filled/150/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/000000/like--v1.png"}`} />
                             {/* https://img.icons8.com/ios-filled/50/000000/like--v1.png 
                             https://img.icons8.com/ios/150/333333/like--v1.png*/}
                         </div>
-                        <div className="flex items-center">
+                        <div className="flex items-center line-clamp-2">
                             {project.description}
                         </div>
                         <div>
                             <h1 className="font-semibold">
                                 Skills Required
                             </h1>
-                            <h1 className="">
+                            <h1 className="line-clamp-1">
                                 {project.skills.join(" | ")}
                             </h1>
                         </div>
@@ -116,7 +116,7 @@ function ProjectGridItem({currentUserProfile, project}) {
                         </div>
                     </div>
                 </div> 
-        //     </div>
+              </div>
         // </div>
     )
 }

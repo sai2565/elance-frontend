@@ -344,7 +344,7 @@ function Header({page}) {
             </div>
             {/* lower header */}
             {
-                page !== "postproject" && page !== "messenger" &&
+                page !== "postproject" && page !== "messenger" && page !== "search" &&
                 <div className= {`bg-white border-b border-gray-200 hidden lg:flex z-0`} >
                     <div className="flex space-x-7 mx-5 lg:mx-32">
                         <HeaderTag tag={'Graphics & Design'} options={categories}/>

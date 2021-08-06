@@ -1,14 +1,27 @@
 import Head from 'next/head';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import FreelancersSearch from '../components/search/FreelancersSearch';
 import ProjectsSearch from '../components/search/ProjectsSearch';
 import { useSession, getSession, session} from 'next-auth/client';
+import { useRouter } from 'next/router';
 
-function Search({data, query, category, subcategory}) {
-    const [searchType, setSearchType] = useState("freelancers");
-    console.log(data.users);
+function Search({data}) {
+    const router = useRouter();
+    const [searchType, setSearchType] = useState("freelancers");  
+    function handleTabChange(tabname){
+        if(router.query.category !== tabname){
+            router.query.category = tabname;
+            var queries = []   
+            for (const [key, value] of Object.entries(router.query)) {
+                console.log(`${key}=${value}`);
+                queries.push(`${key}=${value}`);
+            }
+            router.push(`/Search?${queries.join('&')}`)
+        }
+        
+    }
     return (
         <div className="">
             <Head>
@@ -17,14 +30,14 @@ function Search({data, query, category, subcategory}) {
             </Head>
             <Header page={"search"}/>
              <div className="bg-black space-x-16 flex lg:px-32 px-5 text-white font-semibold pt-3">
-                <h1 onClick={() => setSearchType('freelancers')} className={`cursor-pointer pb-2 px-2 ${searchType === "freelancers" && "border-b-2 border-white"}`}>Freelancers</h1>
-                <h1 onClick={() => setSearchType('projects')} className={`cursor-pointer pb-2 px-2 ${searchType === "projects" && "border-b-2 border-white"}`}>Projects</h1>
+                <h1 onClick={() => handleTabChange("freelancers")} className={`cursor-pointer pb-2 px-2 ${router.query.category !== "projects" && "border-b-2 border-white"}`}>Freelancers</h1>
+                <h1 onClick={() => handleTabChange('projects')} className={`cursor-pointer pb-2 px-2 ${router.query.category === "projects" && "border-b-2 border-white"}`}>Projects</h1>
             </div>
-            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "projects" && "hidden"}`}>
-                <FreelancersSearch freelancers={data.users} pages={data.totalUserPages} />
+            <div className={`mx-5 lg:mx-16 mb-10 ${router.query.category === "projects" && "hidden"}`}>
+                <FreelancersSearch freelancers={data.users} totalpages={data.totalUserPages} currentpage={data.page} />
             </div>
-            <div className={`mx-5 lg:mx-16 mb-10 ${searchType === "freelancers" && "hidden"}`}>
-                <ProjectsSearch projects={data.projects} pages={data.totalProjectPages}/>
+            <div className={`mx-5 lg:mx-16 mb-10 ${router.query.category !== "projects" && "hidden"}`}>
+                <ProjectsSearch projects={data.projects} totalpages={data.totalProjectPages} currentpage={data.page}/>
             </div>
             <Footer />
         </div>
@@ -35,12 +48,7 @@ export async function getServerSideProps(context) {
     const query = context.query.query;
     const category = context.query.category;
     const subcategory = context.query.subcategory;
-    // if(!query)
-    // var searchString = category ? category : "";
-    // searchString = query ? searchString + " " + query : searchString;
-    // searchString = subcategory ? searchString + " " + subcategory : searchString;
-    // if(searchString.length > 1){
-        const skill = [
+    const skill = [
             "React",
             "Next",
             "Mongo",
@@ -94,7 +102,7 @@ export async function getServerSideProps(context) {
             "risk",
             "analysis"
         ].join(" ");
-        const res = await fetch("https://elance-be.herokuapp.com/api/v1/search", {
+        const res = await fetch("https://elance-be.herokuapp.com/api/v1/search?page=1&size=9", {
                         method: "POST",
                         headers: {
                             'Content-Type': 'application/json',
@@ -107,19 +115,8 @@ export async function getServerSideProps(context) {
         return {
             props: {
                 data: res_json
-                // query: query,
-                // category: category,
-                // subcategory: subcategory
             }
         } 
-    // }
-    // return {
-    //     props: {
-    //         query: query,
-    //         category: category,
-    //         subcategory: subcategory
-    //     }
-    // }
 }
 
 export default Search

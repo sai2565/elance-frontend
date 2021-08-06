@@ -89,7 +89,7 @@ var settings = {
                 <div className="w-full justify-center">
                   <Slider {...settings} className="mx-5">
                             {aPopularCategories.map(({title, desc, img_url}) => (
-                                <div onClick={() => router.push(`/Search?category=${desc}`)} className="p-4 mr-5 cursor-pointer focus:outline-none transition duration-150 transform hover:scale-105">
+                                <div onClick={() => router.push(`/Search?query=${desc}`)} className="p-4 mr-5 cursor-pointer focus:outline-none transition duration-150 transform hover:scale-105">
                                     <img loading="lazy" src={img_url} className="w-full"/>
                                     <div className="text-black items-center rounded-b-md bg-gray-200 px-3 py-5">
                                         <h1 className="whitespace-nowrap">{title}</h1>

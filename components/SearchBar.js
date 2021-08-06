@@ -34,12 +34,13 @@ function SearchBar({device}) {
         <div className="items-center">
             <div className="items-center ml-2">
                 <form className="flex">
-                <div onClick={handleSearchDropClick} className="flex items-center rounded-l-full h-9 xl:w-96 border border-gray-400 focus-within:border-[#0e1724]">
+                <div className="flex items-center rounded-l-full h-9 xl:w-96 border border-gray-400 focus-within:border-[#0e1724]">
                     <img 
                     className="h-4 w-4 ml-3"
                     src="https://img.icons8.com/metro/52/000000/search.png"/>
                     <img 
                     className="h-4 w-4 mx-1 cursor-pointer"
+                    onClick={handleSearchDropClick}
                     src="https://img.icons8.com/ios-filled/100/000000/sort-down.png"/>
                     <input
                     ref={searchInputRef}

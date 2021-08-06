@@ -4,8 +4,9 @@ import Slider from '@material-ui/core/Slider';
 import CustomCheckbox from '../CustomCheckbox';
 import RatingSet from '../RatingSet';
 import { session } from 'next-auth/client';
+import { useRouter } from 'next/router';
 
-function ProjectsSearch({ projects, pages}) {
+function ProjectsSearch({ projects, totalpages, currentpage}) {
     //console.log("Projects " + JSON.stringify(projects));
     const userType = "F";
     const [viewType, setViewType] = useState('G');
@@ -13,6 +14,9 @@ function ProjectsSearch({ projects, pages}) {
     const [maxBudget, setMaxBudget] = useState(50);
     const [onlyRemote, setOnlyRemote] = useState(false);
     const [projectDuration, setProjectDuration] = useState(1);
+    const [totPages, setTotPages] = useState(totalpages);
+    const [currPage, setCurrPage] = useState(currentpage);
+    const router = useRouter();
     var selectedSkills = {};
 
     const handleChangeMinBudget = (event, budget) => {
@@ -154,7 +158,7 @@ function ProjectsSearch({ projects, pages}) {
                                 Minimum Rating
                             </h1>
                             <div>
-                                <RatingSet />
+                                <RatingSet editable={true} />
                             </div>
                         </div>
                         <div className="space-y-2">
@@ -219,7 +223,7 @@ function ProjectsSearch({ projects, pages}) {
                     <div className="col-span-9">
                         {/* border border-[#c4c4c4] rounded-md */}
                       <div className="justify-between flex items-center"> 
-                        <h1 className="text-lg text-[#666666] font-bold ml-10">"React" Projects</h1>
+                        <h1 className="text-lg text-[#666666] font-bold ml-10 italic">{router.query.query ? `"${router.query.query}"` : ``} Projects</h1>
                         <div className="flex items-center space-x-2">
                             <img 
                                 onClick={() => setViewType('G')}
@@ -231,7 +235,7 @@ function ProjectsSearch({ projects, pages}) {
                                 src={`https://img.icons8.com/material-rounded/240/${ viewType === 'F' ? "29b2fe" : "666666"}/overview-pages-3.png`} />
                         </div>
                       </div>
-                      <div className={`${viewType === 'G' && "grid lg:grid-cols-3 md:grid-cols-2 grid-flow-row-dense flex-grow-0"} place-items-center p-5`}>
+                      <div className={`${viewType === 'G' && "grid lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-1"} place-items-center p-5`}>
                           {projects && projects.map((project) => (
                               <ProjectGridItem currentUserProfile={session?.user?.elanceprofile} project={project} />
                           ))}
@@ -239,13 +243,13 @@ function ProjectsSearch({ projects, pages}) {
                       <div className="justify-between w-full">
                         <div />
                         <div className="flex items-center space-x-5 mt-10 justify-center">
-                            <img className="w-8 h-8" src="https://img.icons8.com/ios-glyphs/120/999999/previous.png" />
+                            <img className={`w-8 h-8 ${currPage === "1" ? "cursor-not-allowed" : "cursor-pointer"}`} src={currPage === "1" ? "https://img.icons8.com/ios-glyphs/120/999999/previous.png" : "https://img.icons8.com/ios-glyphs/120/29b2fe/previous.png"} />
                         <h1>
-                            Page 1 | 9 of 63 projects
+                            Page {currPage} of {totPages}
                         </h1>
-                        <img className="w-8 h-8 cursor-pointer" src="https://img.icons8.com/ios-glyphs/120/29b2fe/next.png" />
-                        </div>   
-                    </div>
+                            <img className={`w-8 h-8 ${currPage === totPages ? "cursor-not-allowed" : "cursor-pointer"}`} src={currPage <= totPages ? "https://img.icons8.com/ios-glyphs/120/29b2fe/next.png" : "https://img.icons8.com/ios-glyphs/120/999999/next.png"} />
+                        </div>
+                      </div>
                     </div>
                 </div>
             </div>

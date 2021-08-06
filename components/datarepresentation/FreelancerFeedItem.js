@@ -7,8 +7,8 @@ import HireFreelancer from '../search/HireFreelancer';
 function FreelancerFeedItem({profile, currentUserProfile}) {
     //console.log(JSON.stringify(profile))
     const router = useRouter();
-    const [isFavourite, toggleFavourite] = useState(currentUserProfile.user[0].favUsers.map((user) => (user._id)).includes(profile._id));
-    console.log(currentUserProfile.user[0].favUsers);
+    const [isFavourite, toggleFavourite] = useState(currentUserProfile?.user[0].favUsers.map((user) => (user._id)).includes(profile._id));
+    //console.log(currentUserProfile.user[0].favUsers);
     async function switchFavourite(){
             const url = isFavourite ? "https://elance-be.herokuapp.com/api/v1/favourites/unSetFavUser" : "https://elance-be.herokuapp.com/api/v1/favourites/setFavUser"
             toggleFavourite(!isFavourite);
@@ -77,8 +77,8 @@ function FreelancerFeedItem({profile, currentUserProfile}) {
                     <h1>{profile.hourlyRate || "850"} ₹</h1>
                 </div>
             </div>
-            <div className="flex justify-end">
-                <h1 onClick={handleHireDialogOpen} className="text-white font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
+            <div className="flex mb-5 justify-end">
+                <h1 onClick={handleHireDialogOpen}  className="text-white align-text-bottom font-semibold bg-[#29b2fe] px-4 py-1 rounded-full cursor-pointer hover:bg-[#239ada]">
                     Hire
                 </h1>
             </div>
