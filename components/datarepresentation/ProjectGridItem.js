@@ -45,40 +45,42 @@ function ProjectGridItem({currentUserProfile, project}) {
     return (
         // <div className="m-2">
             <div className="my-3 px-3 w-full">
-                <div className="border border-[#c4c4c4] rounded-md h-96 w-full ">
-                    <div className="p-2 space-y-3">
-                        <div className="flex justify-between items-center">
-                            <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg line-clamp-1 font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
-                                {project.projectTitle}
-                            </h1>
-                            <img onClick={switchFavourite} className="w-6 h-6 cursor-pointer transition duration-150 transform hover:scale-110" src={`${isMyFavProj ? "https://img.icons8.com/ios-filled/150/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/000000/like--v1.png"}`} />
-                            {/* https://img.icons8.com/ios-filled/50/000000/like--v1.png 
-                            https://img.icons8.com/ios/150/333333/like--v1.png*/}
-                        </div>
-                        <div className="flex items-center line-clamp-2">
-                            {project.description}
-                        </div>
-                        <div>
-                            <h1 className="font-semibold">
-                                Skills Required
-                            </h1>
-                            <h1 className="line-clamp-1">
-                                {project.skills.join(" | ")}
-                            </h1>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <img className="w-6 h-6" src="https://img.icons8.com/glyph-neue/128/2ECC71/user-location.png"/>
-                            <h1>{project.workLocation[0]}</h1>
-                        </div>
-                        <div className="flex items-center space-x-2">
-                            <img className="w-6 h-6" src="https://img.icons8.com/color/144/000000/rupee--v1.png"/>
-                            <h1>{project.budget ? project.budget.minPrice : "NA"} per Hr | {project.budget ? project.budget.maxPrice : "NA"} Total Budget</h1>
-                        </div>
-                        <div className="">
-                            {/* <h1>posted on : 24-May-2020</h1> */}
+                <div className="border border-[#c4c4c4] rounded-md w-full ">
+                    <div className="p-2 h-96">
+                        <div className="space-y-3 h-80">
+                            <div className="flex justify-between items-center">
+                                <h1 onClick={() => router.push(`/ProjectDetails?projectId=${project._id}`)} className="text-lg line-clamp-1 font-bold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
+                                    {project.projectTitle}
+                                </h1>
+                                <img onClick={switchFavourite} className="w-6 h-6 cursor-pointer transition duration-150 transform hover:scale-110" src={`${isMyFavProj ? "https://img.icons8.com/ios-filled/150/29b2fe/like--v1.png" : "https://img.icons8.com/ios/150/000000/like--v1.png"}`} />
+                                {/* https://img.icons8.com/ios-filled/50/000000/like--v1.png 
+                                https://img.icons8.com/ios/150/333333/like--v1.png*/}
+                            </div>
+                            <div className="flex items-center line-clamp-3">
+                                {project.description}
+                            </div>
+                            <div>
+                                <h1 className="font-semibold">
+                                    Skills Required
+                                </h1>
+                                <h1 className="line-clamp-1">
+                                    {project.skills.join(" | ")}
+                                </h1>
+                            </div>
                             <div className="flex items-center space-x-2">
-                                <img className="w-6 h-6" src="https://img.icons8.com/material/192/666666/clock--v1.png"/>
-                                <h1 className="italic font-semibold text-[#666666] text-sm"></h1>
+                                <img className="w-6 h-6" src="https://img.icons8.com/glyph-neue/128/2ECC71/user-location.png"/>
+                                <h1>{project.workLocation[0]}</h1>
+                            </div>
+                            <div className="flex items-center space-x-2">
+                                <img className="w-6 h-6" src="https://img.icons8.com/color/144/000000/rupee--v1.png"/>
+                                <h1>{project.budget ? project.budget.minPrice : "NA"} per Hr | {project.budget ? project.budget.maxPrice : "NA"} Total Budget</h1>
+                            </div>
+                            <div className="">
+                                {/* <h1>posted on : 24-May-2020</h1> */}
+                                <div className="flex items-center space-x-2">
+                                    <img className="w-6 h-6" src="https://img.icons8.com/material/192/666666/clock--v1.png"/>
+                                    <h1 className="italic font-semibold text-[#666666] text-sm"></h1>
+                                </div>
                             </div>
                         </div>
                         <div className="flex justify-between">

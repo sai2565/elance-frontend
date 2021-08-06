@@ -111,9 +111,10 @@ function CustomSlider() {
                         {
                         userType === "freelancer" && sliderItems &&
                           sliderItems.map((application) => (
-                            <div className="px-3 h-full">
-                                <div className="rounded-md border border-[#e4e4e4] hover:border-[#c4c4c4] space-y-2 cursor-pointer h-full">
-                                    <div className="space-y-2 px-3 py-1">
+                            <div className="px-3 h-96">
+                                <div className="rounded-md cursor-pointer h-96 border border-[#e4e4e4] hover:border-[#c4c4c4]">
+                                    <div className="space-y-2 h-80">
+                                     <div className="space-y-2 px-3 py-1">
                                         <h1 onClick={() => router.push(`/ProjectDetails?projectId=${application.projectId._id}`)} className="text-[#29b2fe] text-lg font-semibold line-clamp-1 hover:underline">
                                           {application.projectId.projectTitle}
                                         </h1>
@@ -145,12 +146,12 @@ function CustomSlider() {
                                         {application.applicationId.bid} ₹ per hour {application.applicationId.bid * 9} for complete project
                                       </h1>
                                     </div>
+                                  </div>
                                     <div className="flex justify-end pb-3 px-3">
                                         <h1 className={`bg-[#29b2fe] px-2 py-1 text-white font-semibold hover:bg-[#238ac2] rounded-full cursor-pointer text-center`}>
                                             {"Remind"}
                                         </h1>
                                     </div>
-                                
                                 </div>
                             </div>
                           )).reverse()

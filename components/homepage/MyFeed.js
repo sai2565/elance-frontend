@@ -67,7 +67,7 @@ function MyFeed({feed}) {
             session && session.user && feed &&
             <div className="space-y-10">
                 <h1 className="text-xl text-black font-bold">My Feed</h1>
-                <div className="h-full grid grid-cols-2">
+                <div className="h-full grid grid-cols-1">
                     {
                         userType === "client" &&
                         freelancers.map((freelancer) => (
