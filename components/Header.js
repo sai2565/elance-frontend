@@ -344,6 +344,17 @@ function Header({page}) {
                                                             </h1>
                                                         </div>
                                                     }
+                                                    {
+                                                        notification.notificationType === 'applicantHired' &&
+                                                        <div>
+                                                            <h1 className="text-sm font-semibold">
+                                                                {notification.triggeredBy.fullName} has accepted your application 
+                                                            </h1>
+                                                            <h1 onClick={() => handleHireReqAgreeNotification(notification._id, myProfile._id, notification.triggeredBy._id)} className="text-sm font-semibold text-[#29b2fe]">
+                                                                Send a Message
+                                                            </h1>
+                                                        </div>
+                                                    }
                                                     {/* 'jobApplication', 
                                                     'hireRequest', 
                                                     'review', 
