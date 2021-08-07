@@ -20,9 +20,6 @@ function HomePage({feed}) {
     try{
         if(feed === "newuser") {router.push('/CreateProfile');}
         else if(feed === "nosession") {router.push('/');}
-        else if(!session?.user?.elanceprofile?.user ||  !session?.user?.elanceprofile?.user[0]){
-            router.reload();
-        }
     }catch(error){
         console.log("HomePage : router called from server");
     }
