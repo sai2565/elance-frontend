@@ -13,7 +13,7 @@ import { InvertColorsOffTwoTone } from '@material-ui/icons';
 
 function HomePage({feed}) {
     const router = useRouter();
-    authsession();
+    //authsession();
     const [session] = useSession();
     // console.log("HomePage : Feed Data"+ JSON.stringify(feed));
     // console.log(session);
