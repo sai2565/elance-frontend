@@ -4,7 +4,7 @@ import CustomSlider from '../components/homepage/CustomSlider';
 import PopularServicesSlider from '../components/landingpage/PopularServicesSlider';
 import HomeOptions from '../components/homepage/HomeOptions';
 import Head from 'next/head';
-import { useSession, getSession, session} from 'next-auth/client';
+import { useSession, getSession, session as authsession} from 'next-auth/client';
 import { useRouter } from "next/router";
 import MyFeed from '../components/homepage/MyFeed';
 import { Dialog } from '@material-ui/core';
@@ -13,6 +13,7 @@ import { InvertColorsOffTwoTone } from '@material-ui/icons';
 
 function HomePage({feed}) {
     const router = useRouter();
+    authsession();
     const [session] = useSession();
     // console.log("HomePage : Feed Data"+ JSON.stringify(feed));
     // console.log(session);
