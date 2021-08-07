@@ -38,7 +38,7 @@ function ProjectsSearch({ projects, totalpages, currentpage}) {
     return (
             <div>
                  <div className="grid grid-cols-12 my-5">
-                 <div className="col-span-3 w-full space-y-2 rounded-md mt-14">
+                 <div className="col-span-2 w-full space-y-2 rounded-md mt-14">
                         <div className="border border-[#c4c4c4] p-3 rounded-md space-y-2">
                         <h1 className="text-lg text-[#666666] font-bold " >Filters</h1>
                         <div className="space-y-2">
@@ -220,7 +220,7 @@ function ProjectsSearch({ projects, totalpages, currentpage}) {
                         </div>
                         </div>
                     </div>
-                    <div className="col-span-9">
+                    <div className="col-span-10">
                         {/* border border-[#c4c4c4] rounded-md */}
                       <div className="justify-between flex items-center"> 
                         <h1 className="text-lg text-[#666666] font-bold ml-10 italic">{router.query.query ? `"${router.query.query}"` : ``} Projects</h1>

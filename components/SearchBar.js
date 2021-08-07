@@ -1,12 +1,12 @@
 import Popover from "@material-ui/core/Popover";
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/router';
-
+import { useSession } from "next-auth/client";
 
 
 function SearchBar({device}) {
-    const usertype = "C";
-    const [searchContext, setSearchContext] = useState(usertype);
+    const [session] = useSession();
+    const [searchContext, setSearchContext] = useState(session?.user?.elanceprofile?.user[0]?.userType === "client" ? "F" : "C");
     const searchInputRef = useRef(null);
     const router = useRouter();
 
@@ -26,6 +26,10 @@ function SearchBar({device}) {
     const handleSearchDropClose = () => {
         setAnchorEl(null);
     };
+    const handleSearchDropSelection = (selectionType) => {
+        setSearchContext(selectionType);
+        handleSearchDropClose();
+    }
 
     const isSearchDropOpen = Boolean(anchorEl);
     const id = isSearchDropOpen ? "searchbardropdown" : undefined;
@@ -69,14 +73,14 @@ function SearchBar({device}) {
                 horizontal: "left"
                 }}>
                     <div className={`rounded-md text-sm lg:text-base`}>
-                        <div onClick={() => setSearchContext("F")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer ${searchContext === "F" && "bg-[#29b2fe] text-white"}`}>
+                        <div onClick={() => handleSearchDropSelection("F")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer ${searchContext === "F" && "bg-[#29b2fe] text-white"}`}>
                             <img className="w-8 h-8" src={`${searchContext === "F" ? "https://img.icons8.com/ios-glyphs/90/ffffff/user--v1.png" : "https://img.icons8.com/ios-glyphs/90/000000/user--v1.png"}`}/>
                             <div className="">
                                 <h1 className="font-bold">Freelancers</h1>
                                 <h1>Hire professional freelancers</h1>
                             </div>
                         </div>
-                        <div onClick={() => setSearchContext("C")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer ${searchContext === "C" && "bg-[#29b2fe] text-white"}`}>
+                        <div onClick={() => handleSearchDropSelection("C")} className={`flex border-b-2 border-gray-400 items-center space-x-5 p-3 cursor-pointer ${searchContext === "C" && "bg-[#29b2fe] text-white"}`}>
                             <img className="w-8 h-8" src={`${searchContext === "C" ? "https://img.icons8.com/material-rounded/128/ffffff/find-matching-job.png" : "https://img.icons8.com/material-rounded/128/000000/find-matching-job.png" }`} />
                             <div className="">
                                 <h1 className="font-bold">Projects</h1>
