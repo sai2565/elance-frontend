@@ -304,7 +304,7 @@ function Header({page}) {
                                                        notification.notificationType === 'message' &&
                                                        notification.triggeredBy.fullName+ " has sent you a message" 
                                                     }{
-                                                       notification.notificationType === 'jobApplication' &&
+                                                       (notification.notificationType === 'jobApplication' || notification.notificationType === 'jobApplicationReminder') &&
                                                        <div onClick={() => handleJobApplicationNotification(notification._id, myProfile._id, notification.projectId)}>
                                                            <h1 className="text-sm font-semibold">
                                                                 {notification.triggeredBy.fullName} has applied to your project
