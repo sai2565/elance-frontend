@@ -45,9 +45,11 @@ function Search({data}) {
 }
 
 export async function getServerSideProps(context) {
+    var reqBody;
     const query = context.query.query;
     const category = context.query.category;
     const subcategory = context.query.subcategory;
+    const isRemote = context.query.isRemote;
     const skill = [
             "React",
             "Next",
@@ -108,7 +110,8 @@ export async function getServerSideProps(context) {
                             'Content-Type': 'application/json',
                         },
                         body: JSON.stringify({
-                            "searchString" : query || (category && subcategory && category+" "+subcategory) || category || skill
+                            "searchString" : query || (category && subcategory && category+" "+subcategory) || category || skill,
+                            "isRemote": isRemote
                         })
             });
         const res_json = await res.json();

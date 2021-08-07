@@ -20,6 +20,9 @@ function HomePage({feed}) {
     try{
         if(feed === "newuser") {router.push('/CreateProfile');}
         else if(feed === "nosession") {router.push('/');}
+        else if(!session?.user?.elanceprofile?.user ||  !session?.user?.elanceprofile?.user[0]){
+            router.reload();
+        }
     }catch(error){
         console.log("HomePage : router called from server");
     }
@@ -35,17 +38,17 @@ function HomePage({feed}) {
                 <link rel="icon" href="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg" />
             </Head>
             {
-                session && feed !== "nosession" && feed !== "newuser" &&
+                session && feed !== "nosession" && feed !== "newuser" && session?.user?.elanceprofile?.user &&
                 <Header page={"home"}/>
             }
             
              {
-                session && feed !== "nosession" && feed !== "newuser" &&
+                session && feed !== "nosession" && feed !== "newuser" && session?.user?.elanceprofile?.user &&
                 <div className={`mx-5 lg:mx-32 mb-10`}>
                     {/* <div className="grid grid-cols-1 lg:grid-cols-4 pt-5"> */}
                     <div className="flex justify-between pt-5 lg:grid lg:grid-cols-4 items-center">
                         <div className="flex items-center space-x-3 lg:col-span-3">
-                            <h1 className="text-lg font-bold text-[#4c4c4c]">{`Welcome, ${session?.user.elanceprofile.user[0].userName}`}</h1>
+                            <h1 className="text-lg font-bold text-[#4c4c4c]">{`Welcome, ${session?.user?.elanceprofile?.user && session?.user?.elanceprofile?.user[0]?.userName}`}</h1>
                             <img className="animate-wave w-10 h-10 hidden lg:flex" src="https://threejs-journey.xyz/assets/images/hand-emoji-100x100.png"></img>
                         </div>
                         <div className="flex lg:col-span-1 lg:justify-center items-center">
@@ -80,11 +83,11 @@ function HomePage({feed}) {
                   
             }
             {
-                session && session.user && session.user.elanceprofile &&
+                session && session.user && session.user.elanceprofile && session.user.elanceprofile.user &&
                 <Footer className=""/>
             }
             {
-                (!session || !session.user || !session.user.elanceprofile) &&
+                (!session || !session.user || !session.user.elanceprofile || !session.user.elanceprofile.user) &&
                 <Dialog
                         open={true}
                         >

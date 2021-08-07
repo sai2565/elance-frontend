@@ -6,7 +6,7 @@ import { useSession } from "next-auth/client";
 
 function SearchBar({device}) {
     const [session] = useSession();
-    const [searchContext, setSearchContext] = useState(session?.user?.elanceprofile?.user[0]?.userType === "client" ? "F" : "C");
+    const [searchContext, setSearchContext] = useState(session?.user?.elanceprofile?.user && session?.user?.elanceprofile?.user[0]?.userType === "client" ? "F" : "C");
     const searchInputRef = useRef(null);
     const router = useRouter();
 

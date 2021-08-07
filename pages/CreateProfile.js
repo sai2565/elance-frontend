@@ -121,9 +121,9 @@ function CreateProfile() {
         var proj3Skills = proj3SkillsInputRef.current.value;
         var proj3URL = proj3UrlInputRef.current.value;
         if(
-            proj1Title && proj1Desc && proj1Skills && proj1URL &&
-            proj2Title && proj2Desc && proj2Skills && proj2URL &&
-            proj3Title && proj3Desc && proj3Skills && proj3URL
+            (proj1Title && proj1Desc && proj1Skills && proj1URL) ||
+            (proj2Title && proj2Desc && proj2Skills && proj2URL) ||
+            (proj3Title && proj3Desc && proj3Skills && proj3URL)
         ){
             setViewContext("4");
             setStep3Validated("T");

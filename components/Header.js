@@ -256,7 +256,6 @@ function Header({page}) {
                                 </div>
                             </Popover>
                         }
-
                         {
                             !(session && session.user) && page !== "postproject" &&
                             <h1 onClick={() => router.push('/PostProject')} className={`bg-yellow-400 px-5 py-2 text-white font-bold rounded-md cursor-pointer hover:bg-yellow-500 hidden lg:flex`}>

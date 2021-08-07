@@ -10,15 +10,16 @@ import {useSession} from 'next-auth/client'
 import {useRouter} from 'next/router'
 
 function FreelancersSearch({freelancers, totalpages, currentpage}) {
+    const router = useRouter();
     const [viewType, setViewType] = useState('G');
     const [minBudget, setMinBudget] = useState(30);
     const [maxBudget, setMaxBudget] = useState(50);
-    const [onlyRemote, setOnlyRemote] = useState(false);
+    const [onlyRemote, setOnlyRemote] = useState(router.query.isRemote);
     const [totPages, setTotPages] = useState(totalpages);
     const [currPage, setCurrPage] = useState(currentpage);
     var selectedSkills = {};
     const [session] = useSession();
-    const router = useRouter();
+    
 
     const handleChangeMinBudget = (event, budget) => {
         setMinBudget(budget);
@@ -30,13 +31,23 @@ function FreelancersSearch({freelancers, totalpages, currentpage}) {
         console.log(event);
       };
     const handleRemoteToggle = () => {
+        router.query.isRemote = !onlyRemote;
+        
+        router.push(getSearchQueryFiltersString());
         setOnlyRemote(!onlyRemote);
+    }
+    function getSearchQueryFiltersString(){
+        var filters = [];
+        for(const [key, val] of Object.entries(router.query)){
+            filters.push(`${key}=${val}`);
+        }
+        return `/Search?${filters.join('&')}`;
     }
 
     return (
             <div >
                  <div className="grid grid-cols-12 my-5">
-                    <div className="col-span-2 w-full space-y-2 rounded-md mt-14">
+                    <div className="col-span-3 w-full space-y-2 rounded-md mt-14">
                         <div className="border border-[#c4c4c4] p-3 rounded-md space-y-2">
                         <h1 className="text-lg text-[#666666] font-bold " >Filters</h1>
                         <div className="space-y-2">
@@ -202,7 +213,7 @@ function FreelancersSearch({freelancers, totalpages, currentpage}) {
                         </div>
                         </div>
                     </div>
-                    <div className="col-span-10">
+                    <div className="col-span-9">
                         {/* border border-[#c4c4c4] rounded-md */}
                       <div className="justify-between flex items-center"> 
                         <h1 className="text-lg text-[#666666] font-bold ml-10 italic">{router.query.query ? `"${router.query.query}"` : ``} freelancers</h1>

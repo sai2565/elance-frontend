@@ -8,15 +8,15 @@ import { useRouter } from 'next/router';
 
 function ProjectsSearch({ projects, totalpages, currentpage}) {
     //console.log("Projects " + JSON.stringify(projects));
-    const userType = "F";
+    const router = useRouter();
     const [viewType, setViewType] = useState('G');
     const [minBudget, setMinBudget] = useState(30);
     const [maxBudget, setMaxBudget] = useState(50);
-    const [onlyRemote, setOnlyRemote] = useState(false);
+    const [onlyRemote, setOnlyRemote] = useState(router.query.isRemote);
     const [projectDuration, setProjectDuration] = useState(1);
     const [totPages, setTotPages] = useState(totalpages);
     const [currPage, setCurrPage] = useState(currentpage);
-    const router = useRouter();
+ 
     var selectedSkills = {};
 
     const handleChangeMinBudget = (event, budget) => {
@@ -29,10 +29,21 @@ function ProjectsSearch({ projects, totalpages, currentpage}) {
         console.log(event);
       };
     const handleRemoteToggle = () => {
+        router.query.isRemote = !onlyRemote;
+        
+        router.push(getSearchQueryFiltersString());
         setOnlyRemote(!onlyRemote);
     }
     const handleChangeProjectDuration = (event, duration) => {
         setProjectDuration(duration);
+    }
+
+    function getSearchQueryFiltersString(){
+        var filters = [];
+        for(const [key, val] of Object.entries(router.query)){
+            filters.push(`${key}=${val}`);
+        }
+        return `/Search?${filters.join('&')}`;
     }
 
     return (
