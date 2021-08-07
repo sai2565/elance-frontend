@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import JobPost from "../datarepresentation/JobPost";
 import { useRouter } from "next/router";
 import { useSession } from 'next-auth/client';
+import { useState } from "react";
+import { Dialog } from '@material-ui/core';
 
 function NextItemArrow(props) {
     const { className, style, onClick } = props;
@@ -34,7 +36,7 @@ function CustomSlider() {
   const userType = session?.user.elanceprofile.user[0].userType;
   const userInternalId = session?.user.elanceprofile.user[0]._id;
   const sliderItems = (userType === "client" ? session?.user.elanceprofile.user[0].projects : session?.user.elanceprofile.user[0].applications)
-
+  const [loading, setLoading] = useState(false);
   var settings = {
         dots: false,
         arrows: true,
@@ -74,6 +76,7 @@ function CustomSlider() {
       };
 
       async function handleMessage(receiverID){
+        setLoading(true);
           const res = await fetch("https://elance-be.herokuapp.com/api/v1/users/setContacted", {
               method: 'POST',
               headers: {
@@ -88,11 +91,13 @@ function CustomSlider() {
           if(res_json.status === 200){
               router.push(`/Messenger?userId=${receiverID}`)
           }
+          setLoading(false);
           //console.log(" set contacted "+ JSON.stringify(res_json));
           // 
       }
 
     async function sendReminder(applicationId){
+      setLoading(true);
       const res = await fetch("https://elance-be.herokuapp.com/api/v1/hire/remindJobApplication", {
               method: 'POST',
               headers: {
@@ -102,7 +107,8 @@ function CustomSlider() {
                 "applicationId": applicationId
             })
           });
-          const res_json = await res.json();
+      const res_json = await res.json();
+      setLoading(false);
     }
 
     return (
@@ -205,6 +211,16 @@ function CustomSlider() {
                   
                 </div>  
             </div>
+            <Dialog
+                open={loading}
+                >
+                <div className="animate-pulse flex items-center justify-center p-5">
+                    <img
+                        className="w-12 h-12"
+                        src="https://cdn.worldvectorlogo.com/logos/freelancer-1.svg"/>
+                    <h1 className="italic text-xl font-extrabold -ml-3 text-[#0e1724] hidden lg:flex">elance</h1>    
+                </div>
+            </Dialog> 
         </div>
     )
 }
