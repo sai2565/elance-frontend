@@ -6,10 +6,12 @@ import { useSession, getSession} from 'next-auth/client';
 import { Dialog } from '@material-ui/core';
 import { useState } from 'react';
 import ApplyToProject from "../components/search/ApplyToProject";
+import { useRouter } from 'next/router';
 
 function ProjectDetails({projectdetails}) {
 
     const [session] = useSession();
+    const router = useRouter();
     const posterEmail = projectdetails?.projects[0].postedBy?.email;
     var currentUserEmail = session?.user.email;
     const currentUserHasPostedThisProject = posterEmail === currentUserEmail;
@@ -108,7 +110,7 @@ function ProjectDetails({projectdetails}) {
                         </div>
                         <div className="border-t border-[#c4c4c4] flex justify-between p-5">
                             <div className="space-y-2">
-                                <h1 className="font-semibold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
+                                <h1 onClick={() => router.push(`/Profile?id=${projectdetails.projects[0].postedBy?._id}`)} className="font-semibold text-[#29b2fe] underline cursor-pointer hover:text-[#239ada]">
                                     {projectdetails.projects[0].postedBy?.userName} | @{projectdetails.projects[0].postedBy?.userName} 
                                 </h1>
                                 <div className="space-x-0.5 flex">
