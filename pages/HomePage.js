@@ -13,7 +13,7 @@ import { InvertColorsOffTwoTone } from '@material-ui/icons';
 
 function HomePage({feed}) {
     const router = useRouter();
-    authsession();
+    //authsession();
     const [session] = useSession();
     // console.log("HomePage : Feed Data"+ JSON.stringify(feed));
     // console.log(session);
@@ -21,6 +21,9 @@ function HomePage({feed}) {
     try{
         if(feed === "newuser") {router.push('/CreateProfile');}
         else if(feed === "nosession") {router.push('/');}
+        else {
+            authsession();
+        }
     }catch(error){
         console.log("HomePage : router called from server");
     }
