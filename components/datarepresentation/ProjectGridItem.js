@@ -81,7 +81,7 @@ function ProjectGridItem({currentUserProfile, project}) {
                                 {/* <h1>posted on : 24-May-2020</h1> */}
                                 <div className="flex items-center space-x-2">
                                     <img className="w-6 h-6" src="https://img.icons8.com/material/192/666666/clock--v1.png"/>
-                                    <h1 className="italic font-semibold text-[#666666] text-sm"></h1>
+                                    <h1 className="italic font-semibold text-[#666666] text-sm">{project.createdAt.split("T")[0]}</h1>
                                 </div>
                             </div>
                         </div>
