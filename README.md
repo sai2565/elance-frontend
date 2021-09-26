@@ -15,14 +15,14 @@ _Elance is a digital platform that lives on a responsive mobile-friendly website
   - Mongoose V5.13.2
 
 * Prerequisites
-1 Your system must have Node v10.16.3+.
+  - Your system must have Node v10.16.3+.
 
-Frontend
-Clone - https://github.com/pesto-students/n4-elance-frontend-KAPPA-4
-Install required packages using - npm i
-Run Application : npm run start
+* Frontend
+  - Clone - https://github.com/pesto-students/n4-elance-frontend-KAPPA-4
+  - Install required packages using - npm i
+  - Run Application : npm run start
 
-Backend
-Clone - https://github.com/pesto-students/n4-elance-backend-kapa-4
-Install required packages using - npm i
-Run Application : npm start
+* Backend
+  - Clone - https://github.com/pesto-students/n4-elance-backend-kapa-4
+  - Install required packages using - npm i
+  - Run Application : npm start
