@@ -1,5 +1,5 @@
 ## Elance
-_Elance is a digital platform that lives on a responsive mobile-friendly website. Its main aim is to help freelancers and clients to connect, collaborate and communicate efficiently._
+_Elance is fully responsive digital platform where freelancers and clients to connect, collaborate and communicate to build projects of varied niches. It aims to make it easier for clients to post jobs and hire freelancers also for freelancers to apply for jobs and get hired for projects._
 
 ## Built With:
 * Frontend
