@@ -1,29 +1,26 @@
-# Elance - Where businesses are built and careers are thrived
-<!-- This example shows how to use [Tailwind CSS](https://tailwindcss.com/) (v2.1) with Next.js. It follows the steps outlined in the official [Tailwind docs](https://tailwindcss.com/docs/guides/nextjs).
+Elance
+PestoMeet is a digital platform that lives on a responsive mobile-friendly website. Its main aim is to help students, mentors, and organizers efficiently manage and track the programs/batches organized by pesto-tech.
 
-It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
+Built With:
+Frontend
+React JS V17.0+
+Next Js V11.1.0+
+JavaScript 2021, 12th edition
+Backend
+Node JS V10+
+Express JS V4.7+
+JavaScript 2021, 12th edition
+MongoDB 4.4
+Mongoose V5.13.2
+Prerequisites
+Your system must have Node v10.16.3+.
 
-## Preview
+Frontend
+Clone - https://github.com/pesto-students/n4-elance-frontend-KAPPA-4
+Install required packages using - npm i
+Run Application : npm run start
 
-Preview the example live on [StackBlitz](http://stackblitz.com/):
-
-[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/vercel/next.js/tree/canary/examples/with-tailwindcss)
-
-## Deploy your own
-
-Deploy the example using [Vercel](https://vercel.com?utm_source=github&utm_medium=readme&utm_campaign=next-example):
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/external?repository-url=https://github.com/vercel/next.js/tree/canary/examples/with-tailwindcss&project-name=with-tailwindcss&repository-name=with-tailwindcss) -->
-
-## How to use
-<!-- 
-Execute [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app) with [npm](https://docs.npmjs.com/cli/init) or [Yarn](https://yarnpkg.com/lang/en/docs/cli/create/) to bootstrap the example:
-
-```bash
-npx create-next-app --example with-tailwindcss with-tailwindcss-app
-# or
-yarn create next-app --example with-tailwindcss with-tailwindcss-app
-```
-
-Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
- -->
+Backend
+Clone - https://github.com/pesto-students/n4-elance-backend-kapa-4
+Install required packages using - npm i
+Run Application : npm start
