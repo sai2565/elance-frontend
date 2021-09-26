@@ -19,10 +19,10 @@ _Elance is a fully responsive digital platform where freelancers and clients con
 
 * Frontend
   - Clone - <code>https://github.com/pesto-students/n4-elance-frontend-KAPPA-4</code>
-  - Install required packages using - npm i
-  - Run Application : npm run start
+  - Install required packages using - <code>npm i</code>
+  - Run Application : <code>npm run start</code>
 
 * Backend
   - Clone - <code>https://github.com/pesto-students/n4-elance-backend-kapa-4</code>
-  - Install required packages using - npm i
-  - Run Application : npm start
+  - Install required packages using - <code>npm i</code>
+  - Run Application : <code>npm start</code>
