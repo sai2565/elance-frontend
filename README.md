@@ -1,6 +1,6 @@
 ## Elance
-_Elance is fully responsive digital platform where freelancers and clients to connect, collaborate and communicate to build projects of varied niches. It aims to make it easier for clients to post jobs and hire freelancers also for freelancers to apply for jobs and get hired for projects._
-
+<!-- _Elance is fully responsive digital platform where freelancers and clients to connect, collaborate and communicate to build projects of varied niches. It aims to make it easier for clients to post jobs and hire freelancers also for freelancers to apply for jobs and get hired for projects._ -->
+_Elance is a fully responsive digital platform 💻 ⌨ where freelancers and clients connect, collaborate and communicate to build projects of varied niches. It aims to make it easier for clients to post jobs and hire freelancers also for freelancers to apply for jobs and get hired for projects. 💻 ⚡️ 🖥 🧑‍💼 👩‍💼_
 ## Built With:
 * Frontend
   - React JS V17.0+
