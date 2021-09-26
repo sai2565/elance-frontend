@@ -8,11 +8,11 @@ _Elance is a digital platform that lives on a responsive mobile-friendly website
   - JavaScript 2021, 12th edition
 
 * Backend
-1 Node JS V10+
-2 Express JS V4.7+
-3 JavaScript 2021, 12th edition
-4 MongoDB 4.4
-5 Mongoose V5.13.2
+  - Node JS V10+
+  - Express JS V4.7+
+  - JavaScript 2021, 12th edition
+  - MongoDB 4.4
+  - Mongoose V5.13.2
 
 * Prerequisites
 1 Your system must have Node v10.16.3+.
