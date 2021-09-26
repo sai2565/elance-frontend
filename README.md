@@ -1,13 +1,13 @@
-#Elance
+# Elance
 </br>
-*Elance is a digital platform that lives on a responsive mobile-friendly website. Its main aim is to help freelancers and clients to connect, collaborate and communicate efficiently.
+* Elance is a digital platform that lives on a responsive mobile-friendly website. Its main aim is to help freelancers and clients to connect, collaborate and communicate efficiently.
 
-#Built With:
-.Frontend
+# Built With:
+. Frontend
 React JS V17.0+
 Next Js V11.1.0+
 JavaScript 2021, 12th edition
-.Backend
+. Backend
 Node JS V10+
 Express JS V4.7+
 JavaScript 2021, 12th edition
