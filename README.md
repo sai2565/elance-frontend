@@ -4,25 +4,25 @@ _Elance is a fully responsive digital platform where freelancers and clients con
 ## Built With:
 * Frontend
   - <code>React JS V17.0+</code>
-  - Next Js V11.1.0+
-  - JavaScript 2021, 12th edition
+  - <code>Next Js V11.1.0+</code>
+  - <code>JavaScript 2021, 12th edition</code>
 
 * Backend
-  - Node JS V10+
-  - Express JS V4.7+
-  - JavaScript 2021, 12th edition
-  - MongoDB 4.4
-  - Mongoose V5.13.2
+  - <code>Node JS V10+</code>
+  - <code>Express JS V4.7+</code>
+  - <code>JavaScript 2021, 12th edition</code>
+  - <code>MongoDB 4.4</code>
+  - <code>Mongoose V5.13.2</code>
 
 * Prerequisites
-  - Your system must have Node v10.16.3+.
+  - Your system must have <code>Node v10.16.3+.</code>
 
 * Frontend
-  - Clone - https://github.com/pesto-students/n4-elance-frontend-KAPPA-4
+  - Clone - <code>https://github.com/pesto-students/n4-elance-frontend-KAPPA-4</code>
   - Install required packages using - npm i
   - Run Application : npm run start
 
 * Backend
-  - Clone - https://github.com/pesto-students/n4-elance-backend-kapa-4
+  - Clone - <code>https://github.com/pesto-students/n4-elance-backend-kapa-4</code>
   - Install required packages using - npm i
   - Run Application : npm start
