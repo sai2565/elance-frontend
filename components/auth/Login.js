@@ -54,7 +54,24 @@ function Login({ providers }) {
                                 </h1>
                                 <div className="bg-[#c4c4c4] h-0.5 w-full"/>
                             </div>
-                            <div className="border-2 border-gray-400 focus-within:border-[#0e1724] rounded-lg px-3 py-1">
+                            <div className="flex cursor-pointer items-center justify-center">
+                                <button 
+                                    className="px-3 py-1 text-white font-bold bg-[#29b2fe] transition duration-150 transform hover:scale-105 rounded-full place-self-center focus:outline-none"
+                                    onClick={() => signIn('testEmail', {
+                                        email: "pestoelance@gmail.com"
+                                    })}
+                                >Test LogIn as Client</button>
+                            </div>
+
+                            <div className="flex cursor-pointer items-center justify-center">
+                                <button 
+                                    className="px-3 py-1 text-white font-bold bg-[#29b2fe] transition duration-150 transform hover:scale-105 rounded-full place-self-center focus:outline-none"
+                                    onClick={() => signIn('testEmail', {
+                                        email: "krr1028@gmail.com"
+                                    })}
+                                >Test LogIn as Freelancer</button>
+                            </div>
+                            {/*<div className="border-2 border-gray-400 focus-within:border-[#0e1724] rounded-lg px-3 py-1">
                                 <input
                                     type="email"
                                     className="border-none focus:outline-none text-[#0e1724] text-sm lg:text-base flex-grow flex-shrink w-full h-10"
@@ -68,7 +85,7 @@ function Login({ providers }) {
                             </div>
                             <div className="flex cursor-pointer items-center justify-center">
                                 <button type="submit" className="px-3 py-1 text-white font-bold bg-[#29b2fe] transition duration-150 transform hover:scale-105 rounded-full place-self-center focus:outline-none">Continue</button>
-                            </div>
+                            </div> */}
                             <div className="flex items-center justify-center">
                                 New user want to 
                                 <h1 onClick={() => router.push('/auth/signup')} className="mx-1 text-[#29b2fe] cursor-pointer hover:underline">Signup</h1>
